@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 680" role="img" aria-labelledby="title desc">
+  <title id="title">Oral surgery illustration</title>
+  <desc id="desc">A dental instrument and tooth symbol representing careful oral surgery.</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#e8e7fb"/><stop offset="1" stop-color="#c6c3ed"/></linearGradient>
+    <linearGradient id="steel" x2="1"><stop stop-color="#718c9e"/><stop offset=".48" stop-color="#fff"/><stop offset="1" stop-color="#7896a4"/></linearGradient>
+    <linearGradient id="tooth" x2="0" y2="1"><stop stop-color="#fff"/><stop offset="1" stop-color="#e5e8f0"/></linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="14" stdDeviation="13" flood-color="#514d81" flood-opacity=".18"/></filter>
+  </defs>
+  <rect width="960" height="680" rx="42" fill="url(#bg)"/>
+  <circle cx="749" cy="153" r="113" fill="#fff" opacity=".32"/>
+  <path d="M433 179q-45-36-90 5-43 41-11 105 24 50 34 103 8 37 28 37t28-51q9-53 28-53t28 53q8 51 28 51t28-37q10-53 34-103 32-64-11-105-45-41-90-5-22 18-44 0Z" fill="url(#tooth)" stroke="#9b9abe" stroke-width="9" filter="url(#shadow)"/>
+  <path d="M220 496 625 91q24-24 48 0l19 19q23 24 0 48L287 563q-29 29-59 1t-8-68Z" fill="url(#steel)" stroke="#6a8596" stroke-width="8"/>
+  <path d="m221 496 66 67m-46-93 66 66" stroke="#658395" stroke-width="8" stroke-linecap="round"/>
+  <path d="m686 349 13 33 35 2-27 22 9 34-30-19-29 19 10-34-27-22 35-2z" fill="#fff" opacity=".84"/>
+  <circle cx="262" cy="222" r="16" fill="#fff" opacity=".8"/>
+</svg>

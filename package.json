@@ -1,0 +1,40 @@
+{
+  "name": "mahamaya-dant-chikitsalaya",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "concurrently --kill-others --names API,SITE \"npm run start:api\" \"npm run start:site\"",
+    "start:api": "node --watch api/server.js",
+    "start:site": "ng serve mdc",
+    "build": "ng build mdc"
+  },
+  "dependencies": {
+    "@angular/common": "^20.3.0",
+    "@angular/compiler": "^20.3.0",
+    "@angular/core": "^20.3.0",
+    "@angular/forms": "^20.3.0",
+    "@angular/platform-browser": "^20.3.0",
+    "@angular/router": "^20.3.0",
+    "better-sqlite3": "^12.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.1.0",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.2",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.15.0"
+  },
+  "devDependencies": {
+    "@angular/build": "^20.3.40",
+    "@angular/cli": "^20.3.40",
+    "@angular/compiler-cli": "^20.3.0",
+    "concurrently": "^10.0.6",
+    "typescript": "~5.9.2"
+  }
+}

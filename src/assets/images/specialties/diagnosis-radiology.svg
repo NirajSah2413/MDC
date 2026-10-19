@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 680" role="img" aria-labelledby="title desc">
+  <title id="title">Dental diagnosis and radiology illustration</title>
+  <desc id="desc">A dental X-ray displayed on a diagnostic monitor.</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#d8eef5"/><stop offset="1" stop-color="#a8d4e5"/></linearGradient>
+    <linearGradient id="screen" x2="0" y2="1"><stop stop-color="#24566f"/><stop offset="1" stop-color="#102e47"/></linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="18" stdDeviation="15" flood-color="#28566c" flood-opacity=".2"/></filter>
+  </defs>
+  <rect width="960" height="680" rx="42" fill="url(#bg)"/>
+  <circle cx="177" cy="497" r="111" fill="#fff" opacity=".26"/><circle cx="777" cy="148" r="100" fill="#fff" opacity=".3"/>
+  <rect x="229" y="118" width="502" height="375" rx="28" fill="#dce9ed" stroke="#668d9e" stroke-width="12" filter="url(#shadow)"/>
+  <rect x="252" y="141" width="456" height="327" rx="13" fill="url(#screen)"/>
+  <path d="M405 204q-27-20-53 3-25 24-6 59 14 27 19 59 4 22 17 22t16-29q5-30 17-30t17 30q5 29 17 29t17-22q5-32 19-59 19-35-6-59-26-23-53-3-13 11-27 0Z" fill="none" stroke="#b6e7f2" stroke-width="8"/>
+  <path d="M559 204q-27-20-53 3-25 24-6 59 14 27 19 59 4 22 17 22t16-29q5-30 17-30t17 30q5 29 17 29t17-22q5-32 19-59 19-35-6-59-26-23-53-3-13 11-27 0Z" fill="none" stroke="#b6e7f2" stroke-width="8"/>
+  <path d="M463 494v51m-75 25h150" stroke="#668d9e" stroke-width="20" stroke-linecap="round"/>
+  <circle cx="664" cy="204" r="25" fill="none" stroke="#80d5e9" stroke-width="7"/><path d="m682 222 28 28" stroke="#80d5e9" stroke-width="8" stroke-linecap="round"/>
+  <path d="M307 416h71m-71 21h46" stroke="#80d5e9" stroke-width="6" stroke-linecap="round" opacity=".7"/>
+</svg>

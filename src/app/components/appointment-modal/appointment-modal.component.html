@@ -1,0 +1,56 @@
+@if (open) {
+  <div class="modal-backdrop" (click)="close()">
+    <section class="appointment-dialog modal-card" role="dialog" aria-modal="true" aria-labelledby="appointmentTitle" (click)="$event.stopPropagation()">
+      <div class="dialog-top">
+        <span class="eyebrow"><span></span> {{ copy.appointment.eyebrow }}</span>
+        <button class="icon-close" type="button" [attr.aria-label]="copy.appointment.close" (click)="close()">×</button>
+      </div>
+      <h2 id="appointmentTitle">{{ copy.appointment.titleFirst }}<br><em>{{ copy.appointment.titleEmphasis }}</em></h2>
+      <p class="dialog-intro">{{ copy.appointment.description }}</p>
+      @if (success) {
+        <div class="form-message success-message" role="status">
+          <strong>{{ copy.appointment.requestReceived }}</strong><br>{{ success }}
+          <button class="button button-dark" type="button" (click)="close()">{{ copy.appointment.done }}</button>
+        </div>
+      } @else {
+        <form #appointmentForm="ngForm" (ngSubmit)="submit()">
+          <div class="form-row">
+            <label>{{ copy.appointment.patientName }} <span>{{ copy.common.requiredMark }}</span><input name="name" [(ngModel)]="form.name" autocomplete="name" [placeholder]="copy.appointment.fullNamePlaceholder" required maxlength="80"></label>
+            <label>{{ copy.appointment.age }} <span>{{ copy.common.requiredMark }}</span><input name="age" [(ngModel)]="form.age" type="number" min="1" max="120" [placeholder]="copy.appointment.age" required></label>
+          </div>
+          <fieldset class="gender-field">
+            <legend>{{ copy.appointment.gender }} <span>{{ copy.common.requiredMark }}</span></legend>
+            <label><input type="radio" name="gender" [(ngModel)]="form.gender" value="Female" required><span>{{ copy.appointment.female }}</span></label>
+            <label><input type="radio" name="gender" [(ngModel)]="form.gender" value="Male"><span>{{ copy.appointment.male }}</span></label>
+            <label><input type="radio" name="gender" [(ngModel)]="form.gender" value="Other"><span>{{ copy.appointment.other }}</span></label>
+          </fieldset>
+          <label class="phone-field">{{ copy.appointment.phoneNumber }} <span>{{ copy.common.requiredMark }}</span>
+            <div class="phone-input"><span>{{ copy.appointment.countryCode }}</span><input name="phone" [(ngModel)]="form.phone" (ngModelChange)="duplicatePhone = ''" type="tel" inputmode="numeric" autocomplete="tel-national" pattern="[0-9]{10}" maxlength="10" [placeholder]="copy.appointment.phonePlaceholder" required></div>
+          </label>
+          <label>{{ copy.appointment.email }} <small>{{ copy.appointment.emailOptional }}</small><input name="email" [(ngModel)]="form.email" type="email" autocomplete="email" [placeholder]="copy.appointment.emailPlaceholder"></label>
+          <label class="problem-field">{{ copy.appointment.problemFacing }} <small>{{ copy.appointment.problemOptional }}</small><textarea name="problem" [(ngModel)]="form.problem" [placeholder]="copy.appointment.problemPlaceholder" maxlength="1000" rows="3"></textarea></label>
+          @if (duplicatePhone) {
+            <p class="form-message success-message" role="status">
+              {{ copy.appointment.duplicateOpen }}
+              <a class="duplicate-phone-link" [href]="phoneHref(duplicatePhone)">{{ copy.appointment.callPhone }} {{ duplicatePhone }}</a>
+            </p>
+          }
+          @if (error) { <p class="form-message error-message" role="alert">{{ error }}</p> }
+          <button class="button button-dark submit-appointment" type="submit" [disabled]="submitting || appointmentForm.invalid">
+            {{ submitting ? copy.appointment.sending : copy.appointment.submit }} <span>{{ copy.common.externalArrow }}</span>
+          </button>
+        </form>
+      }
+      <div class="dialog-contact">
+        <span class="contact-divider"></span><span class="contact-divider-label">{{ copy.appointment.directContact }}</span>
+        <div>
+          @for (phone of clinic.phones; track phone) { <a [href]="phoneHref(phone)">{{ copy.appointment.callPhone }} {{ phone }}</a> }
+          @if (!clinic.phones.length) { <span class="disabled-contact">{{ copy.appointment.phoneUnavailable }}</span> }
+          @if (clinic.email) { <a [href]="'mailto:' + clinic.email">{{ copy.appointment.emailTheClinic }}</a> }
+          @if (!clinic.email) { <span class="disabled-contact">{{ copy.appointment.emailUnavailable }}</span> }
+          <a [href]="clinic.mapUrl" target="_blank" rel="noreferrer">{{ copy.appointment.googleMaps }} {{ copy.common.externalArrow }}</a>
+        </div>
+      </div>
+    </section>
+  </div>
+}

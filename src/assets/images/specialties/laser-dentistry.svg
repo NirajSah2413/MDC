@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 680" role="img" aria-labelledby="title desc">
+  <title id="title">Laser dentistry illustration</title>
+  <desc id="desc">A focused dental laser beam directed toward a treatment area.</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#dff8fb"/><stop offset="1" stop-color="#a8d8ec"/></linearGradient>
+    <linearGradient id="device" x2="0" y2="1"><stop stop-color="#fff"/><stop offset="1" stop-color="#b7d3df"/></linearGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="14" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="960" height="680" rx="42" fill="url(#bg)"/>
+  <circle cx="720" cy="185" r="136" fill="#fff" opacity=".36"/>
+  <path d="M180 472q230-101 464 3v118H180z" fill="#d98982"/>
+  <path d="M196 478q223-100 435 0" fill="none" stroke="#f2b0a4" stroke-width="24" stroke-linecap="round"/>
+  <path d="M415 379q-26-23-52 1-25 25-6 63 14 29 20 59 4 21 17 21t17-29q5-30 17-30t17 30q5 29 17 29t17-21q6-30 20-59 19-38-6-63-26-24-52-1-13 11-26 0Z" fill="#fff" stroke="#91b9c5" stroke-width="7"/>
+  <g transform="rotate(-24 660 250)" filter="url(#glow)">
+    <rect x="544" y="128" width="236" height="68" rx="32" fill="url(#device)" stroke="#6f9bab" stroke-width="8"/>
+    <path d="M758 146h81q25 0 25 17t-25 17h-81" fill="#7899a5" stroke="#587985" stroke-width="7"/>
+    <rect x="576" y="147" width="54" height="30" rx="15" fill="#82d7e9"/>
+  </g>
+  <path d="M801 193 484 451" stroke="#ff647d" stroke-width="12" stroke-linecap="round" filter="url(#glow)"/>
+  <circle cx="484" cy="451" r="23" fill="#fff" stroke="#ff647d" stroke-width="8"/>
+  <path d="M251 196h66m-33-33v66M705 506h58m-29-29v58" stroke="#fff" stroke-width="7" stroke-linecap="round" opacity=".8"/>
+</svg>

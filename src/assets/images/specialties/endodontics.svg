@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 680" role="img" aria-labelledby="title desc">
+  <title id="title">Endodontics illustration</title>
+  <desc id="desc">A cutaway tooth showing the pulp chamber and root canals.</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#e4f6f5"/><stop offset="1" stop-color="#b5dfd9"/></linearGradient>
+    <linearGradient id="enamel" x2="0" y2="1"><stop stop-color="#fff"/><stop offset="1" stop-color="#dcebea"/></linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="14" stdDeviation="14" flood-color="#326a69" flood-opacity=".18"/></filter>
+  </defs>
+  <rect width="960" height="680" rx="42" fill="url(#bg)"/>
+  <circle cx="738" cy="146" r="115" fill="#fff" opacity=".34"/>
+  <path d="M427 152q-50-43-97 2-46 45-12 116 26 53 36 108 9 40 31 40t30-54q11-56 29-56t29 56q8 54 30 54t31-40q10-55 36-108 34-71-12-116-47-45-97-2-24 19-48 0Z" fill="url(#enamel)" stroke="#729da1" stroke-width="10" filter="url(#shadow)"/>
+  <path d="M480 203q-62 0-62 54 0 43 42 70v111m40-235q62 0 62 54 0 43-42 70v111" fill="none" stroke="#e77b78" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M480 314v126m-22-101-12 133m56-133 12 133" fill="none" stroke="#d65d69" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="480" cy="257" r="25" fill="#faaf91"/>
+  <path d="M190 270h110m-55-55v110M676 460h93m-46-46v93" stroke="#fff" stroke-width="8" stroke-linecap="round" opacity=".8"/>
+  <rect x="305" y="554" width="350" height="20" rx="10" fill="#fff" opacity=".45"/>
+</svg>

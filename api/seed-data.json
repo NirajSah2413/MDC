@@ -1,0 +1,117 @@
+{
+  "clinic": {
+    "name": "Mahamaya Dant Chikitsalaya",
+    "tagline": "Thoughtful care for every smile.",
+    "phones": ["9109378708"],
+    "email": "mahamayadantchikitsalaya@gmail.com",
+    "address": "Rudra Vihar Phase-1, Ashok Nagar, Sarkanda, Bilaspur, Chhattisgarh 495006",
+    "hours": "",
+    "mapUrl": "https://maps.app.goo.gl/sjcGbU9LfJ9L98nd7"
+  },
+  "gallery": [
+    { "title": "A warm welcome", "image": "/assets/images/clinic-interior.jpg" },
+    { "title": "Care that feels personal", "image": "/assets/images/dental-care.jpg" },
+    { "title": "Thoughtful details", "image": "/assets/images/teeth-exam.jpg" },
+    { "title": "Here for your smile", "image": "/assets/images/child-dentistry.jpg" },
+    { "title": "A little more at ease", "image": "/assets/images/clinic-team.jpg" }
+  ],
+  "specialties": [
+    {
+      "slug": "dental-implants",
+      "name": "Dental Implants",
+      "image": "/assets/images/specialties/dental-implants.svg",
+      "description": "A dental implant is a small post placed in the jaw to support a replacement tooth. Care is planned around your oral health, bone support and goals.",
+      "descriptionEn": "A dental implant is a small post, usually made of titanium, that is placed in the jaw to support a replacement tooth. Treatment starts with a detailed examination and suitable imaging so the dentist can assess bone support, gum health and your overall needs. If an implant is appropriate, the process is planned in stages: placement, healing, and fitting a custom crown. Healing time and results vary from person to person. Your dentist will explain alternatives, benefits, possible risks, care requirements and expected costs before you decide.",
+      "descriptionHi": "डेंटल इम्प्लांट जबड़े की हड्डी में लगाया जाने वाला एक छोटा पोस्ट होता है, जिस पर बदले हुए दाँत को सहारा दिया जाता है। इलाज शुरू करने से पहले दाँतों, मसूड़ों और हड्डी की जाँच तथा ज़रूरत के अनुसार इमेजिंग की जाती है। इम्प्लांट उपयुक्त होने पर उपचार आमतौर पर चरणों में होता है—इम्प्लांट लगाना, उसे ठीक होने का समय देना और फिर उस पर नया क्राउन लगाना। ठीक होने का समय हर व्यक्ति में अलग हो सकता है। निर्णय लेने से पहले डॉक्टर विकल्प, लाभ, संभावित जोखिम, देखभाल और अनुमानित खर्च समझाएँगे।"
+    },
+    {
+      "slug": "cosmetic-dentistry",
+      "name": "Cosmetic Dentistry",
+      "image": "/assets/images/specialties/cosmetic-dentistry.svg",
+      "description": "Cosmetic dental care focuses on the appearance of your smile. Options are chosen after discussing your goals and checking the health of your teeth.",
+      "descriptionEn": "Cosmetic dentistry considers the appearance of teeth and the way your smile comes together. Depending on your goals and dental health, options may include professional cleaning, whitening, tooth-coloured fillings, bonding or other restorative work. A consultation helps identify what concerns you and whether any underlying tooth or gum problems should be treated first. The dentist will discuss what each option can and cannot change, how long it may last, and how to care for it. The aim is a result that suits your mouth and supports oral health, rather than a one-size-fits-all makeover.",
+      "descriptionHi": "कॉस्मेटिक डेंटिस्ट्री में मुस्कान और दाँतों की दिखावट को बेहतर बनाने के विकल्पों पर चर्चा की जाती है। आपकी ज़रूरत और दाँतों की सेहत के अनुसार प्रोफेशनल क्लीनिंग, दाँतों की सफेदी, दाँत के रंग की फिलिंग या बॉन्डिंग जैसे विकल्प सुझाए जा सकते हैं। परामर्श में पहले यह समझा जाता है कि आपको किस बात की चिंता है और क्या दाँत या मसूड़ों की किसी समस्या का इलाज पहले करना चाहिए। डॉक्टर हर विकल्प की सीमाएँ, टिकने की अवधि और देखभाल समझाएँगे। सही विकल्प आपकी मौखिक सेहत और व्यक्तिगत ज़रूरत के अनुसार तय होता है।"
+    },
+    {
+      "slug": "laser-dentistry",
+      "name": "Laser Dentistry",
+      "image": "/assets/images/specialties/laser-dentistry.svg",
+      "description": "Dental lasers may be used for selected dental procedures. Your dentist will first determine whether laser treatment is suitable for your condition.",
+      "descriptionEn": "Laser dentistry uses a focused beam of light in selected dental procedures, often involving soft tissue. Whether a laser is useful depends on the procedure, your oral health and the equipment available; it is not a replacement for every conventional treatment. During a consultation, the dentist can explain the proposed technique, expected sensations, protective measures and other available options. Some people may still need local anaesthesia or additional treatment. Ask your clinician which approach is recommended for your specific diagnosis and what after-care may be needed.",
+      "descriptionHi": "लेज़र डेंटिस्ट्री में कुछ चुनिंदा दंत प्रक्रियाओं के लिए केंद्रित प्रकाश किरण का उपयोग किया जाता है, विशेषकर कुछ नरम ऊतकों से जुड़ी प्रक्रियाओं में। हर उपचार में लेज़र उपयुक्त नहीं होता और यह सभी पारंपरिक तरीकों का विकल्प भी नहीं है। परामर्श के दौरान डॉक्टर बताएँगे कि आपकी स्थिति में यह तरीका उपयोगी है या नहीं, प्रक्रिया कैसी होगी, सुरक्षा के क्या उपाय होंगे और दूसरे विकल्प कौन-से हैं। कुछ मामलों में लोकल एनेस्थीसिया या अतिरिक्त उपचार की आवश्यकता हो सकती है। अपने निदान के अनुसार सही तरीका और बाद की देखभाल डॉक्टर से समझें।"
+    },
+    {
+      "slug": "orthodontics",
+      "name": "Orthodontics",
+      "image": "/assets/images/specialties/orthodontics.svg",
+      "description": "Orthodontic treatment guides teeth into a more functional alignment. A personalised assessment helps identify suitable options and treatment time.",
+      "descriptionEn": "Orthodontics focuses on the alignment of teeth and the way the upper and lower teeth meet. Braces or other appliances may be recommended to address crowding, spacing or bite concerns. The right plan depends on an examination of the teeth and jaws; in some cases, photographs or dental images help with assessment. Treatment usually involves regular reviews and good daily cleaning around the appliances. The dentist will discuss available options, likely duration, maintenance and any limitations before treatment begins. Results and timelines vary, and retainers are commonly needed after active treatment.",
+      "descriptionHi": "ऑर्थोडॉन्टिक उपचार में दाँतों की स्थिति और ऊपर-नीचे के दाँतों के मिलने के तरीके को बेहतर करने पर ध्यान दिया जाता है। भीड़, खाली जगह या बाइट से जुड़ी समस्याओं के लिए ब्रेसेज़ या अन्य उपकरण सुझाए जा सकते हैं। सही योजना जाँच के बाद बनती है; कुछ मामलों में फोटो या दंत इमेजिंग भी आवश्यक होती है। उपचार के दौरान नियमित फॉलो-अप और उपकरणों के आसपास अच्छी सफाई ज़रूरी है। शुरू करने से पहले डॉक्टर विकल्प, संभावित अवधि, देखभाल और सीमाएँ समझाएँगे। परिणाम और समय हर व्यक्ति के अनुसार अलग होते हैं तथा उपचार के बाद रिटेनर की ज़रूरत पड़ सकती है।"
+    },
+    {
+      "slug": "endodontics",
+      "name": "Endodontics",
+      "image": "/assets/images/specialties/endodontics.svg",
+      "description": "Endodontic care treats the inner pulp and root canals of a tooth. It may help preserve a tooth affected by deep decay or injury.",
+      "descriptionEn": "Endodontics deals with the pulp—the soft tissue inside a tooth—and the narrow canals within its roots. Deep decay, a crack or an injury can inflame or infect this tissue. When root canal treatment is advised, the dentist carefully cleans and seals the canals, then restores the tooth so it can function. The exact steps depend on the tooth and the findings from examination and imaging. Not every painful tooth needs a root canal, and alternatives may be discussed. Follow the dentist's advice on the final restoration and return if pain or swelling continues.",
+      "descriptionHi": "एंडोडॉन्टिक्स दाँत के अंदर मौजूद मुलायम पल्प और उसकी जड़ों की नलिकाओं से संबंधित उपचार है। गहरी सड़न, दरार या चोट से पल्प में सूजन या संक्रमण हो सकता है। रूट कैनाल की सलाह मिलने पर डॉक्टर नलिकाओं को सावधानी से साफ करके सील करते हैं और फिर दाँत को दोबारा मजबूत बनाया जाता है। उपचार के चरण दाँत और जाँच के निष्कर्षों के अनुसार बदलते हैं। हर दर्द वाले दाँत में रूट कैनाल आवश्यक नहीं होता; डॉक्टर विकल्प भी बताएँगे। अंतिम क्राउन या रेस्टोरेशन और फॉलो-अप के निर्देशों का पालन करें।"
+    },
+    {
+      "slug": "periodontics",
+      "name": "Periodontics",
+      "image": "/assets/images/specialties/periodontics.svg",
+      "description": "Periodontics focuses on gums and the supporting tissues around teeth. Regular assessment can help identify inflammation and gum disease.",
+      "descriptionEn": "Periodontics concerns the gums, bone and other tissues that support the teeth. Bleeding while brushing, persistent bad breath, gum tenderness or receding gums can be reasons to arrange an assessment, though only a dental professional can diagnose the cause. Care may include instruction in home cleaning, professional removal of plaque and tartar, or further periodontal treatment when needed. The plan depends on the condition and your general health. Regular maintenance and daily brushing and interdental cleaning are important parts of keeping gums healthy after treatment.",
+      "descriptionHi": "पीरियोडॉन्टिक्स में मसूड़ों, हड्डी और दाँतों को सहारा देने वाले ऊतकों की देखभाल शामिल है। ब्रश करते समय खून आना, लगातार मुँह से दुर्गंध, मसूड़ों में तकलीफ़ या मसूड़ों का पीछे हटना जाँच कराने के कारण हो सकते हैं; सही कारण का निदान दंत चिकित्सक ही कर सकते हैं। देखभाल में घर पर सफाई के तरीके सीखना, प्रोफेशनल स्केलिंग या ज़रूरत के अनुसार आगे का मसूड़ों का उपचार शामिल हो सकता है। योजना समस्या और सामान्य स्वास्थ्य पर निर्भर करती है। उपचार के बाद नियमित जाँच और रोज़ाना ब्रश तथा दाँतों के बीच सफाई महत्वपूर्ण है।"
+    },
+    {
+      "slug": "pedodontics",
+      "name": "Pedodontics",
+      "image": "/assets/images/specialties/pedodontics.svg",
+      "description": "Paediatric dentistry supports children's oral health as they grow. Gentle visits can help families build positive, age-appropriate habits.",
+      "descriptionEn": "Paediatric dentistry supports children from their early years through adolescence, as their teeth and oral-health needs change. Visits can include preventive guidance, monitoring tooth development and checking for decay or other concerns. A calm, age-appropriate explanation helps a child know what to expect, while parents can ask about brushing, diet, fluoride and habits that affect teeth. Treatment is tailored to the child after an examination. Early advice does not replace urgent assessment when a child has toothache, swelling or an injury—contact a dental professional for guidance.",
+      "descriptionHi": "पीडोडॉन्टिक्स में बचपन से किशोरावस्था तक बच्चों के दाँतों और मुँह की सेहत की देखभाल की जाती है। बच्चे के बढ़ने के साथ दाँतों का विकास देखना, सड़न की जाँच और बचाव के तरीके समझना इसमें शामिल हो सकता है। सरल और उम्र के अनुसार समझाने से बच्चा जान पाता है कि जाँच में क्या होगा; माता-पिता ब्रश, खान-पान, फ्लोराइड और दाँतों को प्रभावित करने वाली आदतों के बारे में पूछ सकते हैं। जाँच के बाद उपचार बच्चे के अनुसार तय किया जाता है। दर्द, सूजन या चोट होने पर जल्द दंत चिकित्सक से सलाह लें।"
+    },
+    {
+      "slug": "oral-surgery",
+      "name": "Oral Surgery",
+      "image": "/assets/images/specialties/oral-surgery.svg",
+      "description": "Oral surgery includes procedures involving teeth and nearby oral structures. Your clinician will explain preparation, options and after-care.",
+      "descriptionEn": "Oral surgery includes selected procedures involving the teeth, jaws and nearby tissues, such as removal of a tooth when it cannot be restored. Before recommending a procedure, the clinician reviews your symptoms, medical history and examination findings; imaging may also be needed. You should receive a clear explanation of the reason for treatment, alternatives, anaesthesia, likely recovery and possible risks. Follow the written after-care instructions and contact the clinic if symptoms worsen or you are concerned. The appropriate procedure and setting depend on your individual assessment.",
+      "descriptionHi": "ओरल सर्जरी में दाँत, जबड़े और आसपास के ऊतकों से जुड़ी कुछ प्रक्रियाएँ शामिल होती हैं, जैसे ऐसा दाँत निकालना जिसे बचाना संभव न हो। प्रक्रिया की सलाह देने से पहले डॉक्टर लक्षण, चिकित्सा इतिहास और जाँच देखते हैं; कभी-कभी इमेजिंग की भी आवश्यकता होती है। उपचार का कारण, उपलब्ध विकल्प, एनेस्थीसिया, ठीक होने की संभावित अवधि और जोखिम आपको स्पष्ट रूप से बताए जाने चाहिए। लिखित बाद-देखभाल निर्देशों का पालन करें और लक्षण बढ़ने पर क्लिनिक से संपर्क करें। सही प्रक्रिया व्यक्ति की जाँच पर निर्भर करती है।"
+    },
+    {
+      "slug": "diagnosis-radiology",
+      "name": "Diagnosis & Radiology",
+      "image": "/assets/images/specialties/diagnosis-radiology.svg",
+      "description": "Diagnosis combines a clinical examination with imaging when appropriate. Clear findings help your dentist explain possible care options.",
+      "descriptionEn": "Diagnosis begins with listening to your concerns and examining your teeth, gums and mouth. Dental X-rays or other imaging may be recommended when they can answer a clinical question that cannot be assessed by looking alone. The type of image is selected for the area being examined, and the dentist explains what it can show and how it informs the next step. Imaging is only one part of diagnosis and does not by itself determine every treatment. You can ask why an image is recommended, whether previous images can be used and what the findings mean for your care.",
+      "descriptionHi": "निदान की शुरुआत आपकी समस्या सुनने और दाँतों, मसूड़ों तथा मुँह की जाँच से होती है। जब केवल देखकर किसी ज़रूरी सवाल का उत्तर न मिले, तब दंत एक्स-रे या अन्य इमेजिंग की सलाह दी जा सकती है। जाँचे जाने वाले हिस्से के अनुसार इमेज का प्रकार चुना जाता है और डॉक्टर समझाते हैं कि उससे क्या जानकारी मिलेगी। इमेजिंग निदान का एक हिस्सा है; केवल उसी के आधार पर हर उपचार तय नहीं होता। आप पूछ सकते हैं कि इमेज क्यों आवश्यक है, क्या पुरानी इमेज काम आ सकती है और निष्कर्षों का आपके उपचार के लिए क्या अर्थ है।"
+    }
+  ],
+  "reviews": [
+    {
+      "author": "Vidhi Sinha",
+      "rating": 5,
+      "quote": "Great service, professional treatment by skilled doctor and friendly staff. Highly recommended!"
+    },
+    {
+      "author": "Mrugakshy Panigrahi",
+      "rating": 5,
+      "quote": "Skilled doctor, very professional, good-behaviour staff, and good treatment for patients."
+    },
+    {
+      "author": "Priyanka Shrivastava",
+      "rating": 5,
+      "quote": "A well-equipped clinic with in-office OPG, which saves time."
+    }
+  ],
+  "promotion": {
+    "enabled": false,
+    "title": "",
+    "message": "",
+    "image": "",
+    "startsAt": "",
+    "endsAt": ""
+  }
+}

@@ -1,26 +1,22 @@
-# Angular specific
-/dist/
-/out-tsc/
-/tmp/
-/coverage/
-/e2e/test-output/
-/.angular/
+# Dependencies, build output, and Angular cache
+node_modules/
+dist/
 .angular/
-
-# Node modules and dependency files
-/node_modules/
-/package-lock.json
-/yarn.lock
-
-# Environment files
-/.env
-
-# Angular CLI and build artefacts
-/.angular-cli.json
-/.ng/
-
-# TypeScript cache
+out-tsc/
+coverage/
 *.tsbuildinfo
+
+# Local credentials and generated clinic data
+.env
+data/*.sqlite
+data/*.sqlite-shm
+data/*.sqlite-wal
+data/offers.json
+data/appointments/
+uploads/*
+!uploads/.gitkeep
+src/assets/uploads/*
+!src/assets/uploads/.gitkeep
 
 # Logs
 npm-debug.log*

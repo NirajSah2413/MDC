@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 680" role="img" aria-labelledby="title desc">
+  <title id="title">Cosmetic dentistry illustration</title>
+  <desc id="desc">A bright, natural smile with carefully shaped teeth.</desc>
+  <defs>
+    <linearGradient id="bg" x2="0" y2="1"><stop stop-color="#f9e9d3"/><stop offset="1" stop-color="#f2bbad"/></linearGradient>
+    <linearGradient id="lip" x2="0" y2="1"><stop stop-color="#c66d77"/><stop offset="1" stop-color="#8b455b"/></linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="16" stdDeviation="16" flood-color="#784c58" flood-opacity=".19"/></filter>
+  </defs>
+  <rect width="960" height="680" rx="42" fill="url(#bg)"/>
+  <circle cx="176" cy="163" r="104" fill="#fff" opacity=".25"/><circle cx="794" cy="518" r="142" fill="#fff" opacity=".22"/>
+  <path d="M176 346q304-239 608 0-62 227-304 228T176 346Z" fill="url(#lip)" filter="url(#shadow)"/>
+  <path d="M214 346q266-175 532 0-49 170-266 175T214 346Z" fill="#6f3749"/>
+  <path d="M249 337q231-142 462 0l-24 93q-204 81-414 0Z" fill="#fffdf7"/>
+  <path d="M365 290v129m77-153v171m78-171v171m77-147v129" stroke="#e3dcd2" stroke-width="8"/>
+  <path d="M217 342q263-179 526 0" fill="none" stroke="#ffe0d7" stroke-width="18" stroke-linecap="round"/>
+  <path d="M280 470q200 69 400 0" fill="none" stroke="#f2aeb1" stroke-width="14" stroke-linecap="round"/>
+  <path d="M738 156l12 33 35 2-27 22 9 34-29-19-29 19 10-34-27-22 35-2z" fill="#fff" opacity=".82"/>
+  <path d="M206 510l9 22 24 2-19 15 6 23-20-13-19 13 6-23-19-15 24-2z" fill="#fff" opacity=".78"/>
+</svg>
