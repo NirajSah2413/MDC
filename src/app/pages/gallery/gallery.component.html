@@ -1,0 +1,27 @@
+<div class="announcement"><span class="announcement-dot"></span> {{ copy.common.announcement }} <span class="announcement-divider">·</span> <a routerLink="/">{{ copy.common.backToClinic }} <span aria-hidden="true">{{ copy.common.externalArrow }}</span></a></div>
+<header class="site-header">
+  <a class="brand" routerLink="/" [attr.aria-label]="copy.brand.homeLabel"><img class="brand-logo" src="/assets/brand/mdc-logo.jpg" [alt]="copy.brand.name"></a>
+  <button class="mobile-menu-toggle" type="button" [attr.aria-label]="menuOpen ? copy.common.closeNavigation : copy.common.openNavigation" [attr.aria-expanded]="menuOpen" (click)="menuOpen = !menuOpen">☰</button>
+  <nav class="main-nav" [attr.aria-label]="copy.gallery.title" [class.open]="menuOpen"><a routerLink="/" fragment="care" (click)="menuOpen = false">{{ copy.common.ourCare }}</a><a routerLink="/" fragment="about" (click)="menuOpen = false">{{ copy.common.ourApproach }}</a><a routerLink="/" fragment="contact" (click)="menuOpen = false">{{ copy.common.contact }}</a></nav>
+  <div class="header-actions"><a class="text-button" routerLink="/admin">{{ copy.common.adminLogin }} <span>{{ copy.common.externalArrow }}</span></a><button class="button button-dark" type="button" (click)="appointmentOpen = true">{{ copy.common.bookVisit }} <span>{{ copy.common.externalArrow }}</span></button></div>
+</header>
+<main class="full-gallery-page">
+  <a class="underlined-link" routerLink="/">{{ copy.gallery.backToClinic }}</a>
+  <div class="full-gallery-heading"><div class="eyebrow"><span></span> {{ copy.gallery.eyebrow }}</div><h1>{{ copy.gallery.titleFirst }}<br><em>{{ copy.gallery.titleEmphasis }}</em></h1><p>{{ copy.gallery.description }}</p></div>
+  @if (loading) {
+    <div class="empty-state">{{ copy.common.loadingWebsite }}</div>
+  } @else if (error) {
+    <div class="empty-state" role="alert">{{ error }}</div>
+  } @else if (site; as content) {
+    <div class="full-gallery-grid">
+      @for (image of content.gallery; track image.image) {
+        <figure class="full-gallery-card"><img [src]="imageUrl(image.image)" [alt]="image.title" loading="lazy"><figcaption>{{ image.title }}</figcaption></figure>
+      } @empty {
+        <div class="empty-state">{{ copy.gallery.empty }}</div>
+      }
+    </div>
+    <div class="gallery-appointment-cta"><p>{{ copy.gallery.appointmentPrompt }}</p><button class="button button-dark" type="button" (click)="appointmentOpen = true">{{ copy.common.bookVisit }} <span>{{ copy.common.externalArrow }}</span></button></div>
+    <app-appointment-modal [open]="appointmentOpen" [clinic]="content.clinic" (closed)="appointmentOpen = false" />
+  }
+</main>
+<footer class="gallery-page-footer"><a routerLink="/">{{ copy.gallery.backToClinic }}</a><span>{{ copy.common.copyrightPrefix }} {{ today | date:'yyyy' }} {{ copy.brand.name }}</span></footer>

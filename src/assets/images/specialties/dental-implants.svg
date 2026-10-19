@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 680" role="img" aria-labelledby="title desc">
+  <title id="title">Dental implant illustration</title>
+  <desc id="desc">A tooth crown supported by a titanium implant in the jaw.</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#d8f3f8"/><stop offset="1" stop-color="#91d5e4"/></linearGradient>
+    <linearGradient id="jaw" x2="0" y2="1"><stop stop-color="#e8a879"/><stop offset="1" stop-color="#bd755b"/></linearGradient>
+    <linearGradient id="metal" x2="1"><stop stop-color="#668c9b"/><stop offset=".5" stop-color="#f5ffff"/><stop offset="1" stop-color="#6e929d"/></linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="14" stdDeviation="14" flood-color="#28647a" flood-opacity=".18"/></filter>
+  </defs>
+  <rect width="960" height="680" rx="42" fill="url(#bg)"/>
+  <circle cx="760" cy="150" r="95" fill="#fff" opacity=".35"/><circle cx="184" cy="524" r="118" fill="#fff" opacity=".24"/>
+  <path d="M130 426q170-88 345-6t355 3v146H130z" fill="url(#jaw)" filter="url(#shadow)"/>
+  <path d="M130 429q174-91 347-8t353 0" fill="none" stroke="#f4c7a4" stroke-width="25" stroke-linecap="round"/>
+  <path d="M414 226q-40-32-78 2-37 35-9 91 21 43 29 87 6 32 25 32 18 0 24-42 7-45 25-45t25 45q7 42 25 42 19 0 25-32 8-44 29-87 28-56-9-91-38-34-78-2-19 16-37 0Z" fill="#fff" stroke="#8db9c5" stroke-width="9"/>
+  <path d="M480 419v117m-35-115 19 115m51-115-19 115" fill="none" stroke="url(#metal)" stroke-width="17" stroke-linecap="round"/>
+  <path d="M442 455h76m-68 24h60m-52 24h44m-37 22h30" fill="none" stroke="#648b98" stroke-width="8" stroke-linecap="round"/>
+  <path d="M278 286h74m-37-37v74M650 319h76m-38-38v76" stroke="#fff" stroke-width="8" stroke-linecap="round" opacity=".8"/>
+  <rect x="354" y="582" width="252" height="18" rx="9" fill="#fff" opacity=".58"/>
+</svg>

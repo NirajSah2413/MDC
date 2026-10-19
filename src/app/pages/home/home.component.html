@@ -1,0 +1,116 @@
+@if (site; as content) {
+  <div class="announcement"><span class="announcement-dot"></span> {{ copy.common.announcement }} <span class="announcement-divider">·</span> <a href="#contact">{{ copy.common.findClinic }} <span aria-hidden="true">{{ copy.common.externalArrow }}</span></a></div>
+  <header class="site-header">
+    <a class="brand" routerLink="/" [attr.aria-label]="copy.brand.homeLabel">
+      <img class="brand-logo" src="/assets/brand/mdc-logo.jpg" [alt]="copy.brand.name">
+    </a>
+    <button class="mobile-menu-toggle" type="button" [attr.aria-label]="menuOpen ? copy.common.closeNavigation : copy.common.openNavigation" [attr.aria-expanded]="menuOpen" (click)="menuOpen = !menuOpen">☰</button>
+    <nav class="main-nav" [attr.aria-label]="copy.home.exploreClinic" [class.open]="menuOpen">
+      <a routerLink="/" fragment="care" (click)="menuOpen = false">{{ copy.common.ourCare }}</a><a routerLink="/" fragment="about" (click)="menuOpen = false">{{ copy.common.ourApproach }}</a><a routerLink="/gallery" (click)="menuOpen = false">{{ copy.common.theClinic }}</a><a routerLink="/" fragment="contact" (click)="menuOpen = false">{{ copy.common.contact }}</a>
+    </nav>
+    <div class="header-actions"><a class="text-button" routerLink="/admin">{{ copy.common.adminLogin }} <span aria-hidden="true">{{ copy.common.externalArrow }}</span></a><button class="button button-dark" type="button" (click)="appointmentOpen = true">{{ copy.common.bookVisit }} <span aria-hidden="true">{{ copy.common.externalArrow }}</span></button></div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow"><span></span> {{ copy.home.heroEyebrow }}</div>
+        <h1>{{ copy.home.heroTitleFirst }}<br><em>{{ copy.home.heroTitleEmphasis }}</em><br>{{ copy.home.heroTitleLast }}</h1>
+        <p class="hero-description">{{ copy.home.heroDescription }}</p>
+        <div class="hero-buttons"><button class="button button-dark" type="button" (click)="appointmentOpen = true">{{ copy.home.findTime }} <span aria-hidden="true">{{ copy.common.externalArrow }}</span></button><a class="button button-outline" href="#care">{{ copy.home.exploreCare }} <span aria-hidden="true">↓</span></a></div>
+        <div class="hero-proof"><div class="avatar-stack"><span>☺</span><span>☺</span><span>☺</span></div><div><strong>{{ copy.home.patientFirst }}</strong><small>{{ copy.home.comfortableVisits }}</small></div></div>
+      </div>
+      <div class="hero-art">
+        <div class="hero-image-wrap"><img class="hero-image" src="/assets/images/dental-care.jpg" [alt]="copy.home.heroImageAlt"><div class="image-tint"></div></div>
+        <div class="hero-orbit orbit-one"></div><div class="hero-orbit orbit-two"></div>
+        <div class="hero-note note-top"><span class="note-icon">✳</span><span><b>{{ copy.home.personalCare }}</b><small>{{ copy.home.everySmile }}</small></span></div>
+        <div class="hero-note note-bottom"><span class="note-spark">✦</span><span>{{ copy.home.takeBreath }}<br><b>{{ copy.home.rightPlace }}</b></span></div>
+        <div class="hero-index">{{ copy.home.heroIndex }} <span>/</span> {{ copy.home.heroIndexTotal }}</div>
+      </div>
+      <div class="hero-side-label">{{ copy.home.heroSideLabel }} <span>✳</span> {{ copy.common.careFeelsGood }}</div>
+    </section>
+
+    <section class="ticker"><div class="ticker-track"><span>{{ copy.home.tickerOne }}</span><i>✳</i><span>{{ copy.home.tickerTwo }}</span><i>✳</i><span>{{ copy.home.tickerThree }}</span><i>✳</i><span>{{ copy.home.tickerOne }}</span><i>✳</i><span>{{ copy.home.tickerTwo }}</span><i>✳</i></div></section>
+    <section class="section services-section" id="care">
+      <div class="section-heading"><div><div class="eyebrow"><span></span> {{ copy.home.servicesEyebrow }}</div><h2>{{ copy.home.servicesTitle }}<br><em>{{ copy.home.servicesTitleEmphasis }}</em></h2></div><div class="heading-aside"><p>{{ copy.home.servicesDescription }}</p><div class="specialty-controls"><span class="scroll-hint">{{ copy.home.scrollToExplore }}</span><button type="button" [attr.aria-label]="copy.home.scrollLeft" [attr.title]="copy.home.scrollLeft" (click)="scrollSpecialties(-1)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button><button type="button" [attr.aria-label]="copy.home.scrollRight" [attr.title]="copy.home.scrollRight" (click)="scrollSpecialties(1)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button></div></div></div>
+      <div class="specialty-rail" #specialtyRail [attr.aria-label]="copy.home.specialtiesLabel">
+        @for (specialty of content.specialties; track specialty.slug; let index = $index) {
+          <a class="specialty-card" [routerLink]="['/specialities', specialty.slug]">
+            <img [src]="imageUrl(specialty.image)" [alt]="specialty.name" loading="lazy"><span class="card-number">0{{ index + 1 }} / 09</span>
+            <div class="card-copy"><h3>{{ specialty.name }}</h3><span>{{ copy.home.specialtyCardLink }}</span></div><span class="card-arrow" aria-hidden="true">{{ copy.common.externalArrow }}</span>
+          </a>
+        }
+      </div>
+    </section>
+
+    <section class="about-section" id="about">
+      <div class="about-image"><img src="/assets/images/clinic-interior.jpg" [alt]="copy.home.aboutImageAlt" loading="lazy"><span class="image-caption">{{ copy.home.aboutImageCaption }}</span><span class="about-sticker">{{ copy.home.aboutStickerFirst }}<br>{{ copy.home.aboutStickerSecond }}<br><em>{{ copy.home.aboutStickerEmphasis }}</em></span></div>
+      <div class="about-copy"><div class="eyebrow"><span></span> {{ copy.home.aboutEyebrow }}</div><h2>{{ copy.home.aboutTitleFirst }}<br>{{ copy.home.aboutTitleSecond }}<br><em>{{ copy.home.aboutTitleEmphasis }}</em></h2><p>{{ copy.home.aboutParagraphOne }}</p><p>{{ copy.home.aboutParagraphTwo }}</p><a class="underlined-link" href="#contact">{{ copy.home.sayHello }} <span>{{ copy.common.externalArrow }}</span></a></div><div class="about-number">{{ copy.home.sectionIndex }} <span>/ {{ copy.home.heroIndexTotal }}</span></div>
+    </section>
+
+    <section class="reviews-section" aria-labelledby="reviewsTitle">
+      <div class="reviews-heading">
+        <div><div class="eyebrow"><span></span> {{ copy.home.reviewsEyebrow }}</div><h2 id="reviewsTitle">{{ copy.home.reviewsTitleFirst }}<br><em>{{ copy.home.reviewsTitleEmphasis }}</em></h2></div>
+        <div class="rating-summary"><strong>5.0</strong><span class="review-stars" [attr.aria-label]="copy.home.ratingStarsLabel">★★★★★</span><small>{{ copy.home.googleRating }}</small><a [href]="content.clinic.mapUrl" target="_blank" rel="noreferrer">{{ copy.home.readGoogleReviews }} {{ copy.common.externalArrow }}</a></div>
+      </div>
+      <div class="review-grid">
+        @for (review of content.reviews; track review.author) {
+          <article class="review-card">
+            <div class="review-card-top"><span class="review-stars" [attr.aria-label]="copy.home.ratingStarsLabel">★★★★★</span><span class="google-mark">G</span></div>
+            <blockquote>“{{ review.quote }}”</blockquote>
+            <div class="review-author"><span class="review-avatar">{{ review.author.charAt(0) }}</span><strong>{{ review.author }}</strong><span>{{ copy.home.googleReview }}</span></div>
+          </article>
+        }
+      </div>
+      <p class="review-note">{{ copy.home.reviewDisclaimer }} <a [href]="content.clinic.mapUrl" target="_blank" rel="noreferrer">{{ copy.home.seeAllReviews }} {{ copy.common.externalArrow }}</a></p>
+    </section>
+
+    <section class="section gallery-section" id="gallery">
+      <div class="section-heading gallery-heading"><div><div class="eyebrow"><span></span> {{ copy.home.galleryEyebrow }}</div><h2>{{ copy.home.galleryTitleFirst }}<br><em>{{ copy.home.galleryTitleEmphasis }}</em></h2></div><p>{{ copy.home.galleryDescription }}</p></div>
+      <div class="gallery-grid">@for (image of galleryPreview; track image.image) { <a class="gallery-item" routerLink="/gallery"><img [src]="image.image" [alt]="image.title" loading="lazy"><figcaption>{{ image.title }}</figcaption></a> }</div>
+      <a class="button button-outline gallery-more-link" routerLink="/gallery">{{ copy.home.viewFullGallery }} <span aria-hidden="true">{{ copy.common.externalArrow }}</span></a>
+    </section>
+
+    <section class="visit-banner"><div class="banner-orb">✳</div><div class="eyebrow"><span></span> {{ copy.home.visitEyebrow }}</div><h2>{{ copy.home.visitTitleFirst }}<br><em>{{ copy.home.visitTitleEmphasis }}</em></h2><p>{{ copy.home.visitDescription }}</p><button class="button button-light" type="button" (click)="appointmentOpen = true">{{ copy.home.makeItHappen }} <span>{{ copy.common.externalArrow }}</span></button><span class="banner-side">{{ copy.home.bannerSide }}</span></section>
+    <section class="contact-section" id="contact">
+      <div class="contact-intro"><div class="eyebrow"><span></span> {{ copy.home.contactEyebrow }}</div><h2>{{ copy.home.contactTitleFirst }}<br><em>{{ copy.home.contactTitleEmphasis }}</em></h2><p>{{ copy.home.contactDescription }}</p><button class="button button-dark" type="button" (click)="appointmentOpen = true">{{ copy.home.bookAppointment }} <span>{{ copy.common.externalArrow }}</span></button></div>
+      <div class="contact-details">
+        @for (phone of content.clinic.phones; track phone) { <div class="detail-item"><span class="detail-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h4l2 5-2.5 1.5a15 15 0 0 0 6 6L16 13l5 2v4c0 1.1-.9 2-2 2C10.2 21 3 13.8 3 5c0-1.1.9-2 2-2Z"/></svg></span><div><strong>{{ copy.home.callUs }}</strong><a [href]="'tel:+91' + phone">+91 {{ phone }}</a></div></div> }
+        @if (!content.clinic.phones.length) { <div class="detail-item"><span class="detail-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h4l2 5-2.5 1.5a15 15 0 0 0 6 6L16 13l5 2v4c0 1.1-.9 2-2 2C10.2 21 3 13.8 3 5c0-1.1.9-2 2-2Z"/></svg></span><div><strong>{{ copy.home.callUs }}</strong><small>{{ copy.home.phoneComingSoon }}</small></div></div> }
+        <div class="detail-item"><span class="detail-icon">✉</span><div><strong>{{ copy.home.emailUs }}</strong>@if (content.clinic.email) { <a [href]="'mailto:' + content.clinic.email">{{ content.clinic.email }}</a> } @else { <small>{{ copy.home.emailComingSoon }}</small> }</div></div>
+        <div class="detail-item"><span class="detail-icon">⌖</span><div><strong>{{ copy.home.findClinicTitle }}</strong><small>{{ content.clinic.address || copy.home.mapDirections }}</small></div></div>
+        @if (content.clinic.hours) { <div class="detail-item"><span class="detail-icon">◷</span><div><strong>{{ copy.home.openingHours }}</strong><small>{{ content.clinic.hours }}</small></div></div> }
+      </div>
+      <div class="contact-map"><span class="map-pin">✳</span><div><strong>{{ copy.home.mapImageTitle }}</strong><small>{{ copy.home.mapDescription }}</small></div><a [href]="content.clinic.mapUrl" target="_blank" rel="noreferrer" [attr.aria-label]="copy.home.mapLinkLabel">{{ copy.common.externalArrow }}</a></div>
+    </section>
+  </main>
+  <footer class="clinic-footer">
+    <div class="footer-feature">
+      <div><span class="footer-overline">{{ copy.home.footerOverline }}</span><h2>{{ copy.home.footerTitle }}<br><em>{{ copy.home.footerTitleEmphasis }}</em></h2></div>
+      <button class="footer-book-link" type="button" (click)="appointmentOpen = true">{{ copy.home.requestAppointment }} <span aria-hidden="true">{{ copy.common.externalArrow }}</span></button>
+    </div>
+    <div class="footer-columns">
+      <section class="footer-identity">
+        <a class="footer-logo-link" routerLink="/" [attr.aria-label]="copy.brand.homeLabel"><img src="/assets/brand/mdc-logo.jpg" [alt]="copy.brand.name"></a>
+        <p>{{ copy.home.footerDescription }}</p>
+        <div class="footer-socials"><a [href]="content.clinic.mapUrl" target="_blank" rel="noreferrer">{{ copy.home.googleMaps }} <span>{{ copy.common.externalArrow }}</span></a><a [href]="content.clinic.mapUrl" target="_blank" rel="noreferrer">{{ copy.home.patientReviews }} <span>{{ copy.common.externalArrow }}</span></a><a [href]="justdialUrl" target="_blank" rel="noreferrer">{{ copy.home.justdial }} <span>{{ copy.common.externalArrow }}</span></a></div>
+      </section>
+      <nav class="footer-links" [attr.aria-label]="copy.home.exploreClinic"><h3>{{ copy.home.exploreClinic }}</h3><a routerLink="/" fragment="care">{{ copy.common.ourCare }}</a><a routerLink="/" fragment="about">{{ copy.common.ourApproach }}</a><a routerLink="/gallery">{{ copy.home.clinicGallery }}</a><a routerLink="/" fragment="reviewsTitle">{{ copy.home.patientReviews }}</a><a routerLink="/" fragment="contact">{{ copy.common.contactUs }}</a><a routerLink="/admin">{{ copy.common.adminLogin }}</a></nav>
+      <nav class="footer-links footer-specialties" [attr.aria-label]="copy.home.specialistCare"><h3>{{ copy.home.specialistCare }}</h3>@for (specialty of content.specialties; track specialty.slug) { <a [routerLink]="['/specialities', specialty.slug]">{{ specialty.name }} <span>{{ copy.common.externalArrow }}</span></a> }</nav>
+      <section class="footer-contact"><h3>{{ copy.home.talkToTeam }}</h3><a class="footer-address" [href]="content.clinic.mapUrl" target="_blank" rel="noreferrer">{{ content.clinic.address || copy.home.findOnMaps }} <span>{{ copy.common.externalArrow }}</span></a>@for (phone of content.clinic.phones; track phone) { <a class="footer-phone" [href]="'tel:+91' + phone">+91 {{ phone }} <span>{{ copy.home.callClinic }}</span></a> }<a class="footer-email" [href]="'mailto:' + content.clinic.email">{{ content.clinic.email }} <span>{{ copy.home.emailClinic }}</span></a><a class="footer-map-link" [href]="justdialUrl" target="_blank" rel="noreferrer">{{ copy.home.clinicOnJustdial }} {{ copy.common.externalArrow }}</a></section>
+    </div>
+    <div class="footer-bottom"><span>{{ copy.common.copyrightPrefix }} {{ today | date:'yyyy' }} {{ copy.brand.name }}</span><span class="footer-credit">{{ copy.home.developerCreditPrefix }} <strong>{{ copy.home.developerName }}</strong>{{ copy.home.developerCreditSuffix }}</span></div>
+  </footer>
+  <app-appointment-modal [open]="appointmentOpen" [clinic]="content.clinic" (closed)="appointmentOpen = false" />
+  @if (promotionOpen) {
+    <div class="modal-backdrop" (click)="dismissPromo()"><section class="promo-dialog modal-card" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
+      <button class="icon-close" type="button" [attr.aria-label]="copy.home.closeOffer" (click)="dismissPromo()">×</button>
+      @if (content.promotion.image) { <img [src]="imageUrl(content.promotion.image)" [alt]="content.promotion.title"> }
+      <div class="promo-copy"><div class="eyebrow"><span></span> {{ copy.home.clinicNoteEyebrow }}</div><h2>{{ content.promotion.title }}</h2><p>{{ content.promotion.message }}</p><button class="button button-dark" type="button" (click)="promotionOpen = false; appointmentOpen = true">{{ copy.home.getInTouch }} <span>{{ copy.common.externalArrow }}</span></button></div>
+    </section></div>
+  }
+} @else if (loading) {
+  <main class="loading-page"><span class="loading-mark">m<span>+</span></span><p>{{ copy.common.loadingWebsite }}</p></main>
+} @else {
+  <main class="error-page"><a class="brand" routerLink="/" [attr.aria-label]="copy.brand.homeLabel"><img class="brand-logo" src="/assets/brand/mdc-logo.jpg" [alt]="copy.brand.name"></a><div class="eyebrow"><span></span> {{ copy.home.loadingRetryEyebrow }}</div><h1>{{ copy.common.connectionTitle }}<br><em>{{ copy.common.please }}</em></h1><p>{{ error }}</p><button class="button button-dark" type="button" (click)="loadSiteContent()">{{ copy.common.tryAgain }} <span>↻</span></button></main>
+}

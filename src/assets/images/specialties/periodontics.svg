@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 680" role="img" aria-labelledby="title desc">
+  <title id="title">Periodontics illustration</title>
+  <desc id="desc">Healthy gum tissue supporting the roots of the teeth.</desc>
+  <defs>
+    <linearGradient id="bg" x2="0" y2="1"><stop stop-color="#f5ece4"/><stop offset="1" stop-color="#edd0cb"/></linearGradient>
+    <linearGradient id="gum" x2="0" y2="1"><stop stop-color="#e99b99"/><stop offset="1" stop-color="#bc6e78"/></linearGradient>
+    <linearGradient id="bone" x2="0" y2="1"><stop stop-color="#f2d1a9"/><stop offset="1" stop-color="#d8a881"/></linearGradient>
+  </defs>
+  <rect width="960" height="680" rx="42" fill="url(#bg)"/>
+  <circle cx="762" cy="151" r="110" fill="#fff" opacity=".28"/>
+  <path d="M140 418q166-112 340-28 168-91 340 25v118H140z" fill="url(#bone)"/>
+  <path d="M140 389q170-96 341-20 166-81 339 16v98q-167-111-339-34-167-75-341 33z" fill="url(#gum)"/>
+  <g fill="#fffefa" stroke="#d7c9bd" stroke-width="7">
+    <path d="M256 235q-29-23-58 3-28 27-7 67 16 31 21 66 5 24 19 24 13 0 18-32 5-34 20-34t20 34q5 32 18 32 14 0 19-24 6-35 22-66 21-40-7-67-29-26-58-3-14 12-28 0Z"/>
+    <path d="M444 203q-36-27-72 5-35 33-9 82 20 39 27 83 6 30 23 30t23-39q7-41 24-41t24 41q6 39 23 39t23-30q7-44 27-83 26-49-9-82-36-32-72-5-18 15-35 0Z"/>
+    <path d="M660 235q-29-23-58 3-28 27-7 67 16 31 21 66 5 24 19 24 13 0 18-32 5-34 20-34t20 34q5 32 18 32 14 0 19-24 6-35 22-66 21-40-7-67-29-26-58-3-14 12-28 0Z"/>
+  </g>
+  <path d="M198 413q282-77 564 0" fill="none" stroke="#f8c4bc" stroke-width="9" stroke-linecap="round"/>
+  <circle cx="205" cy="190" r="15" fill="#fff" opacity=".9"/><circle cx="738" cy="477" r="11" fill="#fff" opacity=".8"/>
+</svg>

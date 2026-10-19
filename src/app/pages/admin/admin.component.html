@@ -1,0 +1,192 @@
+@if (!signedIn) {
+  <main class="admin-login">
+    <a class="brand" routerLink="/" [attr.aria-label]="copy.brand.homeLabel"><img class="brand-logo" src="/assets/brand/mdc-logo.jpg" [alt]="copy.brand.name"></a>
+    <a class="admin-back" routerLink="/">← {{ copy.common.backToWebsite }}</a>
+    <div class="eyebrow"><span></span> {{ copy.admin.loginEyebrow }}</div><h2>{{ copy.admin.welcomeFirst }}<br><em>{{ copy.admin.welcomeEmphasis }}</em></h2><p>{{ copy.admin.loginDescription }}</p>
+    <form (ngSubmit)="signIn()">
+      <label>{{ copy.admin.username }}<input name="username" [(ngModel)]="username" autocomplete="username" [placeholder]="copy.admin.usernamePlaceholder" required></label>
+      <label>{{ copy.admin.password }}<input name="password" [(ngModel)]="password" type="password" autocomplete="current-password" [placeholder]="copy.admin.passwordPlaceholder" required></label>
+      @if (loginError) { <div class="login-error" role="alert">{{ loginError }}</div> }
+      @if (requestError) { <div class="login-error" role="alert">{{ requestError }}</div> }
+      <button class="button button-dark" type="submit" [disabled]="busy">{{ busy ? copy.admin.signingIn : copy.admin.signIn }} <span>{{ copy.common.externalArrow }}</span></button>
+    </form>
+    <small class="demo-note">{{ copy.admin.recoveryNote }}</small>
+    <small class="demo-note">{{ copy.admin.demoNote }}</small>
+  </main>
+} @else {
+  <main class="admin-dialog admin-page-shell">
+    <div class="admin-panel">
+      <aside class="admin-sidebar">
+        <a class="admin-brand" routerLink="/"><span class="brand-mark">m<span>+</span></span><span>{{ copy.admin.dashboard }}</span></a>
+        <nav class="admin-nav" [attr.aria-label]="copy.admin.sections">
+          <button class="admin-tab" [class.active]="tab === 'appointments'" (click)="selectTab('appointments')">▤ <span>{{ copy.admin.appointments }}</span></button>
+          <button class="admin-tab" [class.active]="tab === 'website'" (click)="selectTab('website')">✳ <span>{{ copy.admin.websiteContent }}</span></button>
+          <button class="admin-tab" [class.active]="tab === 'gallery'" (click)="selectTab('gallery')">▧ <span>{{ copy.admin.gallery }}</span></button>
+          <button class="admin-tab" [class.active]="tab === 'promotion'" (click)="selectTab('promotion')">✦ <span>{{ copy.admin.offers }}</span></button>
+          <button class="admin-tab" [class.active]="tab === 'profile'" (click)="selectTab('profile')">◉ <span>{{ copy.admin.profile }}</span></button>
+        </nav>
+        <div class="admin-sidebar-bottom"><span class="online-dot"></span> {{ copy.admin.connected }}<button class="text-button" (click)="signOut()">{{ copy.admin.signOut }} {{ copy.common.externalArrow }}</button></div>
+      </aside>
+      <section class="admin-main">
+        <div class="admin-topbar"><a class="admin-mobile-brand" routerLink="/">{{ copy.admin.mobileBrand }} <span>·</span> {{ copy.admin.profile }}</a><a class="text-button admin-home-link" routerLink="/">{{ copy.admin.viewWebsite }} {{ copy.common.externalArrow }}</a></div>
+        <div class="admin-content">
+          @if (requestError) { <p class="form-message error-message" role="alert">{{ requestError }}</p> }
+          @if (notice) { <p class="form-message success-message" role="status">{{ notice }}</p> }
+          @if (loading) { <div class="empty-state">{{ copy.admin.loading }}</div> }
+          @else if (tab === 'profile' && profile) {
+            <div class="admin-page-heading"><div><div class="eyebrow"><span></span> {{ copy.admin.accountEyebrow }}</div><h2>{{ copy.admin.profile }}</h2><p>{{ copy.admin.profileDescription }}</p></div></div>
+            <form (ngSubmit)="saveProfile()">
+              <div class="admin-profile-photo">
+                @if (profile.imageUrl) { <img [src]="imageUrl(profile.imageUrl)" [alt]="copy.admin.profilePhotoAlt"> }
+                @else { <span>{{ profile.fullName.charAt(0).toUpperCase() }}</span> }
+                <label class="upload-label">{{ copy.admin.chooseProfilePhoto }}<input type="file" accept="image/jpeg,image/png,image/webp,image/gif" (change)="uploadProfileImage($any($event.target).files?.[0] || null)"></label>
+              </div>
+              <div class="admin-form-grid">
+                <label class="admin-field">{{ copy.admin.username }}<input [value]="profile.username" readonly [attr.aria-label]="copy.admin.username"></label>
+                <label class="admin-field">{{ copy.admin.fullName }}<input name="profileName" [(ngModel)]="profile.fullName" autocomplete="name" required maxlength="100"></label>
+                <label class="admin-field">{{ copy.admin.phoneNumber }}<input name="profilePhone" [(ngModel)]="profile.phone" type="tel" autocomplete="tel" inputmode="numeric" maxlength="10" [placeholder]="copy.admin.phonePlaceholder"></label>
+                <label class="admin-field">{{ copy.admin.emailAddress }}<input name="profileEmail" [(ngModel)]="profile.email" type="email" autocomplete="email" [placeholder]="copy.admin.emailPlaceholder"></label>
+              </div>
+              <div class="admin-save-row"><small>{{ copy.admin.personalDetailsNote }}</small><button class="button button-dark" type="submit" [disabled]="busy">{{ copy.admin.saveProfile }}</button></div>
+            </form>
+            <form class="admin-password-form" (ngSubmit)="changePassword()">
+              <div class="admin-subheading">{{ copy.admin.changePassword }}</div>
+              <div class="admin-form-grid">
+                <label class="admin-field">{{ copy.admin.currentPassword }}<input name="currentPassword" [(ngModel)]="currentPassword" type="password" autocomplete="current-password" required></label>
+                <label class="admin-field">{{ copy.admin.newPassword }}<input name="newPassword" [(ngModel)]="newPassword" type="password" autocomplete="new-password" minlength="8" maxlength="128" required></label>
+                <label class="admin-field">{{ copy.admin.confirmPassword }}<input name="confirmPassword" [(ngModel)]="confirmPassword" type="password" autocomplete="new-password" minlength="8" maxlength="128" required></label>
+              </div>
+              <p class="password-recovery-note">{{ copy.admin.otpRecoveryNote }}</p>
+              <div class="admin-save-row"><span></span><button class="button button-dark" type="submit" [disabled]="busy">{{ copy.admin.changePassword }}</button></div>
+            </form>
+          }
+          @else if (tab === 'appointments') {
+            <div class="admin-page-heading"><div><div class="eyebrow"><span></span> {{ copy.admin.frontDesk }}</div><h2>{{ copy.admin.appointments }}</h2><p>{{ copy.admin.appointmentDescription }}</p></div><button class="button button-outline" (click)="exportCsv()">{{ copy.admin.exportCsv }} ↓</button></div>
+            <div class="appointment-summary"><div class="summary-card"><small>{{ copy.admin.waiting }}</small><b>{{ waitingCount }}</b></div><div class="summary-card"><small>{{ copy.admin.completed }}</small><b>{{ doneCount }}</b></div><div class="summary-card"><small>{{ copy.admin.cancelled }}</small><b>{{ cancelledCount }}</b></div></div>
+            <div class="appointment-tabs" role="tablist">
+              <button class="appointment-filter" [class.active]="filter === 'waiting'" (click)="filter = 'waiting'">{{ copy.admin.waiting }}</button>
+              <button class="appointment-filter" [class.active]="filter === 'done'" (click)="filter = 'done'">{{ copy.admin.completed }}</button>
+              <button class="appointment-filter" [class.active]="filter === 'cancelled'" (click)="filter = 'cancelled'">{{ copy.admin.cancelled }}</button>
+              <button class="appointment-filter" [class.active]="filter === 'all'" (click)="filter = 'all'">{{ copy.admin.allRequests }}</button>
+            </div>
+            <div class="appointment-list">
+              @for (appointment of visibleAppointments; track appointment.id) {
+                <article class="appointment-row">
+                  <div class="patient-main"><strong>{{ appointment.name }} <span class="patient-status" [class.done]="appointment.status === 'done'" [class.cancelled]="appointment.status === 'cancelled'">{{ copy.status[appointment.status] }}</span></strong><small>{{ appointment.age }} {{ copy.admin.ageYears }} · {{ appointment.gender }} · {{ copy.admin.requested }} {{ formatDate(appointment.requestedAt) }}</small></div>
+                  <div class="patient-meta">
+                    <a [href]="'tel:+91' + appointment.phone">+91 {{ appointment.phone }}</a>
+                    @if (appointment.email) { <span>{{ appointment.email }}</span> }
+                    @if (appointment.statusUpdatedAt) { <span>{{ appointment.status === 'done' ? copy.admin.completed : copy.admin.updated }} {{ formatDate(appointment.statusUpdatedAt) }}</span> }
+                  </div>
+                  @if (appointment.problem) { <p class="patient-problem"><strong>{{ copy.admin.problemFacing }}:</strong> {{ appointment.problem }}</p> }
+                  <div class="row-actions">
+                    @if (appointment.status !== 'done') { <button class="mini-button" [disabled]="busy" (click)="updateStatus(appointment, 'done')">{{ copy.admin.done }}</button> }
+                    @if (appointment.status !== 'cancelled') { <button class="mini-button" [disabled]="busy" (click)="updateStatus(appointment, 'cancelled')">{{ copy.admin.cancel }}</button> }
+                    @if (appointment.status !== 'waiting') { <button class="mini-button" [disabled]="busy" (click)="updateStatus(appointment, 'waiting')">{{ copy.admin.restore }}</button> }
+                  </div>
+                </article>
+              } @empty { <div class="empty-state"><b>{{ filter === 'all' ? copy.admin.noAppointments : copy.admin.noAppointmentsByStatus[filter] }}</b>{{ copy.admin.newRequests }}</div> }
+            </div>
+            <section class="archive-section">
+              <div class="admin-subheading">{{ copy.admin.appointmentArchive }}</div>
+              <p class="archive-description">{{ copy.admin.archiveDescription }}</p>
+              <div class="archive-search">
+                <label class="admin-field">{{ copy.admin.archiveYear }}<select name="archiveYear" [(ngModel)]="archiveYear">@for (year of archiveYears; track year) { <option [ngValue]="year">{{ year }}</option> }</select></label>
+                <label class="admin-field">{{ copy.admin.archiveMonth }}<select name="archiveMonth" [(ngModel)]="archiveMonth">@for (month of archiveMonths; track month) { <option [ngValue]="month">{{ copy.admin.monthNames[month - 1] }}</option> }</select></label>
+                <button class="button button-outline" type="button" (click)="searchArchive()" [disabled]="archiveLoading">{{ archiveLoading ? copy.admin.archiveSearching : copy.admin.searchArchive }}</button>
+              </div>
+              @if (archiveSearched) {
+                <h3 class="archive-result-title">{{ copy.admin.archiveResults }} · {{ copy.admin.monthNames[archiveMonth - 1] }} {{ archiveYear }}</h3>
+                <div class="appointment-list archive-list">
+                  @for (appointment of archiveAppointments; track appointment.id) {
+                    <article class="appointment-row">
+                      <div class="patient-main"><strong>{{ appointment.name }} <span class="patient-status" [class.done]="appointment.status === 'done'" [class.cancelled]="appointment.status === 'cancelled'">{{ copy.status[appointment.status] }}</span></strong><small>{{ appointment.age }} {{ copy.admin.ageYears }} · {{ appointment.gender }} · {{ copy.admin.requested }} {{ formatDate(appointment.requestedAt) }}</small></div>
+                      <div class="patient-meta"><a [href]="'tel:+91' + appointment.phone">+91 {{ appointment.phone }}</a>@if (appointment.email) { <span>{{ appointment.email }}</span> }@if (appointment.statusUpdatedAt) { <span>{{ appointment.status === 'done' ? copy.admin.completed : copy.admin.updated }} {{ formatDate(appointment.statusUpdatedAt) }}</span> }</div>
+                      @if (appointment.problem) { <p class="patient-problem"><strong>{{ copy.admin.problemFacing }}:</strong> {{ appointment.problem }}</p> }
+                      <div class="row-actions">@if (appointment.status !== 'done') { <button class="mini-button" [disabled]="busy" (click)="updateStatus(appointment, 'done')">{{ copy.admin.done }}</button> }@if (appointment.status !== 'cancelled') { <button class="mini-button" [disabled]="busy" (click)="updateStatus(appointment, 'cancelled')">{{ copy.admin.cancel }}</button> }@if (appointment.status !== 'waiting') { <button class="mini-button" [disabled]="busy" (click)="updateStatus(appointment, 'waiting')">{{ copy.admin.restore }}</button> }</div>
+                    </article>
+                  } @empty { <div class="empty-state">{{ copy.admin.archiveEmpty }}</div> }
+                </div>
+              }
+            </section>
+          } @else if (site && tab === 'website') {
+            <div class="admin-page-heading"><div><div class="eyebrow"><span></span> {{ copy.admin.onlineFrontDoor }}</div><h2>{{ copy.admin.websiteContent }}</h2><p>{{ copy.admin.websiteDescription }}</p></div></div>
+            <form (ngSubmit)="saveSite()">
+              <div class="admin-subheading">{{ copy.admin.clinicDetails }}</div><div class="admin-form-grid">
+                <label class="admin-field">{{ copy.admin.clinicName }}<input name="clinicName" [(ngModel)]="site.clinic.name" required></label>
+                <label class="admin-field">{{ copy.admin.shortTagline }}<input name="tagline" [(ngModel)]="site.clinic.tagline"></label>
+                <label class="admin-field">{{ copy.admin.phoneNumbers }} <small>{{ copy.admin.phoneNumbersHint }}</small><input name="phones" [(ngModel)]="phoneNumbersText" [placeholder]="copy.admin.phoneNumbersPlaceholder"></label>
+                <label class="admin-field">{{ copy.admin.clinicEmail }}<input name="email" type="email" [(ngModel)]="site.clinic.email" [placeholder]="copy.admin.clinicEmailPlaceholder"></label>
+                <label class="admin-field full">{{ copy.admin.address }}<input name="address" [(ngModel)]="site.clinic.address" [placeholder]="copy.admin.addressPlaceholder"></label>
+                <label class="admin-field">{{ copy.admin.openingHours }}<input name="hours" [(ngModel)]="site.clinic.hours" [placeholder]="copy.admin.hoursPlaceholder"></label>
+                <label class="admin-field">{{ copy.admin.mapsLink }}<input name="mapUrl" type="url" [(ngModel)]="site.clinic.mapUrl" required></label>
+              </div>
+              <div class="admin-subheading">{{ copy.admin.specialties }}</div>
+              <div class="admin-form-grid">
+                @for (specialty of site.specialties; track specialty.slug) {
+                  <div class="specialty-edit-card">
+                    <label class="admin-field">{{ specialty.name }}<input [name]="'specialty-' + specialty.slug" [(ngModel)]="specialty.name" [attr.aria-label]="copy.admin.specialtyName"></label>
+                    <label class="admin-field">{{ copy.admin.specialtySummary }}<textarea [name]="'description-' + specialty.slug" [(ngModel)]="specialty.description" [attr.aria-label]="copy.admin.specialtySummary"></textarea></label>
+                    <label class="admin-field">{{ copy.admin.specialtyEnglish }}<textarea [name]="'description-en-' + specialty.slug" [(ngModel)]="specialty.descriptionEn" [attr.aria-label]="copy.admin.specialtyEnglish"></textarea></label>
+                    <label class="admin-field">{{ copy.admin.specialtyHindi }}<textarea [name]="'description-hi-' + specialty.slug" [(ngModel)]="specialty.descriptionHi" [attr.aria-label]="copy.admin.specialtyHindi"></textarea></label>
+                    <label class="upload-label">{{ copy.admin.replaceSpecialtyImage }}<input type="file" accept="image/jpeg,image/png,image/webp,image/gif" (change)="uploadSpecialtyImage($any($event.target).files?.[0] || null, specialty.slug)"></label>
+                  </div>
+                }
+              </div>
+              <div class="admin-save-row"><small>{{ copy.admin.saveChangesNote }}</small><button class="button button-dark" type="submit" [disabled]="busy">{{ copy.admin.saveWebsite }} <span>{{ copy.common.externalArrow }}</span></button></div>
+            </form>
+          } @else if (site && tab === 'gallery') {
+            <div class="admin-page-heading"><div><div class="eyebrow"><span></span> {{ copy.admin.galleryEyebrow }}</div><h2>{{ copy.admin.clinicGallery }}</h2><p>{{ copy.admin.galleryDescription }}</p></div></div>
+            <div class="gallery-admin-grid">
+              @for (image of site.gallery; track image.image; let index = $index) {
+                <article class="gallery-admin-card"><img [src]="imageUrl(image.image)" [alt]="image.title"><div class="gallery-admin-fields">
+                  <input [(ngModel)]="image.title" [name]="'gallery-title-' + index" [attr.aria-label]="copy.admin.galleryCaption">
+                  <div class="gallery-admin-actions"><span><button type="button" class="mini-button" (click)="moveGalleryImage(index, -1)" [disabled]="index === 0">←</button> <button type="button" class="mini-button" (click)="moveGalleryImage(index, 1)" [disabled]="index === site.gallery.length - 1">→</button></span><button type="button" class="mini-button" (click)="removeGalleryImage(index)">{{ copy.admin.remove }}</button></div>
+                  <label class="upload-label">{{ copy.admin.replaceImage }}<input type="file" accept="image/jpeg,image/png,image/webp,image/gif" (change)="uploadImage($any($event.target).files?.[0] || null, index)"></label>
+                </div></article>
+              }
+            </div>
+            <div class="add-image-row"><input type="text" [(ngModel)]="galleryTitle" name="galleryTitle" [placeholder]="copy.admin.imageCaptionPlaceholder"><label class="upload-label">{{ copy.admin.chooseImage }}<input #newGalleryImage type="file" accept="image/jpeg,image/png,image/webp,image/gif"></label><button type="button" class="button button-dark" (click)="addGalleryImage(newGalleryImage.files?.[0] || null)" [disabled]="busy">+ {{ copy.admin.addImage }}</button></div>
+            <div class="admin-save-row"><small>{{ copy.admin.gallerySavedNote }}</small><button class="button button-dark" type="button" (click)="saveSite()" [disabled]="busy">{{ copy.admin.saveGallery }} <span>{{ copy.common.externalArrow }}</span></button></div>
+          } @else if (tab === 'promotion') {
+            <div class="admin-page-heading"><div><div class="eyebrow"><span></span> {{ copy.admin.promotionEyebrow }}</div><h2>{{ copy.admin.offers }}</h2><p>{{ copy.admin.promotionDescription }}</p></div></div>
+            <form (ngSubmit)="createOffer()">
+              <div class="admin-form-grid">
+                <label class="admin-field full">{{ copy.admin.popupTitle }}<input name="offerTitle" [(ngModel)]="newOffer.title" [placeholder]="copy.admin.popupTitlePlaceholder" maxlength="120" required></label>
+                <label class="admin-field full">{{ copy.admin.message }}<textarea name="offerMessage" [(ngModel)]="newOffer.message" [placeholder]="copy.admin.messagePlaceholder" maxlength="2000" required></textarea></label>
+                <label class="admin-field">{{ copy.admin.offerDate }}<input name="offerDate" type="date" [min]="offerMinDate" [(ngModel)]="newOffer.displayDate" required></label>
+                <label class="admin-field full">{{ copy.admin.uploadImage }}<input type="file" accept="image/jpeg,image/png,image/webp,image/gif" (change)="uploadOfferImage($any($event.target).files?.[0] || null)"></label>
+              </div>
+              <div class="promo-preview">@if (newOffer.image) { <img [src]="imageUrl(newOffer.image)" alt=""> } @else { <div class="empty-state">{{ copy.admin.noImage }}</div> }<div><b>{{ newOffer.title || copy.admin.popupPreview }}</b><p>{{ newOffer.message || copy.admin.messagePreview }}</p><small>{{ newOffer.displayDate ? formatOfferDate(newOffer.displayDate) : copy.admin.offerDateRequired }}</small></div></div>
+              <div class="admin-save-row"><small>{{ copy.admin.offerAllDayNote }}</small><button class="button button-dark" type="submit" [disabled]="busy">{{ copy.admin.saveOffer }} <span>{{ copy.common.externalArrow }}</span></button></div>
+            </form>
+            <section class="offer-list-section">
+              <div class="admin-subheading">{{ copy.admin.activeAndScheduledOffers }}</div>
+              <div class="offer-list">
+                @for (offer of activeOrScheduledOffers; track offer.id) {
+                  <article class="offer-admin-card">
+                    @if (offer.image) { <img [src]="imageUrl(offer.image)" [alt]="offer.title"> }
+                    <div class="offer-admin-copy"><h3>{{ offer.title }}</h3><p>{{ offer.message }}</p><small>{{ copy.admin.offerDate }}: {{ formatOfferDate(offer.displayDate) }} · {{ isOfferLive(offer) ? copy.admin.offerLive : copy.admin.offerScheduled }}</small></div>
+                    <button type="button" class="mini-button offer-toggle" [disabled]="busy" [attr.aria-pressed]="offer.enabled" (click)="toggleOffer(offer)">{{ offer.enabled ? copy.admin.turnOfferOff : copy.admin.turnOfferOn }}</button>
+                  </article>
+                } @empty { <div class="empty-state">{{ copy.admin.noActiveOffers }}</div> }
+              </div>
+            </section>
+            <section class="offer-list-section">
+              <div class="admin-subheading">{{ copy.admin.expiredOffers }} <small>{{ copy.admin.offerHistoryLimit }}</small></div>
+              <div class="offer-list">
+                @for (offer of pastOrInactiveOffers; track offer.id) {
+                  <article class="offer-admin-card offer-expired">
+                    @if (offer.image) { <img [src]="imageUrl(offer.image)" [alt]="offer.title"> }
+                    <div class="offer-admin-copy"><h3>{{ offer.title }}</h3><p>{{ offer.message }}</p><small>{{ copy.admin.offerDate }}: {{ formatOfferDate(offer.displayDate) }} · {{ isOfferExpired(offer) ? copy.admin.offerExpired : copy.admin.disabled }}</small></div>
+                    <button type="button" class="mini-button offer-toggle" [disabled]="busy || isOfferExpired(offer)" [attr.aria-pressed]="offer.enabled" (click)="toggleOffer(offer)">{{ offer.enabled ? copy.admin.turnOfferOff : copy.admin.turnOfferOn }}</button>
+                  </article>
+                } @empty { <div class="empty-state">{{ copy.admin.noExpiredOffers }}</div> }
+              </div>
+            </section>
+          }
+        </div>
+      </section>
+    </div>
+  </main>
+}

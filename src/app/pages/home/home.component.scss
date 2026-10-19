@@ -1,0 +1,12 @@
+.promo-dialog {
+  max-height: calc(100dvh - 28px);
+  overflow-y: auto;
+}
+
+.promo-dialog img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 60vh;
+  object-fit: contain;
+}
