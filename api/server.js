@@ -15,10 +15,9 @@ import {
   getAdminProfile,
   getSiteContent,
   saveAdminProfile,
-  saveSiteContent,
   verifyAdminCredentials
 } from "./database.js";
-import { validateAdminProfile, validateAppointment, validateSiteContent } from "./validation.js";
+import { isStrongAdminPassword, validateAdminProfile, validateAppointment, validateDoctors } from "./validation.js";
 import {
   addOffer,
   createOffer,
@@ -28,10 +27,12 @@ import {
   managedImageDir,
   migrateLegacyPromotion,
   readOffers,
+  readDoctors,
   removeUnreferencedManagedImages,
   setOfferEnabled,
   syncAppointmentArchives,
-  writeAppointmentMonth
+  writeAppointmentMonth,
+  writeDoctors
 } from "./file-storage.js";
 
 const app = express();
@@ -42,13 +43,24 @@ fs.mkdirSync(uploadDir, { recursive: true });
 fs.mkdirSync(legacyUploadDir, { recursive: true });
 const port = Number(process.env.PORT || 3000);
 const isProduction = process.env.NODE_ENV === "production";
+const host = process.env.HOST || "127.0.0.1";
+const appointmentAcknowledgement = "If you already have an open request for this number, our team will contact you soon. Otherwise, your appointment request has been received.";
 const adminUsername = process.env.ADMIN_USERNAME || (isProduction ? "" : "admin");
 const adminPassword = process.env.ADMIN_PASSWORD || (isProduction ? "" : "admin");
-const jwtSecret = process.env.JWT_SECRET || (isProduction ? "" : "local-development-secret-change-before-deploy-2026");
+const jwtSecret = process.env.JWT_SECRET || (isProduction ? "" : crypto.randomBytes(48).toString("base64url"));
 const allowedOrigin = process.env.FRONTEND_ORIGIN || "http://localhost:4200";
+const jwtSecretIsStrong = typeof jwtSecret === "string" && jwtSecret.length >= 43 &&
+  /^[A-Za-z0-9_-]+$/.test(jwtSecret) && new Set(jwtSecret).size >= 20;
 
-if (!adminUsername || !adminPassword || jwtSecret.length < 32) {
-  throw new Error("Production must define ADMIN_USERNAME, ADMIN_PASSWORD, and a JWT_SECRET of at least 32 characters.");
+if (!adminUsername || !adminPassword || !jwtSecretIsStrong) {
+  throw new Error("Production must define ADMIN_USERNAME, a strong ADMIN_PASSWORD, and a unique base64url JWT_SECRET generated from at least 32 random bytes.");
+}
+const isLoopbackHost = host === "localhost" || host === "::1" || /^127(?:\.\d{1,3}){3}$/.test(host);
+if (isProduction && (!isStrongAdminPassword(adminPassword) || !process.env.JWT_SECRET || !jwtSecretIsStrong)) {
+  throw new Error("Production must define a strong ADMIN_PASSWORD (12+ characters with lowercase, uppercase, number and symbol) and a unique base64url JWT_SECRET generated from at least 32 random bytes.");
+}
+if (!isProduction && !isLoopbackHost && adminUsername === "admin" && adminPassword === "admin") {
+  throw new Error("The demo admin credentials are allowed only on a loopback host. Configure a strong admin account before exposing the API.");
 }
 process.env.JWT_SECRET = jwtSecret;
 
@@ -56,6 +68,9 @@ const databasePath = process.env.DATABASE_PATH
   ? path.resolve(process.cwd(), process.env.DATABASE_PATH)
   : path.resolve(here, "../data/clinic.sqlite");
 const db = createDatabase(databasePath, { username: adminUsername, password: adminPassword });
+if (isProduction && verifyAdminCredentials(db, "admin", "admin")) {
+  throw new Error("The database still accepts the default admin/admin credentials. Sign in locally and change the admin password before production deployment.");
+}
 syncAppointmentArchives(db);
 migrateLegacyPromotion(getSiteContent(db).promotion);
 const appointments = db.prepare(`
@@ -119,13 +134,22 @@ app.get("/api/public/site", (_req, res, next) => {
     next(error);
   }
 });
+app.get("/api/public/doctors", (_req, res, next) => {
+  try {
+    res.json(readDoctors());
+  } catch (error) {
+    next(error);
+  }
+});
 app.post("/api/public/appointments", bookingLimiter, (req, res, next) => {
   const data = validateAppointment(req.body || {});
   if (typeof data === "string") return res.status(400).json({ error: data });
   try {
     const existingAppointment = openAppointmentByPhone.get(data.phone);
     if (existingAppointment) {
-      return res.status(409).json({ code: "OPEN_APPOINTMENT_EXISTS", phone: data.phone });
+      return res.json({
+        message: appointmentAcknowledgement
+      });
     }
     const appointment = {
       id: crypto.randomUUID(),
@@ -146,8 +170,10 @@ app.post("/api/public/appointments", bookingLimiter, (req, res, next) => {
         requestedAt: appointment.requestedAt
       });
       writeAppointmentMonth(db, appointment.requestedAt);
+    })();
+    res.json({
+      message: appointmentAcknowledgement
     });
-    res.status(201).json({ id: appointment.id, message: "Your appointment request has been received." });
   } catch (error) {
     next(error);
   }
@@ -160,6 +186,33 @@ app.post("/api/admin/login", loginLimiter, (req, res) => {
 });
 
 app.use("/api/admin", requireAdmin);
+app.get("/api/admin/doctors", (_req, res, next) => {
+  try {
+    res.json(readDoctors());
+  } catch (error) {
+    next(error);
+  }
+});
+app.put("/api/admin/doctors", (req, res, next) => {
+  const doctors = validateDoctors(req.body);
+  if (typeof doctors === "string") return res.status(400).json({ error: doctors });
+  try {
+    const previousDoctors = readDoctors();
+    writeDoctors(doctors);
+    const removedImages = previousDoctors
+      .filter(doctor => {
+        const nextDoctor = doctors.find(item => item.id === doctor.id);
+        return !nextDoctor || nextDoctor.image !== doctor.image;
+      })
+      .map(doctor => doctor.image)
+      .filter(Boolean);
+    const profile = getAdminProfile(db);
+    removeUnreferencedManagedImages(removedImages, getSiteContent(db), readOffers(), profile.imageUrl);
+    res.json({ doctors, message: "Doctors list saved." });
+  } catch (error) {
+    next(error);
+  }
+});
 app.get("/api/admin/profile", (_req, res) => res.json(getAdminProfile(db)));
 app.put("/api/admin/profile", (req, res) => {
   const profile = validateAdminProfile(req.body || {});
@@ -170,8 +223,10 @@ app.put("/api/admin/profile", (req, res) => {
 app.put("/api/admin/password", (req, res) => {
   const currentPassword = typeof req.body?.currentPassword === "string" ? req.body.currentPassword : "";
   const newPassword = typeof req.body?.newPassword === "string" ? req.body.newPassword : "";
-  if (newPassword.length < 8 || newPassword.length > 128) {
-    return res.status(400).json({ error: "Your new password must contain 8 to 128 characters." });
+  if (!isStrongAdminPassword(newPassword)) {
+    return res.status(400).json({
+      error: "Your new password must be 12 to 128 characters and include lowercase and uppercase letters, a number, and a symbol."
+    });
   }
   if (!changeAdminPassword(db, currentPassword, newPassword)) {
     return res.status(400).json({ error: "Your current password is incorrect." });
@@ -198,35 +253,8 @@ app.patch("/api/admin/appointments/:id", (req, res) => {
   db.transaction(() => {
     updateStatus.run(status, new Date().toISOString(), req.params.id);
     writeAppointmentMonth(db, appointment.requestedAt);
-  });
+  })();
   res.json({ message: "Appointment status updated." });
-});
-app.get("/api/admin/site", (_req, res, next) => {
-  try {
-    res.json(getSiteContent(db));
-  } catch (error) {
-    next(error);
-  }
-});
-app.put("/api/admin/site", (req, res, next) => {
-  const validationError = validateSiteContent(req.body);
-  if (validationError) return res.status(400).json({ error: validationError });
-  try {
-    const currentContent = getSiteContent(db);
-    saveSiteContent(db, req.body);
-    const profile = getAdminProfile(db);
-    removeUnreferencedManagedImages(
-      currentContent.gallery.map(item => item.image).filter(image =>
-        !req.body.gallery.some(nextImage => nextImage.image === image)
-      ),
-      req.body,
-      readOffers(),
-      profile.imageUrl
-    );
-    res.json({ message: "Website content saved." });
-  } catch (error) {
-    next(error);
-  }
 });
 app.post("/api/admin/uploads", imageUpload.single("image"), (req, res) => {
   if (!req.file) return res.status(400).json({ error: "Choose an image to upload." });
@@ -261,4 +289,4 @@ app.use((error, _req, res, _next) => {
   res.status(status).json({ error: status === 500 ? "The server could not complete this request." : error.message });
 });
 
-app.listen(port, () => console.log(`Mahamaya clinic API listening on port ${port}`));
+app.listen(port, host, () => console.log(`Mahamaya clinic API listening on ${host}:${port}`));

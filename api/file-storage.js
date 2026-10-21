@@ -9,6 +9,7 @@ export const dataDir = process.env.CLINIC_DATA_DIR
   : path.resolve(here, "../data");
 export const managedImageDir = path.resolve(here, "../src/assets/uploads");
 const offersFile = path.join(dataDir, "offers.json");
+const doctorsFile = path.join(dataDir, "doctors.json");
 const archiveDir = path.join(dataDir, "appointments");
 const MAX_OFFERS = 30;
 
@@ -64,6 +65,17 @@ export function readOffers() {
   return offers;
 }
 
+export function readDoctors() {
+  if (!fs.existsSync(doctorsFile)) return [];
+  const doctors = JSON.parse(fs.readFileSync(doctorsFile, "utf8"));
+  if (!Array.isArray(doctors)) throw new Error("Doctor storage has an invalid format.");
+  return doctors;
+}
+
+export function writeDoctors(doctors) {
+  writeJson(doctorsFile, doctors);
+}
+
 export function migrateLegacyPromotion(promotion) {
   if (!promotion || !promotion.title || !promotion.message || readOffers().length) return;
   const displayDate = typeof promotion.startsAt === "string" && /^\d{4}-\d{2}-\d{2}/.test(promotion.startsAt)
@@ -99,6 +111,7 @@ export function removeUnreferencedManagedImages(candidates, content, offers, pro
     ...(content.specialties || []).map(item => item.image),
     content.promotion?.image,
     ...offers.map(offer => offer.image),
+    ...readDoctors().map(doctor => doctor.image),
     profileImage
   ].filter(Boolean));
   for (const image of new Set(candidates)) {

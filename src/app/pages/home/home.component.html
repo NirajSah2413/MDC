@@ -2,11 +2,11 @@
   <div class="announcement"><span class="announcement-dot"></span> {{ copy.common.announcement }} <span class="announcement-divider">·</span> <a href="#contact">{{ copy.common.findClinic }} <span aria-hidden="true">{{ copy.common.externalArrow }}</span></a></div>
   <header class="site-header">
     <a class="brand" routerLink="/" [attr.aria-label]="copy.brand.homeLabel">
-      <img class="brand-logo" src="/assets/brand/mdc-logo.jpg" [alt]="copy.brand.name">
+      <img class="brand-logo" src="/assets/brand/mdc%20logo%201.png" [alt]="copy.brand.name">
     </a>
     <button class="mobile-menu-toggle" type="button" [attr.aria-label]="menuOpen ? copy.common.closeNavigation : copy.common.openNavigation" [attr.aria-expanded]="menuOpen" (click)="menuOpen = !menuOpen">☰</button>
     <nav class="main-nav" [attr.aria-label]="copy.home.exploreClinic" [class.open]="menuOpen">
-      <a routerLink="/" fragment="care" (click)="menuOpen = false">{{ copy.common.ourCare }}</a><a routerLink="/" fragment="about" (click)="menuOpen = false">{{ copy.common.ourApproach }}</a><a routerLink="/gallery" (click)="menuOpen = false">{{ copy.common.theClinic }}</a><a routerLink="/" fragment="contact" (click)="menuOpen = false">{{ copy.common.contact }}</a>
+      <a routerLink="/" fragment="care" (click)="menuOpen = false">{{ copy.common.ourCare }}</a><a routerLink="/" fragment="about" (click)="menuOpen = false">{{ copy.common.ourApproach }}</a><a routerLink="/team" (click)="menuOpen = false">{{ copy.common.ourTeam }}</a><a routerLink="/gallery" (click)="menuOpen = false">{{ copy.common.theClinic }}</a><a routerLink="/" fragment="contact" (click)="menuOpen = false">{{ copy.common.contact }}</a>
     </nav>
     <div class="header-actions"><a class="text-button" routerLink="/admin">{{ copy.common.adminLogin }} <span aria-hidden="true">{{ copy.common.externalArrow }}</span></a><button class="button button-dark" type="button" (click)="appointmentOpen = true">{{ copy.common.bookVisit }} <span aria-hidden="true">{{ copy.common.externalArrow }}</span></button></div>
   </header>
@@ -30,7 +30,7 @@
       <div class="hero-side-label">{{ copy.home.heroSideLabel }} <span>✳</span> {{ copy.common.careFeelsGood }}</div>
     </section>
 
-    <section class="ticker"><div class="ticker-track"><span>{{ copy.home.tickerOne }}</span><i>✳</i><span>{{ copy.home.tickerTwo }}</span><i>✳</i><span>{{ copy.home.tickerThree }}</span><i>✳</i><span>{{ copy.home.tickerOne }}</span><i>✳</i><span>{{ copy.home.tickerTwo }}</span><i>✳</i></div></section>
+    <section class="ticker" aria-label="{{ copy.home.tickerOne }}"><div class="ticker-track"><div class="ticker-group"><span>{{ copy.home.tickerOne }}</span><i>✳</i><span>{{ copy.home.tickerTwo }}</span><i>✳</i><span>{{ copy.home.tickerThree }}</span><i>✳</i></div><div class="ticker-group" aria-hidden="true"><span>{{ copy.home.tickerOne }}</span><i>✳</i><span>{{ copy.home.tickerTwo }}</span><i>✳</i><span>{{ copy.home.tickerThree }}</span><i>✳</i></div></div></section>
     <section class="section services-section" id="care">
       <div class="section-heading"><div><div class="eyebrow"><span></span> {{ copy.home.servicesEyebrow }}</div><h2>{{ copy.home.servicesTitle }}<br><em>{{ copy.home.servicesTitleEmphasis }}</em></h2></div><div class="heading-aside"><p>{{ copy.home.servicesDescription }}</p><div class="specialty-controls"><span class="scroll-hint">{{ copy.home.scrollToExplore }}</span><button type="button" [attr.aria-label]="copy.home.scrollLeft" [attr.title]="copy.home.scrollLeft" (click)="scrollSpecialties(-1)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button><button type="button" [attr.aria-label]="copy.home.scrollRight" [attr.title]="copy.home.scrollRight" (click)="scrollSpecialties(1)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button></div></div></div>
       <div class="specialty-rail" #specialtyRail [attr.aria-label]="copy.home.specialtiesLabel">
@@ -91,11 +91,11 @@
     </div>
     <div class="footer-columns">
       <section class="footer-identity">
-        <a class="footer-logo-link" routerLink="/" [attr.aria-label]="copy.brand.homeLabel"><img src="/assets/brand/mdc-logo.jpg" [alt]="copy.brand.name"></a>
+        <a class="footer-logo-link" routerLink="/" [attr.aria-label]="copy.brand.homeLabel"><img src="/assets/brand/mdc%20logo%201.png" [alt]="copy.brand.name"></a>
         <p>{{ copy.home.footerDescription }}</p>
         <div class="footer-socials"><a [href]="content.clinic.mapUrl" target="_blank" rel="noreferrer">{{ copy.home.googleMaps }} <span>{{ copy.common.externalArrow }}</span></a><a [href]="content.clinic.mapUrl" target="_blank" rel="noreferrer">{{ copy.home.patientReviews }} <span>{{ copy.common.externalArrow }}</span></a><a [href]="justdialUrl" target="_blank" rel="noreferrer">{{ copy.home.justdial }} <span>{{ copy.common.externalArrow }}</span></a></div>
       </section>
-      <nav class="footer-links" [attr.aria-label]="copy.home.exploreClinic"><h3>{{ copy.home.exploreClinic }}</h3><a routerLink="/" fragment="care">{{ copy.common.ourCare }}</a><a routerLink="/" fragment="about">{{ copy.common.ourApproach }}</a><a routerLink="/gallery">{{ copy.home.clinicGallery }}</a><a routerLink="/" fragment="reviewsTitle">{{ copy.home.patientReviews }}</a><a routerLink="/" fragment="contact">{{ copy.common.contactUs }}</a><a routerLink="/admin">{{ copy.common.adminLogin }}</a></nav>
+      <nav class="footer-links" [attr.aria-label]="copy.home.exploreClinic"><h3>{{ copy.home.exploreClinic }}</h3><a routerLink="/" fragment="care">{{ copy.common.ourCare }}</a><a routerLink="/" fragment="about">{{ copy.common.ourApproach }}</a><a routerLink="/team">{{ copy.common.ourTeam }}</a><a routerLink="/gallery">{{ copy.home.clinicGallery }}</a><a routerLink="/" fragment="reviewsTitle">{{ copy.home.patientReviews }}</a><a routerLink="/" fragment="contact">{{ copy.common.contactUs }}</a><a routerLink="/admin">{{ copy.common.adminLogin }}</a></nav>
       <nav class="footer-links footer-specialties" [attr.aria-label]="copy.home.specialistCare"><h3>{{ copy.home.specialistCare }}</h3>@for (specialty of content.specialties; track specialty.slug) { <a [routerLink]="['/specialities', specialty.slug]">{{ specialty.name }} <span>{{ copy.common.externalArrow }}</span></a> }</nav>
       <section class="footer-contact"><h3>{{ copy.home.talkToTeam }}</h3><a class="footer-address" [href]="content.clinic.mapUrl" target="_blank" rel="noreferrer">{{ content.clinic.address || copy.home.findOnMaps }} <span>{{ copy.common.externalArrow }}</span></a>@for (phone of content.clinic.phones; track phone) { <a class="footer-phone" [href]="'tel:+91' + phone">+91 {{ phone }} <span>{{ copy.home.callClinic }}</span></a> }<a class="footer-email" [href]="'mailto:' + content.clinic.email">{{ content.clinic.email }} <span>{{ copy.home.emailClinic }}</span></a><a class="footer-map-link" [href]="justdialUrl" target="_blank" rel="noreferrer">{{ copy.home.clinicOnJustdial }} {{ copy.common.externalArrow }}</a></section>
     </div>
@@ -112,5 +112,5 @@
 } @else if (loading) {
   <main class="loading-page"><span class="loading-mark">m<span>+</span></span><p>{{ copy.common.loadingWebsite }}</p></main>
 } @else {
-  <main class="error-page"><a class="brand" routerLink="/" [attr.aria-label]="copy.brand.homeLabel"><img class="brand-logo" src="/assets/brand/mdc-logo.jpg" [alt]="copy.brand.name"></a><div class="eyebrow"><span></span> {{ copy.home.loadingRetryEyebrow }}</div><h1>{{ copy.common.connectionTitle }}<br><em>{{ copy.common.please }}</em></h1><p>{{ error }}</p><button class="button button-dark" type="button" (click)="loadSiteContent()">{{ copy.common.tryAgain }} <span>↻</span></button></main>
+  <main class="error-page"><a class="brand" routerLink="/" [attr.aria-label]="copy.brand.homeLabel"><img class="brand-logo" src="/assets/brand/mdc%20logo%201.png" [alt]="copy.brand.name"></a><div class="eyebrow"><span></span> {{ copy.home.loadingRetryEyebrow }}</div><h1>{{ copy.common.connectionTitle }}<br><em>{{ copy.common.please }}</em></h1><p>{{ error }}</p><button class="button button-dark" type="button" (click)="loadSiteContent()">{{ copy.common.tryAgain }} <span>↻</span></button></main>
 }

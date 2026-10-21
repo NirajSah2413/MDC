@@ -4,11 +4,11 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { AdminProfile, Appointment, AppointmentStatus, ClinicOffer, SiteContent } from '../../models';
+import { AdminProfile, Appointment, AppointmentStatus, ClinicOffer, Doctor } from '../../models';
 import { ClinicApiService } from '../../services/clinic-api.service';
 import { UI_COPY } from '../../ui-copy';
 
-type AdminTab = 'appointments' | 'website' | 'gallery' | 'promotion' | 'profile';
+type AdminTab = 'appointments' | 'doctors' | 'promotion' | 'profile';
 
 const currentClinicYear = Number(new Intl.DateTimeFormat('en-CA', {
   timeZone: 'Asia/Kolkata',
@@ -44,14 +44,16 @@ export class AdminComponent implements OnInit {
   archiveMonth = new Date().getMonth() + 1;
   offers: ClinicOffer[] = [];
   newOffer = { title: '', message: '', image: '', displayDate: '' };
-  site?: SiteContent;
+  doctors: Doctor[] = [];
+  newDoctor = { name: '', qualification: '', description: '', expertise: '', image: '' };
   profile?: AdminProfile;
-  galleryTitle = '';
-  phoneNumbersText = '';
   notice = '';
   currentPassword = '';
   newPassword = '';
   confirmPassword = '';
+  showCurrentPassword = false;
+  showNewPassword = false;
+  showConfirmPassword = false;
 
   ngOnInit(): void {
     if (this.api.hasToken()) this.loadDashboard();
@@ -77,7 +79,6 @@ export class AdminComponent implements OnInit {
   signOut(): void {
     this.api.clearToken();
     this.signedIn = false;
-    this.site = undefined;
     this.appointments = [];
   }
 
@@ -85,17 +86,16 @@ export class AdminComponent implements OnInit {
     this.loading = true;
     this.requestError = '';
     forkJoin({
-      site: this.api.getAdminSite(),
       appointments: this.api.getAppointments(),
       profile: this.api.getAdminProfile(),
-      offers: this.api.getOffers()
+      offers: this.api.getOffers(),
+      doctors: this.api.getAdminDoctors()
     }).subscribe({
       next: result => {
-        this.site = result.site;
         this.profile = result.profile;
-        this.phoneNumbersText = result.site.clinic.phones.join(', ');
         this.appointments = result.appointments;
         this.offers = result.offers;
+        this.doctors = result.doctors;
         this.signedIn = true;
         this.busy = false;
         this.loading = false;
@@ -204,28 +204,6 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  saveSite(): void {
-    if (!this.site) return;
-    const phones = this.phoneNumbersText.split(',').map(phone => phone.replace(/\D/g, '')).filter(Boolean);
-    if (phones.some(phone => phone.length !== 10)) {
-      this.requestError = this.copy.admin.invalidPhoneNumbers;
-      return;
-    }
-    this.site.clinic.phones = phones;
-    this.busy = true;
-    this.api.saveSite(this.site).subscribe({
-      next: result => {
-        this.busy = false;
-        this.notice = result.message;
-        this.requestError = '';
-      },
-      error: (error: HttpErrorResponse) => {
-        this.busy = false;
-        this.requestError = error.error?.error || this.copy.admin.saveWebsiteError;
-      }
-    });
-  }
-
   saveProfile(): void {
     if (!this.profile) return;
     this.busy = true;
@@ -244,6 +222,10 @@ export class AdminComponent implements OnInit {
 
   changePassword(): void {
     this.requestError = '';
+    if (!this.passwordIsStrong) {
+      this.requestError = this.copy.admin.passwordRequirementsError;
+      return;
+    }
     if (this.newPassword !== this.confirmPassword) {
       this.requestError = this.copy.admin.passwordMismatch;
       return;
@@ -255,6 +237,9 @@ export class AdminComponent implements OnInit {
         this.currentPassword = '';
         this.newPassword = '';
         this.confirmPassword = '';
+        this.showCurrentPassword = false;
+        this.showNewPassword = false;
+        this.showConfirmPassword = false;
         this.notice = result.message;
       },
       error: (error: HttpErrorResponse) => {
@@ -262,6 +247,45 @@ export class AdminComponent implements OnInit {
         this.requestError = error.error?.error || this.copy.admin.changePasswordError;
       }
     });
+  }
+
+  get passwordIsStrong(): boolean {
+    return this.passwordHasMinLength && this.passwordHasLowercase &&
+      this.passwordHasUppercase && this.passwordHasNumber && this.passwordHasSymbol;
+  }
+
+  get passwordHasMinLength(): boolean {
+    return this.newPassword.length >= 12;
+  }
+
+  get passwordHasLowercase(): boolean {
+    return /[a-z]/.test(this.newPassword);
+  }
+
+  get passwordHasUppercase(): boolean {
+    return /[A-Z]/.test(this.newPassword);
+  }
+
+  get passwordHasNumber(): boolean {
+    return /\d/.test(this.newPassword);
+  }
+
+  get passwordHasSymbol(): boolean {
+    return /[^A-Za-z0-9\s]/.test(this.newPassword);
+  }
+
+  get passwordStrengthScore(): number {
+    return [
+      this.passwordHasMinLength,
+      this.passwordHasLowercase,
+      this.passwordHasUppercase,
+      this.passwordHasNumber,
+      this.passwordHasSymbol
+    ].filter(Boolean).length;
+  }
+
+  get passwordsMatch(): boolean {
+    return !!this.confirmPassword && this.newPassword === this.confirmPassword;
   }
 
   uploadProfileImage(file: File | null): void {
@@ -276,59 +300,6 @@ export class AdminComponent implements OnInit {
       error: (error: HttpErrorResponse) => {
         this.busy = false;
         this.requestError = error.error?.error || this.copy.admin.profileImageError;
-      }
-    });
-  }
-
-  addGalleryImage(file: File | null): void {
-    const title = this.galleryTitle.trim();
-    if (!file || !title || !this.site) {
-      this.requestError = this.copy.admin.invalidGalleryImage;
-      return;
-    }
-    this.busy = true;
-    this.api.uploadImage(file).subscribe({
-      next: result => {
-        this.site?.gallery.push({ image: result.url, title });
-        this.galleryTitle = '';
-        this.saveSite();
-      },
-      error: (error: HttpErrorResponse) => {
-        this.busy = false;
-        this.requestError = error.error?.error || this.copy.admin.uploadImageError;
-      }
-    });
-  }
-
-  removeGalleryImage(index: number): void {
-    if (!this.site) return;
-    this.site.gallery.splice(index, 1);
-    this.saveSite();
-  }
-
-  moveGalleryImage(index: number, direction: -1 | 1): void {
-    if (!this.site) return;
-    const target = index + direction;
-    if (target < 0 || target >= this.site.gallery.length) return;
-    [this.site.gallery[index], this.site.gallery[target]] = [this.site.gallery[target], this.site.gallery[index]];
-    this.saveSite();
-  }
-
-  uploadImage(file: File | null, galleryIndex?: number): void {
-    if (!file || !this.site) return;
-    this.busy = true;
-    this.api.uploadImage(file).subscribe({
-      next: result => {
-        if (galleryIndex === undefined) {
-          this.site?.gallery.push({ image: result.url, title: file.name.replace(/\.[^.]+$/, '') });
-        } else if (this.site?.gallery[galleryIndex]) {
-          this.site.gallery[galleryIndex].image = result.url;
-        }
-        this.saveSite();
-      },
-      error: (error: HttpErrorResponse) => {
-        this.busy = false;
-        this.requestError = error.error?.error || this.copy.admin.uploadImageError;
       }
     });
   }
@@ -389,18 +360,48 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  uploadSpecialtyImage(file: File | null, slug: string): void {
-    if (!file || !this.site) return;
+  addDoctor(): void {
+    if (!this.newDoctor.name.trim() || !this.newDoctor.description.trim() || !this.newDoctor.expertise.trim()) {
+      this.requestError = this.copy.admin.doctorRequiredFields;
+      return;
+    }
+    this.doctors.push({ id: crypto.randomUUID(), ...this.newDoctor });
+    this.newDoctor = { name: '', qualification: '', description: '', expertise: '', image: '' };
+    this.requestError = '';
+  }
+
+  removeDoctor(index: number): void {
+    this.doctors.splice(index, 1);
+  }
+
+  saveDoctors(): void {
     this.busy = true;
-    this.api.uploadImage(file).subscribe({
+    this.requestError = '';
+    this.api.saveDoctors(this.doctors).subscribe({
       next: result => {
-        const specialty = this.site?.specialties.find(item => item.slug === slug);
-        if (specialty) specialty.image = result.url;
-        this.saveSite();
+        this.doctors = result.doctors;
+        this.busy = false;
+        this.notice = result.message;
       },
       error: (error: HttpErrorResponse) => {
         this.busy = false;
-        this.requestError = error.error?.error || this.copy.admin.specialtyImageError;
+        this.requestError = error.error?.error || this.copy.admin.doctorsSaveError;
+      }
+    });
+  }
+
+  uploadDoctorImage(file: File | null, index: number): void {
+    if (!file || !this.doctors[index]) return;
+    this.busy = true;
+    this.api.uploadImage(file).subscribe({
+      next: result => {
+        this.doctors[index].image = result.url;
+        this.busy = false;
+        this.notice = this.copy.admin.doctorImageUploaded;
+      },
+      error: (error: HttpErrorResponse) => {
+        this.busy = false;
+        this.requestError = error.error?.error || this.copy.admin.uploadImageError;
       }
     });
   }
@@ -440,7 +441,11 @@ export class AdminComponent implements OnInit {
       item.name, item.age, item.gender, `+91 ${item.phone}`, item.email, item.problem, item.status,
       this.formatDate(item.requestedAt), item.statusUpdatedAt ? this.formatDate(item.statusUpdatedAt) : ''
     ]);
-    const csv = [headings, ...rows].map(row => row.map(value => `"${String(value).replace(/"/g, '""')}"`).join(',')).join('\r\n');
+    const csv = [headings, ...rows].map(row => row.map(value => {
+      const text = String(value);
+      const safeText = /^[\u0000-\u0020\uFEFF]*[=+\-@]/.test(text) ? `'${text}` : text;
+      return `"${safeText.replace(/"/g, '""')}"`;
+    }).join(',')).join('\r\n');
     const link = document.createElement('a');
     const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
     link.href = url;

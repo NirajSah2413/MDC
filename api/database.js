@@ -176,11 +176,6 @@ export function getSiteContent(db) {
   return JSON.parse(row.content_json);
 }
 
-export function saveSiteContent(db, content) {
-  db.prepare("UPDATE site_content SET content_json = ?, updated_at = ? WHERE id = 1")
-    .run(JSON.stringify(content), new Date().toISOString());
-}
-
 export function verifyAdminCredentials(db, username, password) {
   const admin = db.prepare("SELECT username, password_salt, password_hash FROM admin_account WHERE id = 1").get();
   if (!admin || admin.username !== username) return false;

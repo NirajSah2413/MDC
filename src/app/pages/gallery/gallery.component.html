@@ -1,25 +1,58 @@
 <div class="announcement"><span class="announcement-dot"></span> {{ copy.common.announcement }} <span class="announcement-divider">·</span> <a routerLink="/">{{ copy.common.backToClinic }} <span aria-hidden="true">{{ copy.common.externalArrow }}</span></a></div>
 <header class="site-header">
-  <a class="brand" routerLink="/" [attr.aria-label]="copy.brand.homeLabel"><img class="brand-logo" src="/assets/brand/mdc-logo.jpg" [alt]="copy.brand.name"></a>
+  <a class="brand" routerLink="/" [attr.aria-label]="copy.brand.homeLabel"><img class="brand-logo" src="/assets/brand/mdc%20logo%201.png" [alt]="copy.brand.name"></a>
   <button class="mobile-menu-toggle" type="button" [attr.aria-label]="menuOpen ? copy.common.closeNavigation : copy.common.openNavigation" [attr.aria-expanded]="menuOpen" (click)="menuOpen = !menuOpen">☰</button>
-  <nav class="main-nav" [attr.aria-label]="copy.gallery.title" [class.open]="menuOpen"><a routerLink="/" fragment="care" (click)="menuOpen = false">{{ copy.common.ourCare }}</a><a routerLink="/" fragment="about" (click)="menuOpen = false">{{ copy.common.ourApproach }}</a><a routerLink="/" fragment="contact" (click)="menuOpen = false">{{ copy.common.contact }}</a></nav>
+  <nav class="main-nav" [attr.aria-label]="copy.gallery.title" [class.open]="menuOpen"><a routerLink="/" fragment="care" (click)="menuOpen = false">{{ copy.common.ourCare }}</a><a routerLink="/team" (click)="menuOpen = false">{{ copy.common.ourTeam }}</a><a routerLink="/" fragment="about" (click)="menuOpen = false">{{ copy.common.ourApproach }}</a><a routerLink="/" fragment="contact" (click)="menuOpen = false">{{ copy.common.contact }}</a></nav>
   <div class="header-actions"><a class="text-button" routerLink="/admin">{{ copy.common.adminLogin }} <span>{{ copy.common.externalArrow }}</span></a><button class="button button-dark" type="button" (click)="appointmentOpen = true">{{ copy.common.bookVisit }} <span>{{ copy.common.externalArrow }}</span></button></div>
 </header>
 <main class="full-gallery-page">
   <a class="underlined-link" routerLink="/">{{ copy.gallery.backToClinic }}</a>
-  <div class="full-gallery-heading"><div class="eyebrow"><span></span> {{ copy.gallery.eyebrow }}</div><h1>{{ copy.gallery.titleFirst }}<br><em>{{ copy.gallery.titleEmphasis }}</em></h1><p>{{ copy.gallery.description }}</p></div>
   @if (loading) {
     <div class="empty-state">{{ copy.common.loadingWebsite }}</div>
   } @else if (error) {
     <div class="empty-state" role="alert">{{ error }}</div>
   } @else if (site; as content) {
-    <div class="full-gallery-grid">
-      @for (image of content.gallery; track image.image) {
-        <figure class="full-gallery-card"><img [src]="imageUrl(image.image)" [alt]="image.title" loading="lazy"><figcaption>{{ image.title }}</figcaption></figure>
-      } @empty {
-        <div class="empty-state">{{ copy.gallery.empty }}</div>
+    <section class="gallery-hero" [attr.aria-label]="copy.gallery.carouselLabel">
+      @for (image of gallerySlides; track image.image; let index = $index) {
+        <img class="gallery-hero-slide" [class.active]="activeSlide === index" [src]="imageUrl(image.image)" [alt]="image.title" [attr.aria-hidden]="activeSlide !== index" [loading]="index > 1 ? 'lazy' : 'eager'">
       }
-    </div>
+      <div class="gallery-hero-shade"></div>
+      <div class="gallery-hero-caption"><span>{{ copy.gallery.eyebrow }}</span><h1>{{ gallerySlides[activeSlide]?.title }}</h1></div>
+      <div class="gallery-hero-controls">
+        <button type="button" [attr.aria-label]="copy.gallery.previousSlide" (click)="previousSlide()">←</button>
+        <span>{{ activeSlide + 1 }} / {{ gallerySlides.length }}</span>
+        <button type="button" [attr.aria-label]="copy.gallery.nextSlide" (click)="nextSlide()">→</button>
+      </div>
+    </section>
+    <section class="gallery-video-section" #videoSection>
+      <div class="gallery-video-heading"><div class="eyebrow"><span></span> {{ copy.gallery.videoEyebrow }}</div><h2>{{ copy.gallery.videoTitle }}</h2><p>{{ copy.gallery.videoDescription }}</p></div>
+      @if (safeVideoUrl) {
+        <div class="gallery-video-frame">
+          @if (videoStarted) {
+            <iframe [src]="safeVideoUrl" [title]="copy.gallery.videoTitle" allow="autoplay; encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          } @else {
+            <div class="gallery-video-placeholder" aria-hidden="true"><span>▶</span></div>
+          }
+        </div>
+      } @else {
+        <div class="empty-state" role="alert">{{ videoError }}</div>
+      }
+      <small class="gallery-video-note">{{ copy.gallery.demoVideoNote }}</small>
+    </section>
+    <section class="gallery-photo-section">
+      <div class="full-gallery-heading"><div class="eyebrow"><span></span> {{ copy.gallery.eyebrow }}</div><h2>{{ copy.gallery.titleFirst }}<br><em>{{ copy.gallery.titleEmphasis }}</em></h2><p>{{ copy.gallery.description }}</p></div>
+      <div class="gallery-rail-controls">
+        <button type="button" [attr.aria-label]="copy.gallery.scrollImagesLeft" (click)="scrollGallery(-1)">←</button>
+        <button type="button" [attr.aria-label]="copy.gallery.scrollImagesRight" (click)="scrollGallery(1)">→</button>
+      </div>
+      <div class="gallery-image-rail" #galleryRail>
+        @for (image of content.gallery; track image.image) {
+          <figure class="gallery-rail-card"><img [src]="imageUrl(image.image)" [alt]="image.title" loading="lazy"><figcaption>{{ image.title }}</figcaption></figure>
+        } @empty {
+          <div class="empty-state">{{ copy.gallery.empty }}</div>
+        }
+      </div>
+    </section>
     <div class="gallery-appointment-cta"><p>{{ copy.gallery.appointmentPrompt }}</p><button class="button button-dark" type="button" (click)="appointmentOpen = true">{{ copy.common.bookVisit }} <span>{{ copy.common.externalArrow }}</span></button></div>
     <app-appointment-modal [open]="appointmentOpen" [clinic]="content.clinic" (closed)="appointmentOpen = false" />
   }

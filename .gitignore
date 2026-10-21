@@ -12,6 +12,7 @@ data/*.sqlite
 data/*.sqlite-shm
 data/*.sqlite-wal
 data/offers.json
+data/doctors.json
 data/appointments/
 uploads/*
 !uploads/.gitkeep
