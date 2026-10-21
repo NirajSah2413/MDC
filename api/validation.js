@@ -29,26 +29,25 @@ export function validateAppointment(body) {
   return { name, age, gender, phone, email, problem };
 }
 
-export function validateSiteContent(content) {
-  if (!content || typeof content !== "object" || !content.clinic || !Array.isArray(content.gallery) ||
-      !Array.isArray(content.specialties) || !content.promotion) {
-    return "Website settings are incomplete.";
+export function validateDoctors(body) {
+  if (!Array.isArray(body) || body.length > 50) return "The doctors list must contain at most 50 entries.";
+  const ids = new Set();
+  const doctors = [];
+  for (const item of body) {
+    const id = typeof item?.id === "string" ? item.id.trim() : "";
+    const name = typeof item?.name === "string" ? item.name.trim() : "";
+    const qualification = typeof item?.qualification === "string" ? item.qualification.trim() : "";
+    const description = typeof item?.description === "string" ? item.description.trim() : "";
+    const expertise = typeof item?.expertise === "string" ? item.expertise.trim() : "";
+    const image = typeof item?.image === "string" ? item.image.trim() : "";
+    if (!id || id.length > 80 || ids.has(id)) return "Each doctor must have a unique identifier.";
+    if (!name || name.length > 100) return "Enter each doctor's name (up to 100 characters).";
+    if (qualification.length > 160) return "Doctor qualifications must be 160 characters or fewer.";
+    if (!description || description.length > 1000) return "Enter a doctor description of up to 1,000 characters.";
+    if (!expertise || expertise.length > 300) return "Enter doctor expertise of up to 300 characters.";
+    if (image && !localImagePattern.test(image)) return "Use a doctor image uploaded to the clinic website.";
+    ids.add(id);
+    doctors.push({ id, name, qualification, description, expertise, image });
   }
-  if (typeof content.clinic.name !== "string" || !content.clinic.name.trim()) return "Clinic name is required.";
-  if (!Array.isArray(content.clinic.phones) ||
-      content.clinic.phones.some(phone => !/^\d{10}$/.test(String(phone).replace(/\D/g, "")))) {
-    return "Clinic phone numbers must each contain exactly 10 digits.";
-  }
-  if (content.clinic.email && !emailPattern.test(content.clinic.email)) return "Enter a valid clinic email address.";
-  if (content.gallery.length > 40) return "The gallery can contain at most 40 images.";
-  if (content.specialties.length > 50) return "Too many specialties were submitted.";
-  const images = [
-    ...content.gallery.map(item => item?.image),
-    ...content.specialties.map(item => item?.image),
-    content.promotion.image
-  ].filter(Boolean);
-  if (images.some(image => typeof image !== "string" || !localImagePattern.test(image))) {
-    return "Use images uploaded to the clinic website.";
-  }
-  return null;
+  return doctors;
 }

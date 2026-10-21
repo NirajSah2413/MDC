@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AdminProfile, Appointment, AppointmentStatus, ClinicOffer, SiteContent } from '../models';
+import { AdminProfile, Appointment, AppointmentStatus, ClinicOffer, Doctor, SiteContent } from '../models';
 import { environment } from '../../environments/environment';
 
 const TOKEN_KEY = 'mahamaya-admin-token';
@@ -23,6 +23,10 @@ export class ClinicApiService {
     return this.http.get<SiteContent>(`${this.apiUrl}/public/site`);
   }
 
+  getPublicDoctors(): Observable<Doctor[]> {
+    return this.http.get<Doctor[]>(`${this.apiUrl}/public/doctors`);
+  }
+
   requestAppointment(request: {
     name: string;
     age: number;
@@ -40,6 +44,18 @@ export class ClinicApiService {
 
   getAdminProfile(): Observable<AdminProfile> {
     return this.http.get<AdminProfile>(`${this.apiUrl}/admin/profile`, { headers: this.adminHeaders() });
+  }
+
+  getAdminDoctors(): Observable<Doctor[]> {
+    return this.http.get<Doctor[]>(`${this.apiUrl}/admin/doctors`, { headers: this.adminHeaders() });
+  }
+
+  saveDoctors(doctors: Doctor[]): Observable<{ doctors: Doctor[]; message: string }> {
+    return this.http.put<{ doctors: Doctor[]; message: string }>(
+      `${this.apiUrl}/admin/doctors`,
+      doctors,
+      { headers: this.adminHeaders() }
+    );
   }
 
   saveAdminProfile(profile: AdminProfile): Observable<{ message: string }> {
@@ -67,14 +83,6 @@ export class ClinicApiService {
 
   updateAppointment(id: string, status: AppointmentStatus): Observable<{ message: string }> {
     return this.http.patch<{ message: string }>(`${this.apiUrl}/admin/appointments/${encodeURIComponent(id)}`, { status }, { headers: this.adminHeaders() });
-  }
-
-  getAdminSite(): Observable<SiteContent> {
-    return this.http.get<SiteContent>(`${this.apiUrl}/admin/site`, { headers: this.adminHeaders() });
-  }
-
-  saveSite(content: SiteContent): Observable<{ message: string }> {
-    return this.http.put<{ message: string }>(`${this.apiUrl}/admin/site`, content, { headers: this.adminHeaders() });
   }
 
   uploadImage(file: File): Observable<{ url: string }> {

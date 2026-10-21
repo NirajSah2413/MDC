@@ -15,10 +15,9 @@ import {
   getAdminProfile,
   getSiteContent,
   saveAdminProfile,
-  saveSiteContent,
   verifyAdminCredentials
 } from "./database.js";
-import { validateAdminProfile, validateAppointment, validateSiteContent } from "./validation.js";
+import { validateAdminProfile, validateAppointment, validateDoctors } from "./validation.js";
 import {
   addOffer,
   createOffer,
@@ -28,10 +27,12 @@ import {
   managedImageDir,
   migrateLegacyPromotion,
   readOffers,
+  readDoctors,
   removeUnreferencedManagedImages,
   setOfferEnabled,
   syncAppointmentArchives,
-  writeAppointmentMonth
+  writeAppointmentMonth,
+  writeDoctors
 } from "./file-storage.js";
 
 const app = express();
@@ -119,6 +120,13 @@ app.get("/api/public/site", (_req, res, next) => {
     next(error);
   }
 });
+app.get("/api/public/doctors", (_req, res, next) => {
+  try {
+    res.json(readDoctors());
+  } catch (error) {
+    next(error);
+  }
+});
 app.post("/api/public/appointments", bookingLimiter, (req, res, next) => {
   const data = validateAppointment(req.body || {});
   if (typeof data === "string") return res.status(400).json({ error: data });
@@ -160,6 +168,33 @@ app.post("/api/admin/login", loginLimiter, (req, res) => {
 });
 
 app.use("/api/admin", requireAdmin);
+app.get("/api/admin/doctors", (_req, res, next) => {
+  try {
+    res.json(readDoctors());
+  } catch (error) {
+    next(error);
+  }
+});
+app.put("/api/admin/doctors", (req, res, next) => {
+  const doctors = validateDoctors(req.body);
+  if (typeof doctors === "string") return res.status(400).json({ error: doctors });
+  try {
+    const previousDoctors = readDoctors();
+    writeDoctors(doctors);
+    const removedImages = previousDoctors
+      .filter(doctor => {
+        const nextDoctor = doctors.find(item => item.id === doctor.id);
+        return !nextDoctor || nextDoctor.image !== doctor.image;
+      })
+      .map(doctor => doctor.image)
+      .filter(Boolean);
+    const profile = getAdminProfile(db);
+    removeUnreferencedManagedImages(removedImages, getSiteContent(db), readOffers(), profile.imageUrl);
+    res.json({ doctors, message: "Doctors list saved." });
+  } catch (error) {
+    next(error);
+  }
+});
 app.get("/api/admin/profile", (_req, res) => res.json(getAdminProfile(db)));
 app.put("/api/admin/profile", (req, res) => {
   const profile = validateAdminProfile(req.body || {});
@@ -170,8 +205,12 @@ app.put("/api/admin/profile", (req, res) => {
 app.put("/api/admin/password", (req, res) => {
   const currentPassword = typeof req.body?.currentPassword === "string" ? req.body.currentPassword : "";
   const newPassword = typeof req.body?.newPassword === "string" ? req.body.newPassword : "";
-  if (newPassword.length < 8 || newPassword.length > 128) {
-    return res.status(400).json({ error: "Your new password must contain 8 to 128 characters." });
+  if (newPassword.length < 12 || newPassword.length > 128 ||
+      !/[a-z]/.test(newPassword) || !/[A-Z]/.test(newPassword) ||
+      !/\d/.test(newPassword) || !/[^A-Za-z0-9\s]/.test(newPassword)) {
+    return res.status(400).json({
+      error: "Your new password must be 12 to 128 characters and include lowercase and uppercase letters, a number, and a symbol."
+    });
   }
   if (!changeAdminPassword(db, currentPassword, newPassword)) {
     return res.status(400).json({ error: "Your current password is incorrect." });
@@ -200,33 +239,6 @@ app.patch("/api/admin/appointments/:id", (req, res) => {
     writeAppointmentMonth(db, appointment.requestedAt);
   });
   res.json({ message: "Appointment status updated." });
-});
-app.get("/api/admin/site", (_req, res, next) => {
-  try {
-    res.json(getSiteContent(db));
-  } catch (error) {
-    next(error);
-  }
-});
-app.put("/api/admin/site", (req, res, next) => {
-  const validationError = validateSiteContent(req.body);
-  if (validationError) return res.status(400).json({ error: validationError });
-  try {
-    const currentContent = getSiteContent(db);
-    saveSiteContent(db, req.body);
-    const profile = getAdminProfile(db);
-    removeUnreferencedManagedImages(
-      currentContent.gallery.map(item => item.image).filter(image =>
-        !req.body.gallery.some(nextImage => nextImage.image === image)
-      ),
-      req.body,
-      readOffers(),
-      profile.imageUrl
-    );
-    res.json({ message: "Website content saved." });
-  } catch (error) {
-    next(error);
-  }
 });
 app.post("/api/admin/uploads", imageUpload.single("image"), (req, res) => {
   if (!req.file) return res.status(400).json({ error: "Choose an image to upload." });

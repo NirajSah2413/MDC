@@ -45,6 +45,15 @@ export interface ClinicOffer {
   updatedAt: string;
 }
 
+export interface Doctor {
+  id: string;
+  name: string;
+  qualification: string;
+  description: string;
+  expertise: string;
+  image: string;
+}
+
 export interface ClinicReview {
   author: string;
   rating: number;

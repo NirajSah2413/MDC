@@ -1,0 +1,54 @@
+<div class="announcement"><span class="announcement-dot"></span> {{ copy.common.announcement }} <span class="announcement-divider">·</span> <a routerLink="/">{{ copy.common.backToClinic }} <span aria-hidden="true">{{ copy.common.externalArrow }}</span></a></div>
+<header class="site-header">
+  <a class="brand" routerLink="/" [attr.aria-label]="copy.brand.homeLabel"><img class="brand-logo" src="/assets/brand/mdc%20logo%201.png" [alt]="copy.brand.name"></a>
+  <button class="mobile-menu-toggle" type="button" [attr.aria-label]="menuOpen ? copy.common.closeNavigation : copy.common.openNavigation" [attr.aria-expanded]="menuOpen" (click)="menuOpen = !menuOpen">☰</button>
+  <nav class="main-nav" [attr.aria-label]="copy.team.navigation" [class.open]="menuOpen">
+    <a routerLink="/" fragment="care" (click)="menuOpen = false">{{ copy.common.ourCare }}</a>
+    <a routerLink="/gallery" (click)="menuOpen = false">{{ copy.home.clinicGallery }}</a>
+    <a routerLink="/team" (click)="menuOpen = false">{{ copy.common.ourTeam }}</a>
+    <a routerLink="/" fragment="contact" (click)="menuOpen = false">{{ copy.common.contact }}</a>
+  </nav>
+  <div class="header-actions"><a class="text-button" routerLink="/admin">{{ copy.common.adminLogin }} <span>{{ copy.common.externalArrow }}</span></a><button class="button button-dark" type="button" (click)="appointmentOpen = true">{{ copy.common.bookVisit }} <span>{{ copy.common.externalArrow }}</span></button></div>
+</header>
+<main class="team-page">
+  <a class="underlined-link" routerLink="/">{{ copy.team.backToClinic }}</a>
+  <section class="team-heading">
+    <div class="eyebrow"><span></span> {{ copy.team.eyebrow }}</div>
+    <h1>{{ copy.team.titleFirst }}<br><em>{{ copy.team.titleEmphasis }}</em></h1>
+    <p>{{ copy.team.description }}</p>
+  </section>
+  @if (loading) {
+    <div class="empty-state">{{ copy.common.loadingWebsite }}</div>
+  } @else if (error) {
+    <div class="empty-state" role="alert">{{ error }}</div>
+  } @else if (doctors.length) {
+    <section class="doctor-list" [attr.aria-label]="copy.team.doctorList">
+      @for (doctor of doctors; track doctor.id; let index = $index) {
+        <article class="doctor-profile">
+          <div class="doctor-photo">
+            @if (doctor.image) { <img [src]="imageUrl(doctor.image)" [alt]="doctor.name" [loading]="index > 1 ? 'lazy' : 'eager'"> }
+            @else { <div class="doctor-photo-placeholder" aria-hidden="true">{{ doctor.name.charAt(0) }}</div> }
+          </div>
+          <div class="doctor-information">
+            <div class="eyebrow"><span></span> {{ copy.team.doctorLabel }} · {{ index + 1 }}</div>
+            <h2>{{ doctor.name }}</h2>
+            @if (doctor.qualification) { <p class="doctor-qualification">{{ doctor.qualification }}</p> }
+            <p>{{ doctor.description }}</p>
+            <div class="doctor-expertise"><strong>{{ copy.team.expertise }}</strong><span>{{ doctor.expertise }}</span></div>
+          </div>
+        </article>
+      }
+    </section>
+  } @else {
+    <div class="team-empty-state">
+      <span class="team-empty-mark" aria-hidden="true">✳</span>
+      <h2>{{ copy.team.profilesComingSoon }}</h2>
+      <p>{{ copy.team.profilesDescription }}</p>
+    </div>
+  }
+  @if (clinic) {
+    <div class="team-appointment-cta"><p>{{ copy.team.appointmentPrompt }}</p><button class="button button-dark" type="button" (click)="appointmentOpen = true">{{ copy.common.bookVisit }} <span>{{ copy.common.externalArrow }}</span></button></div>
+    <app-appointment-modal [open]="appointmentOpen" [clinic]="clinic" (closed)="appointmentOpen = false" />
+  }
+</main>
+<footer class="gallery-page-footer"><a routerLink="/">{{ copy.team.backToClinic }}</a><span>{{ copy.common.copyrightPrefix }} {{ today | date:'yyyy' }} {{ copy.brand.name }}</span></footer>
