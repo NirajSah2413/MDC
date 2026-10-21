@@ -25,16 +25,10 @@
             <label><input type="radio" name="gender" [(ngModel)]="form.gender" value="Other"><span>{{ copy.appointment.other }}</span></label>
           </fieldset>
           <label class="phone-field">{{ copy.appointment.phoneNumber }} <span>{{ copy.common.requiredMark }}</span>
-            <div class="phone-input"><span>{{ copy.appointment.countryCode }}</span><input name="phone" [(ngModel)]="form.phone" (ngModelChange)="duplicatePhone = ''" type="tel" inputmode="numeric" autocomplete="tel-national" pattern="[0-9]{10}" maxlength="10" [placeholder]="copy.appointment.phonePlaceholder" required></div>
+            <div class="phone-input"><span>{{ copy.appointment.countryCode }}</span><input name="phone" [(ngModel)]="form.phone" type="tel" inputmode="numeric" autocomplete="tel-national" pattern="[0-9]{10}" maxlength="10" [placeholder]="copy.appointment.phonePlaceholder" required></div>
           </label>
           <label>{{ copy.appointment.email }} <small>{{ copy.appointment.emailOptional }}</small><input name="email" [(ngModel)]="form.email" type="email" autocomplete="email" [placeholder]="copy.appointment.emailPlaceholder"></label>
           <label class="problem-field">{{ copy.appointment.problemFacing }} <small>{{ copy.appointment.problemOptional }}</small><textarea name="problem" [(ngModel)]="form.problem" [placeholder]="copy.appointment.problemPlaceholder" maxlength="1000" rows="3"></textarea></label>
-          @if (duplicatePhone) {
-            <p class="form-message success-message" role="status">
-              {{ copy.appointment.duplicateOpen }}
-              <a class="duplicate-phone-link" [href]="phoneHref(duplicatePhone)">{{ copy.appointment.callPhone }} {{ duplicatePhone }}</a>
-            </p>
-          }
           @if (error) { <p class="form-message error-message" role="alert">{{ error }}</p> }
           <button class="button button-dark submit-appointment" type="submit" [disabled]="submitting || appointmentForm.invalid">
             {{ submitting ? copy.appointment.sending : copy.appointment.submit }} <span>{{ copy.common.externalArrow }}</span>

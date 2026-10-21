@@ -24,15 +24,15 @@ To create a production frontend build, run `npm run build` from this same folder
 
 1. Open <http://localhost:4200>.
 2. Use the navigation or footer links to visit the **Our team** page, jump to clinic sections, or browse the gallery. The gallery starts with an automatically fading photo slideshow, followed by a muted YouTube demo video that starts when scrolled into view (player controls include pause and sound), then a horizontally scrollable photo gallery. Browse individual speciality pages, each with its own illustration and separate English and Hindi explanations.
-3. Select **Book a visit** to request an appointment. Name, age, gender, and a 10-digit Indian phone number are required; email and a description of the problem are optional. The clinic team can view the problem description alongside the booking. If that phone number already has an open request, the form shows the existing-request message and a direct, clickable clinic phone number instead of adding a duplicate.
+3. Select **Book a visit** to request an appointment. Name, age, gender, and a 10-digit Indian phone number are required; email and a description of the problem are optional. The clinic team can view the problem description alongside the booking. To protect patient privacy, the confirmation text is the same whether a phone number already has an open request or a new one is created; repeat open requests are not duplicated. The modal also provides the clinic’s direct, clickable phone number.
 4. Phone links use the device's dialler. Email links use the device's configured email application chooser. Maps links open directions.
 
 ## For clinic administrators
 
 1. Select **Admin login** or open <http://localhost:4200/admin>.
-2. The initial local-development credentials are:
+2. The initial local-development credentials are `admin` / `admin`. These work only while the API binds to loopback (`127.0.0.1`). Change the demo password to a strong password before exposing or deploying the API.
 
-   A successful login displays a confirmation. Incorrect credentials show an error beside the sign-in form. Change the demo password after the first login.
+   A successful login displays a confirmation. Incorrect credentials show an error beside the sign-in form. Production requires explicit admin credentials (12+ characters including lowercase, uppercase, number and symbol) and a unique base64url JWT secret generated from at least 32 random bytes. If the existing database still accepts `admin` / `admin`, production startup is refused; sign in locally and change the password first.
 3. Use the dashboard sections:
    - **Appointments:** see waiting requests and recent history, update statuses, export a CSV, and search monthly JSON archives by year and month. Appointment archives are retained for the last 10 calendar years.
    - **Doctors:** add, update, and remove doctor profiles, including qualifications, introduction, expertise, and photos. Profiles appear on the public **Our team** page. Doctor data is stored in `data/doctors.json`.
@@ -69,7 +69,9 @@ Static website and admin interface copy (labels, headings, messages, placeholder
 
 ## Configuration and deployment
 
-Local development uses the demo admin credentials automatically; no environment file is needed. For custom API credentials, copy `.env.example` to `.env` in this project folder and set `ADMIN_USERNAME`, `ADMIN_PASSWORD`, and a strong `JWT_SECRET`. Do not publish the demo credentials or `.env`.
+Local development uses the demo admin credentials automatically and binds the API to `127.0.0.1`; no environment file is needed. For deployment, copy `.env.example` to `.env`, set a strong `ADMIN_PASSWORD`, generate `JWT_SECRET` with `node -e "console.log(require('node:crypto').randomBytes(32).toString('base64url'))"`, and set `HOST` to the interface required by your hosting provider. The API refuses to bind beyond loopback with the default `admin` / `admin` account, and production refuses missing/weak credentials or a database that still accepts those defaults. Never publish `.env`.
+
+Appointment confirmations deliberately do not disclose whether the supplied phone number has an existing open request. This prevents unauthenticated callers from probing for patient booking status. The server still avoids creating a duplicate open appointment.
 
 The default clinic email is `mahamayadantchikitsalaya@gmail.com`, the phone is `+91 9109378708`, and the address is Rudra Vihar Phase-1, Ashok Nagar, Sarkanda, Bilaspur, Chhattisgarh 495006. These public contact details can be edited by an administrator.
 

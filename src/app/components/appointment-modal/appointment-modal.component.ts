@@ -21,7 +21,6 @@ export class AppointmentModalComponent {
   submitting = false;
   error = '';
   success = '';
-  duplicatePhone = '';
   form = { name: '', age: null as number | null, gender: '', phone: '', email: '', problem: '' };
 
   @HostListener('document:keydown.escape')
@@ -33,7 +32,6 @@ export class AppointmentModalComponent {
     this.closed.emit();
     this.error = '';
     this.success = '';
-    this.duplicatePhone = '';
   }
 
   submit(): void {
@@ -59,11 +57,7 @@ export class AppointmentModalComponent {
         this.submitting = false;
       },
       error: (error: HttpErrorResponse) => {
-        if (error.status === 409 && error.error?.code === 'OPEN_APPOINTMENT_EXISTS') {
-          this.duplicatePhone = phone;
-        } else {
-          this.error = error.error?.error || this.copy.appointment.requestError;
-        }
+        this.error = error.error?.error || this.copy.appointment.requestError;
         this.submitting = false;
       }
     });

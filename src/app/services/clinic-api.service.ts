@@ -34,8 +34,8 @@ export class ClinicApiService {
     phone: string;
     email: string;
     problem: string;
-  }): Observable<{ id: string; message: string }> {
-    return this.http.post<{ id: string; message: string }>(`${this.apiUrl}/public/appointments`, request);
+  }): Observable<{ message: string }> {
+    return this.http.post<{ message: string }>(`${this.apiUrl}/public/appointments`, request);
   }
 
   login(username: string, password: string): Observable<{ token: string }> {

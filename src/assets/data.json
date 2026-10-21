@@ -177,8 +177,7 @@
     "emailUnavailable": "Email details coming soon",
     "googleMaps": "Google Maps",
     "validationError": "Please complete the required fields and enter a valid 10-digit number.",
-    "requestError": "We could not send your request. Please try again or call the clinic.",
-    "duplicateOpen": "You already have an open appointment request. Our team will call you soon. If you need help sooner, call us directly:"
+    "requestError": "We could not send your request. Please try again or call the clinic."
   },
   "specialty": {
     "backToCare": "Back to all care",

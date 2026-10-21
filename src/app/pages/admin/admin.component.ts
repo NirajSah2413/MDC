@@ -441,7 +441,11 @@ export class AdminComponent implements OnInit {
       item.name, item.age, item.gender, `+91 ${item.phone}`, item.email, item.problem, item.status,
       this.formatDate(item.requestedAt), item.statusUpdatedAt ? this.formatDate(item.statusUpdatedAt) : ''
     ]);
-    const csv = [headings, ...rows].map(row => row.map(value => `"${String(value).replace(/"/g, '""')}"`).join(',')).join('\r\n');
+    const csv = [headings, ...rows].map(row => row.map(value => {
+      const text = String(value);
+      const safeText = /^[\u0000-\u0020\uFEFF]*[=+\-@]/.test(text) ? `'${text}` : text;
+      return `"${safeText.replace(/"/g, '""')}"`;
+    }).join(',')).join('\r\n');
     const link = document.createElement('a');
     const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
     link.href = url;

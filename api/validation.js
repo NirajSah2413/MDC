@@ -1,6 +1,12 @@
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const localImagePattern = /^\/(?:assets|uploads)\/[A-Za-z0-9._/-]+\.(?:jpe?g|png|webp|gif|svg)$/i;
 
+export function isStrongAdminPassword(password) {
+  return typeof password === "string" && password.length >= 12 && password.length <= 128 &&
+    /[a-z]/.test(password) && /[A-Z]/.test(password) &&
+    /\d/.test(password) && /[^A-Za-z0-9\s]/.test(password);
+}
+
 export function validateAdminProfile(body) {
   const fullName = typeof body.fullName === "string" ? body.fullName.trim() : "";
   const phone = typeof body.phone === "string" ? body.phone.replace(/\D/g, "") : "";
