@@ -12,7 +12,7 @@ import { UI_COPY } from '../../ui-copy';
   selector: 'app-team',
   standalone: true,
   imports: [CommonModule, RouterLink, AppointmentModalComponent],
-  templateUrl: './team.component.html'
+  templateUrl: './team.component.html',
 })
 export class TeamComponent implements OnInit {
   private readonly api = inject(ClinicApiService);
@@ -28,9 +28,9 @@ export class TeamComponent implements OnInit {
   ngOnInit(): void {
     forkJoin({
       doctors: this.api.getPublicDoctors(),
-      site: this.api.getPublicSite()
+      site: this.api.getPublicSite(),
     }).subscribe({
-      next: result => {
+      next: (result) => {
         this.doctors = result.doctors;
         this.clinic = result.site.clinic;
         this.loading = false;
@@ -39,7 +39,7 @@ export class TeamComponent implements OnInit {
       error: (error: HttpErrorResponse) => {
         this.loading = false;
         this.error = error.error?.error || this.copy.team.loadError;
-      }
+      },
     });
   }
 

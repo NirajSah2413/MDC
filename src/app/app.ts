@@ -7,7 +7,7 @@ import { UI_COPY } from './ui-copy';
   selector: 'app-root',
   imports: [RouterOutlet],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrl: './app.scss',
 })
 export class App implements OnInit {
   private readonly title = inject(Title);
@@ -15,6 +15,9 @@ export class App implements OnInit {
 
   ngOnInit(): void {
     this.title.setTitle(UI_COPY.brand.metaTitle);
-    this.meta.updateTag({ name: 'description', content: UI_COPY.brand.metaDescription });
+    this.meta.updateTag({
+      name: 'description',
+      content: UI_COPY.brand.metaDescription,
+    });
   }
 }

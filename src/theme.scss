@@ -21,7 +21,7 @@ body {
 }
 
 .site-header {
-  background: rgba(239, 248, 252, .94);
+  background: rgba(239, 248, 252, 0.94);
   border-bottom-color: #d7e8ef;
 }
 
@@ -30,7 +30,11 @@ body {
 }
 
 .image-tint {
-  background: linear-gradient(145deg, rgba(198, 232, 244, .08), rgba(22, 91, 123, .18));
+  background: linear-gradient(
+    145deg,
+    rgba(198, 232, 244, 0.08),
+    rgba(22, 91, 123, 0.18)
+  );
 }
 
 .hero-orbit {
@@ -112,7 +116,7 @@ body {
   margin: 0 auto;
   padding: 43px 3.2% 40px;
   display: grid;
-  grid-template-columns: 1.2fr .8fr 1fr 1.15fr;
+  grid-template-columns: 1.2fr 0.8fr 1fr 1.15fr;
   gap: clamp(25px, 4vw, 68px);
   background: #fff;
   border: 1px solid #e3eef3;
@@ -156,8 +160,10 @@ body {
   gap: 10px;
   width: fit-content;
   color: #5e717b;
-  font-size: 11px;
-  transition: color .18s, transform .18s;
+  font-size: 12px;
+  transition:
+    color 0.18s,
+    transform 0.18s;
 }
 
 .footer-socials > a:hover,
@@ -210,7 +216,7 @@ body {
   position: relative;
   color: #203c4c;
   font: 700 16px var(--display);
-  letter-spacing: -.035em;
+  letter-spacing: -0.035em;
 }
 
 .footer-column h2:after {
@@ -254,7 +260,7 @@ body {
   width: 100% !important;
   align-items: flex-start !important;
   gap: 11px !important;
-  font-size: 10px !important;
+  font-size: 12px !important;
 }
 
 .footer-contact-row > span:last-child {
@@ -338,7 +344,7 @@ body {
   align-items: center;
   gap: 12px 24px;
   color: #748995;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .footer-credit strong {
@@ -449,14 +455,14 @@ body {
   }
 
   .footer-column > a {
-    font-size: 10px;
+    font-size: 12px;
   }
 
   .footer-bottom {
     padding: 17px 6px 22px;
     flex-direction: column;
     align-items: flex-start;
-    font-size: 9px;
+    font-size: 12px;
   }
 }
 
@@ -494,7 +500,10 @@ body {
   border: 1px solid #c7e2ed;
   border-radius: 50%;
   cursor: pointer;
-  transition: color .2s, background .2s, transform .2s;
+  transition:
+    color 0.2s,
+    background 0.2s,
+    transform 0.2s;
 }
 
 .specialty-controls button:hover {
@@ -548,16 +557,16 @@ body {
 
 .footer-overline {
   color: #80cbe2;
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 700;
-  letter-spacing: .16em;
+  letter-spacing: 0.16em;
 }
 
 .footer-feature h2 {
   margin: 15px 0 0;
   color: white;
   font: 600 clamp(34px, 4.5vw, 55px)/1.02 var(--display);
-  letter-spacing: -.07em;
+  letter-spacing: -0.07em;
 }
 
 .footer-feature h2 em {
@@ -574,11 +583,13 @@ body {
   color: #073e59;
   background: #bfeaf5;
   border: 0;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   cursor: pointer;
   white-space: nowrap;
-  transition: background .2s, transform .2s;
+  transition:
+    background 0.2s,
+    transform 0.2s;
 }
 
 .footer-book-link:hover {
@@ -589,7 +600,7 @@ body {
 .footer-columns {
   padding: 38px 0 44px;
   display: grid;
-  grid-template-columns: 1.12fr .65fr 1.05fr 1.1fr;
+  grid-template-columns: 1.12fr 0.65fr 1.05fr 1.1fr;
   gap: clamp(24px, 4vw, 58px);
 }
 
@@ -615,13 +626,13 @@ body {
   max-width: 270px;
   margin: 17px 0 20px;
   color: #b7ced8;
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.8;
 }
 
 .footer-socials {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  justify-items: start;
   gap: 7px;
 }
 
@@ -630,8 +641,12 @@ body {
   color: #d9eaf0;
   border: 1px solid #ffffff35;
   border-radius: 2px 10px 2px 10px;
-  font-size: 9px;
-  transition: color .2s, border-color .2s, background .2s;
+  font-size: 12px;
+  white-space: nowrap;
+  transition:
+    color 0.2s,
+    border-color 0.2s,
+    background 0.2s;
 }
 
 .footer-socials a:hover {
@@ -658,15 +673,17 @@ body {
 .footer-contact h3 {
   margin: 4px 0 9px;
   color: #80cbe2;
-  font: 700 10px var(--sans);
-  letter-spacing: .14em;
+  font: 700 12px var(--sans);
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
 .footer-links a {
   color: #c8dce4;
-  font-size: 10px;
-  transition: color .2s, transform .2s;
+  font-size: 12px;
+  transition:
+    color 0.2s,
+    transform 0.2s;
 }
 
 .footer-links a:hover,
@@ -676,19 +693,31 @@ body {
 }
 
 .footer-specialties {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: flex;
+  flex-direction: column;
   align-content: start;
-  gap: 11px 14px;
+  gap: 11px;
 }
 
 .footer-specialties h3 {
-  grid-column: 1 / -1;
+  width: 100%;
 }
 
 .footer-specialties a span {
   color: #80cbe2;
-  font-size: 9px;
+  font-size: 12px;
+}
+
+.footer-specialties a {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  min-width: 0;
+}
+
+.footer-specialties a span {
+  flex: 0 0 auto;
+  white-space: nowrap;
 }
 
 .footer-contact {
@@ -696,7 +725,9 @@ body {
 }
 
 .footer-contact a {
-  transition: color .2s, transform .2s;
+  transition:
+    color 0.2s,
+    transform 0.2s;
 }
 
 .footer-address,
@@ -707,7 +738,7 @@ body {
   color: #e1edf2;
   background: #ffffff0b;
   border-left: 2px solid #43afcf;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.6;
   overflow-wrap: anywhere;
 }
@@ -718,15 +749,44 @@ body {
   display: block;
   margin-top: 3px;
   color: #8faebc;
-  font-size: 9px;
+  font-size: 12px;
+}
+
+.footer-address {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.footer-address-text {
+  min-width: 0;
+}
+
+.footer-address-icon {
+  display: inline;
+  flex: 0 0 auto;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.footer-google-maps {
+  width: 100%;
+  padding: 9px 10px;
+  color: #e1edf2;
+  background: #ffffff0b;
+  border-left: 2px solid #43afcf;
+  font-size: 12px;
+  line-height: 1.6;
 }
 
 .footer-map-link {
   margin-top: 4px;
   padding: 8px 0;
   color: #80cbe2;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
+  white-space: nowrap;
 }
 
 .footer-bottom {
@@ -738,7 +798,7 @@ body {
   gap: 10px 24px;
   border-top: 1px solid #ffffff25;
   color: #9bb5c0;
-  font-size: 9px;
+  font-size: 12px;
 }
 
 .footer-credit strong {
@@ -774,7 +834,7 @@ body {
 .password-recovery-note {
   margin: 12px 0;
   color: var(--muted);
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.6;
 }
 
@@ -809,7 +869,7 @@ body {
   color: #075b82;
   background: transparent;
   border: 0;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
   cursor: pointer;
 }
@@ -827,7 +887,7 @@ body {
   justify-content: space-between;
   gap: 12px;
   color: #193746;
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .password-strength-heading span {
@@ -845,7 +905,9 @@ body {
   display: block;
   height: 100%;
   background: #d19a42;
-  transition: width .2s ease, background-color .2s ease;
+  transition:
+    width 0.2s ease,
+    background-color 0.2s ease;
 }
 
 .password-strength-meter > span.strong {
@@ -867,7 +929,7 @@ body {
   align-items: center;
   gap: 7px;
   color: #637b87;
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.5;
 }
 
@@ -880,7 +942,7 @@ body {
   place-items: center;
   border: 1px solid #aabcc5;
   border-radius: 50%;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .password-rules li.met,
@@ -985,11 +1047,11 @@ body {
   }
 
   .footer-specialties {
-    gap: 10px 8px;
+    gap: 10px;
   }
 
   .footer-specialties a {
-    font-size: 9px;
+    font-size: 12px;
   }
 
   .footer-bottom {
@@ -1181,13 +1243,13 @@ body {
   }
 
   .footer-specialties {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 11px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
   }
 
   .footer-specialties h3 {
-    grid-column: 1 / -1;
+    width: 100%;
   }
 
   .appointment-dialog .form-row {
@@ -1299,7 +1361,7 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform .7s ease;
+  transition: transform 0.7s ease;
 }
 
 .specialty-detail-photo:hover > img {
@@ -1479,8 +1541,8 @@ body {
 .full-gallery-heading h1 {
   margin: 18px 0;
   color: #193746;
-  font: 700 clamp(42px, 6vw, 76px)/.98 var(--display);
-  letter-spacing: -.065em;
+  font: 700 clamp(42px, 6vw, 76px)/0.98 var(--display);
+  letter-spacing: -0.065em;
 }
 
 .full-gallery-heading h1 em {
@@ -1551,7 +1613,7 @@ body {
   gap: 18px;
   color: #b7ced8;
   background: #073e59;
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .gallery-page-footer a {
@@ -1613,7 +1675,7 @@ body {
   .full-gallery-card figcaption {
     min-height: 48px;
     padding: 12px;
-    font-size: 11px;
+    font-size: 12px;
   }
 
   .gallery-page-footer {
@@ -1727,8 +1789,8 @@ body {
 
 .offer-admin-copy small {
   color: #637b87;
-  font-size: 10px;
-  letter-spacing: .03em;
+  font-size: 12px;
+  letter-spacing: 0.03em;
 }
 
 .offer-toggle {
@@ -1736,7 +1798,7 @@ body {
 }
 
 .offer-expired {
-  opacity: .78;
+  opacity: 0.78;
 }
 
 .offer-list-section .admin-subheading small {
@@ -1823,7 +1885,9 @@ body {
 }
 
 @keyframes ticker-loop {
-  to { transform: translateX(-50%); }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 .footer-map-link {
@@ -1861,7 +1925,9 @@ body {
   object-fit: cover;
   opacity: 0;
   transform: scale(1.02);
-  transition: opacity 1.1s ease, transform 5s ease;
+  transition:
+    opacity 1.1s ease,
+    transform 5s ease;
 }
 
 .gallery-hero-slide.active {
@@ -1885,16 +1951,16 @@ body {
 }
 
 .gallery-hero-caption > span {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
-  letter-spacing: .16em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
 }
 
 .gallery-hero-caption h1 {
   margin: 12px 0 0;
   font: 600 clamp(30px, 5vw, 60px)/1.08 var(--display);
-  letter-spacing: -.055em;
+  letter-spacing: -0.055em;
 }
 
 .gallery-hero-controls,
@@ -1946,7 +2012,7 @@ body {
   margin: 14px 0 12px;
   color: #193746;
   font: 600 clamp(30px, 4vw, 46px)/1.08 var(--display);
-  letter-spacing: -.05em;
+  letter-spacing: -0.05em;
 }
 
 .gallery-video-heading p {
@@ -1994,7 +2060,7 @@ body {
   display: block;
   margin-top: 10px;
   color: var(--muted);
-  font-size: 10px;
+  font-size: 12px;
   text-align: right;
 }
 
@@ -2010,8 +2076,8 @@ body {
 .gallery-photo-section .full-gallery-heading h2 {
   margin: 18px 0;
   color: #193746;
-  font: 700 clamp(42px, 6vw, 76px)/.98 var(--display);
-  letter-spacing: -.065em;
+  font: 700 clamp(42px, 6vw, 76px)/0.98 var(--display);
+  letter-spacing: -0.065em;
 }
 
 .gallery-photo-section .full-gallery-heading h2 em {
@@ -2075,8 +2141,8 @@ body {
 .team-heading h1 {
   margin: 20px 0 18px;
   color: #193746;
-  font: 700 clamp(44px, 6vw, 76px)/.98 var(--display);
-  letter-spacing: -.065em;
+  font: 700 clamp(44px, 6vw, 76px)/0.98 var(--display);
+  letter-spacing: -0.065em;
 }
 
 .team-heading h1 em {
@@ -2142,7 +2208,7 @@ body {
   margin: 16px 0 8px;
   color: #193746;
   font: 600 clamp(30px, 4vw, 48px)/1.08 var(--display);
-  letter-spacing: -.05em;
+  letter-spacing: -0.05em;
   overflow-wrap: anywhere;
 }
 
@@ -2243,7 +2309,7 @@ body {
   place-items: center;
   padding: 12px;
   color: #526c77;
-  font-size: 11px;
+  font-size: 12px;
   text-align: center;
 }
 

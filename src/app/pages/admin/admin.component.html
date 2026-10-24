@@ -1,14 +1,49 @@
 @if (!signedIn) {
   <main class="admin-login">
-    <a class="brand" routerLink="/" [attr.aria-label]="copy.brand.homeLabel"><img class="brand-logo" src="/assets/brand/mdc%20logo%201.png" [alt]="copy.brand.name"></a>
+    <a class="brand" routerLink="/" [attr.aria-label]="copy.brand.homeLabel"
+      ><img
+        class="brand-logo"
+        src="/assets/brand/mdc%20logo%201.png"
+        [alt]="copy.brand.name"
+    /></a>
     <a class="admin-back" routerLink="/">← {{ copy.common.backToWebsite }}</a>
-    <div class="eyebrow"><span></span> {{ copy.admin.loginEyebrow }}</div><h2>{{ copy.admin.welcomeFirst }}<br><em>{{ copy.admin.welcomeEmphasis }}</em></h2><p>{{ copy.admin.loginDescription }}</p>
+    <div class="eyebrow"><span></span> {{ copy.admin.loginEyebrow }}</div>
+    <h2>
+      {{ copy.admin.welcomeFirst }}<br /><em>{{
+        copy.admin.welcomeEmphasis
+      }}</em>
+    </h2>
+    <p>{{ copy.admin.loginDescription }}</p>
     <form (ngSubmit)="signIn()">
-      <label>{{ copy.admin.username }}<input name="username" [(ngModel)]="username" autocomplete="username" [placeholder]="copy.admin.usernamePlaceholder" required></label>
-      <label>{{ copy.admin.password }}<input name="password" [(ngModel)]="password" type="password" autocomplete="current-password" [placeholder]="copy.admin.passwordPlaceholder" required></label>
-      @if (loginError) { <div class="login-error" role="alert">{{ loginError }}</div> }
-      @if (requestError) { <div class="login-error" role="alert">{{ requestError }}</div> }
-      <button class="button button-dark" type="submit" [disabled]="busy">{{ busy ? copy.admin.signingIn : copy.admin.signIn }} <span>{{ copy.common.externalArrow }}</span></button>
+      <label
+        >{{ copy.admin.username
+        }}<input
+          name="username"
+          [(ngModel)]="username"
+          autocomplete="username"
+          [placeholder]="copy.admin.usernamePlaceholder"
+          required
+      /></label>
+      <label
+        >{{ copy.admin.password
+        }}<input
+          name="password"
+          [(ngModel)]="password"
+          type="password"
+          autocomplete="current-password"
+          [placeholder]="copy.admin.passwordPlaceholder"
+          required
+      /></label>
+      @if (loginError) {
+        <div class="login-error" role="alert">{{ loginError }}</div>
+      }
+      @if (requestError) {
+        <div class="login-error" role="alert">{{ requestError }}</div>
+      }
+      <button class="button button-dark" type="submit" [disabled]="busy">
+        {{ busy ? copy.admin.signingIn : copy.admin.signIn }}
+        <span>{{ copy.common.externalArrow }}</span>
+      </button>
     </form>
     <small class="demo-note">{{ copy.admin.recoveryNote }}</small>
     <small class="demo-note">{{ copy.admin.demoNote }}</small>
@@ -17,174 +52,904 @@
   <main class="admin-dialog admin-page-shell">
     <div class="admin-panel">
       <aside class="admin-sidebar">
-        <a class="admin-brand" routerLink="/"><span class="brand-mark">m<span>+</span></span><span>{{ copy.admin.dashboard }}</span></a>
+        <a class="admin-brand" routerLink="/"
+          ><span class="brand-mark">m<span>+</span></span
+          ><span>{{ copy.admin.dashboard }}</span></a
+        >
         <nav class="admin-nav" [attr.aria-label]="copy.admin.sections">
-          <button class="admin-tab" [class.active]="tab === 'appointments'" (click)="selectTab('appointments')">▤ <span>{{ copy.admin.appointments }}</span></button>
-          <button class="admin-tab" [class.active]="tab === 'doctors'" (click)="selectTab('doctors')">◉ <span>{{ copy.admin.doctors }}</span></button>
-          <button class="admin-tab" [class.active]="tab === 'promotion'" (click)="selectTab('promotion')">✦ <span>{{ copy.admin.offers }}</span></button>
-          <button class="admin-tab" [class.active]="tab === 'profile'" (click)="selectTab('profile')">◉ <span>{{ copy.admin.profile }}</span></button>
+          <button
+            class="admin-tab"
+            [class.active]="tab === 'appointments'"
+            (click)="selectTab('appointments')"
+          >
+            ▤ <span>{{ copy.admin.appointments }}</span>
+          </button>
+          <button
+            class="admin-tab"
+            [class.active]="tab === 'doctors'"
+            (click)="selectTab('doctors')"
+          >
+            ◉ <span>{{ copy.admin.doctors }}</span>
+          </button>
+          <button
+            class="admin-tab"
+            [class.active]="tab === 'promotion'"
+            (click)="selectTab('promotion')"
+          >
+            ✦ <span>{{ copy.admin.offers }}</span>
+          </button>
+          <button
+            class="admin-tab"
+            [class.active]="tab === 'profile'"
+            (click)="selectTab('profile')"
+          >
+            ◉ <span>{{ copy.admin.profile }}</span>
+          </button>
         </nav>
-        <div class="admin-sidebar-bottom"><span class="online-dot"></span> {{ copy.admin.connected }}<button class="text-button" (click)="signOut()">{{ copy.admin.signOut }} {{ copy.common.externalArrow }}</button></div>
+        <div class="admin-sidebar-bottom">
+          <span class="online-dot"></span> {{ copy.admin.connected
+          }}<button class="text-button" (click)="signOut()">
+            {{ copy.admin.signOut }} {{ copy.common.externalArrow }}
+          </button>
+        </div>
       </aside>
       <section class="admin-main">
-        <div class="admin-topbar"><a class="admin-mobile-brand" routerLink="/">{{ copy.admin.mobileBrand }} <span>·</span> {{ copy.admin.profile }}</a><a class="text-button admin-home-link" routerLink="/">{{ copy.admin.viewWebsite }} {{ copy.common.externalArrow }}</a></div>
+        <div class="admin-topbar">
+          <a class="admin-mobile-brand" routerLink="/"
+            >{{ copy.admin.mobileBrand }} <span>·</span>
+            {{ copy.admin.profile }}</a
+          ><a class="text-button admin-home-link" routerLink="/"
+            >{{ copy.admin.viewWebsite }} {{ copy.common.externalArrow }}</a
+          >
+        </div>
         <div class="admin-content">
-          @if (requestError) { <p class="form-message error-message" role="alert">{{ requestError }}</p> }
-          @if (notice) { <p class="form-message success-message" role="status">{{ notice }}</p> }
-          @if (loading) { <div class="empty-state">{{ copy.admin.loading }}</div> }
-          @else if (tab === 'profile' && profile) {
-            <div class="admin-page-heading"><div><div class="eyebrow"><span></span> {{ copy.admin.accountEyebrow }}</div><h2>{{ copy.admin.profile }}</h2><p>{{ copy.admin.profileDescription }}</p></div></div>
+          @if (requestError) {
+            <p class="form-message error-message" role="alert">
+              {{ requestError }}
+            </p>
+          }
+          @if (notice) {
+            <p class="form-message success-message" role="status">
+              {{ notice }}
+            </p>
+          }
+          @if (loading) {
+            <div class="empty-state">{{ copy.admin.loading }}</div>
+          } @else if (tab === "profile" && profile) {
+            <div class="admin-page-heading">
+              <div>
+                <div class="eyebrow">
+                  <span></span> {{ copy.admin.accountEyebrow }}
+                </div>
+                <h2>{{ copy.admin.profile }}</h2>
+                <p>{{ copy.admin.profileDescription }}</p>
+              </div>
+            </div>
             <form (ngSubmit)="saveProfile()">
               <div class="admin-profile-photo">
-                @if (profile.imageUrl) { <img [src]="imageUrl(profile.imageUrl)" [alt]="copy.admin.profilePhotoAlt"> }
-                @else { <span>{{ profile.fullName.charAt(0).toUpperCase() }}</span> }
-                <label class="upload-label">{{ copy.admin.chooseProfilePhoto }}<input type="file" accept="image/jpeg,image/png,image/webp,image/gif" (change)="uploadProfileImage($any($event.target).files?.[0] || null)"></label>
+                @if (profile.imageUrl) {
+                  <img
+                    [src]="imageUrl(profile.imageUrl)"
+                    [alt]="copy.admin.profilePhotoAlt"
+                  />
+                } @else {
+                  <span>{{ profile.fullName.charAt(0).toUpperCase() }}</span>
+                }
+                <label class="upload-label"
+                  >{{ copy.admin.chooseProfilePhoto
+                  }}<input
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp,image/gif"
+                    (change)="
+                      uploadProfileImage($any($event.target).files?.[0] || null)
+                    "
+                /></label>
               </div>
               <div class="admin-form-grid">
-                <label class="admin-field">{{ copy.admin.username }}<input [value]="profile.username" readonly [attr.aria-label]="copy.admin.username"></label>
-                <label class="admin-field">{{ copy.admin.fullName }}<input name="profileName" [(ngModel)]="profile.fullName" autocomplete="name" required maxlength="100"></label>
-                <label class="admin-field">{{ copy.admin.phoneNumber }}<input name="profilePhone" [(ngModel)]="profile.phone" type="tel" autocomplete="tel" inputmode="numeric" maxlength="10" [placeholder]="copy.admin.phonePlaceholder"></label>
-                <label class="admin-field">{{ copy.admin.emailAddress }}<input name="profileEmail" [(ngModel)]="profile.email" type="email" autocomplete="email" [placeholder]="copy.admin.emailPlaceholder"></label>
+                <label class="admin-field"
+                  >{{ copy.admin.username
+                  }}<input
+                    [value]="profile.username"
+                    readonly
+                    [attr.aria-label]="copy.admin.username"
+                /></label>
+                <label class="admin-field"
+                  >{{ copy.admin.fullName
+                  }}<input
+                    name="profileName"
+                    [(ngModel)]="profile.fullName"
+                    autocomplete="name"
+                    required
+                    maxlength="100"
+                /></label>
+                <label class="admin-field"
+                  >{{ copy.admin.phoneNumber
+                  }}<input
+                    name="profilePhone"
+                    [(ngModel)]="profile.phone"
+                    type="tel"
+                    autocomplete="tel"
+                    inputmode="numeric"
+                    maxlength="10"
+                    [placeholder]="copy.admin.phonePlaceholder"
+                /></label>
+                <label class="admin-field"
+                  >{{ copy.admin.emailAddress
+                  }}<input
+                    name="profileEmail"
+                    [(ngModel)]="profile.email"
+                    type="email"
+                    autocomplete="email"
+                    [placeholder]="copy.admin.emailPlaceholder"
+                /></label>
               </div>
-              <div class="admin-save-row"><small>{{ copy.admin.personalDetailsNote }}</small><button class="button button-dark" type="submit" [disabled]="busy">{{ copy.admin.saveProfile }}</button></div>
+              <div class="admin-save-row">
+                <small>{{ copy.admin.personalDetailsNote }}</small
+                ><button
+                  class="button button-dark"
+                  type="submit"
+                  [disabled]="busy"
+                >
+                  {{ copy.admin.saveProfile }}
+                </button>
+              </div>
             </form>
             <form class="admin-password-form" (ngSubmit)="changePassword()">
-              <div class="admin-subheading">{{ copy.admin.changePassword }}</div>
-              <div class="admin-form-grid">
-                <label class="admin-field">{{ copy.admin.currentPassword }}<span class="password-input-control"><input name="currentPassword" [(ngModel)]="currentPassword" [type]="showCurrentPassword ? 'text' : 'password'" autocomplete="current-password" required><button type="button" class="password-visibility-toggle" (click)="showCurrentPassword = !showCurrentPassword" [attr.aria-label]="showCurrentPassword ? copy.admin.hidePassword : copy.admin.showPassword">{{ showCurrentPassword ? copy.admin.hidePassword : copy.admin.showPassword }}</button></span></label>
-                <label class="admin-field">{{ copy.admin.newPassword }}<span class="password-input-control"><input name="newPassword" [(ngModel)]="newPassword" [type]="showNewPassword ? 'text' : 'password'" autocomplete="new-password" minlength="12" maxlength="128" required aria-describedby="passwordRequirements"><button type="button" class="password-visibility-toggle" (click)="showNewPassword = !showNewPassword" [attr.aria-label]="showNewPassword ? copy.admin.hidePassword : copy.admin.showPassword">{{ showNewPassword ? copy.admin.hidePassword : copy.admin.showPassword }}</button></span></label>
-                <label class="admin-field">{{ copy.admin.confirmPassword }}<span class="password-input-control"><input name="confirmPassword" [(ngModel)]="confirmPassword" [type]="showConfirmPassword ? 'text' : 'password'" autocomplete="new-password" minlength="12" maxlength="128" required [attr.aria-invalid]="confirmPassword && !passwordsMatch"><button type="button" class="password-visibility-toggle" (click)="showConfirmPassword = !showConfirmPassword" [attr.aria-label]="showConfirmPassword ? copy.admin.hidePassword : copy.admin.showPassword">{{ showConfirmPassword ? copy.admin.hidePassword : copy.admin.showPassword }}</button></span></label>
+              <div class="admin-subheading">
+                {{ copy.admin.changePassword }}
               </div>
-              <section class="password-guidance" id="passwordRequirements" [attr.aria-label]="copy.admin.passwordRequirementsTitle">
-                <div class="password-strength-heading"><strong>{{ copy.admin.passwordStrength }}</strong><span>{{ copy.admin.passwordStrengthLabels[passwordStrengthScore] }}</span></div>
-                <div class="password-strength-meter" role="progressbar" [attr.aria-valuenow]="passwordStrengthScore" aria-valuemin="0" aria-valuemax="5" [attr.aria-label]="copy.admin.passwordStrength"><span [style.width.%]="passwordStrengthScore * 20" [class.strong]="passwordIsStrong"></span></div>
+              <div class="admin-form-grid">
+                <label class="admin-field"
+                  >{{ copy.admin.currentPassword
+                  }}<span class="password-input-control"
+                    ><input
+                      name="currentPassword"
+                      [(ngModel)]="currentPassword"
+                      [type]="showCurrentPassword ? 'text' : 'password'"
+                      autocomplete="current-password"
+                      required
+                    /><button
+                      type="button"
+                      class="password-visibility-toggle"
+                      (click)="showCurrentPassword = !showCurrentPassword"
+                      [attr.aria-label]="
+                        showCurrentPassword
+                          ? copy.admin.hidePassword
+                          : copy.admin.showPassword
+                      "
+                    >
+                      {{
+                        showCurrentPassword
+                          ? copy.admin.hidePassword
+                          : copy.admin.showPassword
+                      }}
+                    </button></span
+                  ></label
+                >
+                <label class="admin-field"
+                  >{{ copy.admin.newPassword
+                  }}<span class="password-input-control"
+                    ><input
+                      name="newPassword"
+                      [(ngModel)]="newPassword"
+                      [type]="showNewPassword ? 'text' : 'password'"
+                      autocomplete="new-password"
+                      minlength="12"
+                      maxlength="128"
+                      required
+                      aria-describedby="passwordRequirements"
+                    /><button
+                      type="button"
+                      class="password-visibility-toggle"
+                      (click)="showNewPassword = !showNewPassword"
+                      [attr.aria-label]="
+                        showNewPassword
+                          ? copy.admin.hidePassword
+                          : copy.admin.showPassword
+                      "
+                    >
+                      {{
+                        showNewPassword
+                          ? copy.admin.hidePassword
+                          : copy.admin.showPassword
+                      }}
+                    </button></span
+                  ></label
+                >
+                <label class="admin-field"
+                  >{{ copy.admin.confirmPassword
+                  }}<span class="password-input-control"
+                    ><input
+                      name="confirmPassword"
+                      [(ngModel)]="confirmPassword"
+                      [type]="showConfirmPassword ? 'text' : 'password'"
+                      autocomplete="new-password"
+                      minlength="12"
+                      maxlength="128"
+                      required
+                      [attr.aria-invalid]="confirmPassword && !passwordsMatch"
+                    /><button
+                      type="button"
+                      class="password-visibility-toggle"
+                      (click)="showConfirmPassword = !showConfirmPassword"
+                      [attr.aria-label]="
+                        showConfirmPassword
+                          ? copy.admin.hidePassword
+                          : copy.admin.showPassword
+                      "
+                    >
+                      {{
+                        showConfirmPassword
+                          ? copy.admin.hidePassword
+                          : copy.admin.showPassword
+                      }}
+                    </button></span
+                  ></label
+                >
+              </div>
+              <section
+                class="password-guidance"
+                id="passwordRequirements"
+                [attr.aria-label]="copy.admin.passwordRequirementsTitle"
+              >
+                <div class="password-strength-heading">
+                  <strong>{{ copy.admin.passwordStrength }}</strong
+                  ><span>{{
+                    copy.admin.passwordStrengthLabels[passwordStrengthScore]
+                  }}</span>
+                </div>
+                <div
+                  class="password-strength-meter"
+                  role="progressbar"
+                  [attr.aria-valuenow]="passwordStrengthScore"
+                  aria-valuemin="0"
+                  aria-valuemax="5"
+                  [attr.aria-label]="copy.admin.passwordStrength"
+                >
+                  <span
+                    [style.width.%]="passwordStrengthScore * 20"
+                    [class.strong]="passwordIsStrong"
+                  ></span>
+                </div>
                 <ul class="password-rules">
-                  <li [class.met]="passwordHasMinLength"><span aria-hidden="true">{{ passwordHasMinLength ? '✓' : '○' }}</span>{{ copy.admin.passwordMinLength }}</li>
-                  <li [class.met]="passwordHasLowercase"><span aria-hidden="true">{{ passwordHasLowercase ? '✓' : '○' }}</span>{{ copy.admin.passwordLowercase }}</li>
-                  <li [class.met]="passwordHasUppercase"><span aria-hidden="true">{{ passwordHasUppercase ? '✓' : '○' }}</span>{{ copy.admin.passwordUppercase }}</li>
-                  <li [class.met]="passwordHasNumber"><span aria-hidden="true">{{ passwordHasNumber ? '✓' : '○' }}</span>{{ copy.admin.passwordNumber }}</li>
-                  <li [class.met]="passwordHasSymbol"><span aria-hidden="true">{{ passwordHasSymbol ? '✓' : '○' }}</span>{{ copy.admin.passwordSymbol }}</li>
+                  <li [class.met]="passwordHasMinLength">
+                    <span aria-hidden="true">{{
+                      passwordHasMinLength ? "✓" : "○"
+                    }}</span
+                    >{{ copy.admin.passwordMinLength }}
+                  </li>
+                  <li [class.met]="passwordHasLowercase">
+                    <span aria-hidden="true">{{
+                      passwordHasLowercase ? "✓" : "○"
+                    }}</span
+                    >{{ copy.admin.passwordLowercase }}
+                  </li>
+                  <li [class.met]="passwordHasUppercase">
+                    <span aria-hidden="true">{{
+                      passwordHasUppercase ? "✓" : "○"
+                    }}</span
+                    >{{ copy.admin.passwordUppercase }}
+                  </li>
+                  <li [class.met]="passwordHasNumber">
+                    <span aria-hidden="true">{{
+                      passwordHasNumber ? "✓" : "○"
+                    }}</span
+                    >{{ copy.admin.passwordNumber }}
+                  </li>
+                  <li [class.met]="passwordHasSymbol">
+                    <span aria-hidden="true">{{
+                      passwordHasSymbol ? "✓" : "○"
+                    }}</span
+                    >{{ copy.admin.passwordSymbol }}
+                  </li>
                 </ul>
                 @if (confirmPassword) {
-                  <p class="password-match-indicator" [class.match]="passwordsMatch" role="status"><span aria-hidden="true">{{ passwordsMatch ? '✓' : '!' }}</span>{{ passwordsMatch ? copy.admin.passwordsMatch : copy.admin.passwordsDoNotMatch }}</p>
+                  <p
+                    class="password-match-indicator"
+                    [class.match]="passwordsMatch"
+                    role="status"
+                  >
+                    <span aria-hidden="true">{{
+                      passwordsMatch ? "✓" : "!"
+                    }}</span
+                    >{{
+                      passwordsMatch
+                        ? copy.admin.passwordsMatch
+                        : copy.admin.passwordsDoNotMatch
+                    }}
+                  </p>
                 }
               </section>
-              <p class="password-recovery-note">{{ copy.admin.otpRecoveryNote }}</p>
-              <div class="admin-save-row"><span></span><button class="button button-dark" type="submit" [disabled]="busy || !passwordIsStrong || !passwordsMatch || !currentPassword">{{ copy.admin.changePassword }}</button></div>
+              <p class="password-recovery-note">
+                {{ copy.admin.otpRecoveryNote }}
+              </p>
+              <div class="admin-save-row">
+                <span></span
+                ><button
+                  class="button button-dark"
+                  type="submit"
+                  [disabled]="
+                    busy ||
+                    !passwordIsStrong ||
+                    !passwordsMatch ||
+                    !currentPassword
+                  "
+                >
+                  {{ copy.admin.changePassword }}
+                </button>
+              </div>
             </form>
-          }
-          @else if (tab === 'appointments') {
-            <div class="admin-page-heading"><div><div class="eyebrow"><span></span> {{ copy.admin.frontDesk }}</div><h2>{{ copy.admin.appointments }}</h2><p>{{ copy.admin.appointmentDescription }}</p></div><button class="button button-outline" (click)="exportCsv()">{{ copy.admin.exportCsv }} ↓</button></div>
-            <div class="appointment-summary"><div class="summary-card"><small>{{ copy.admin.waiting }}</small><b>{{ waitingCount }}</b></div><div class="summary-card"><small>{{ copy.admin.completed }}</small><b>{{ doneCount }}</b></div><div class="summary-card"><small>{{ copy.admin.cancelled }}</small><b>{{ cancelledCount }}</b></div></div>
+          } @else if (tab === "appointments") {
+            <div class="admin-page-heading">
+              <div>
+                <div class="eyebrow">
+                  <span></span> {{ copy.admin.frontDesk }}
+                </div>
+                <h2>{{ copy.admin.appointments }}</h2>
+                <p>{{ copy.admin.appointmentDescription }}</p>
+              </div>
+              <button class="button button-outline" (click)="exportCsv()">
+                {{ copy.admin.exportCsv }} ↓
+              </button>
+            </div>
+            <div class="appointment-summary">
+              <div class="summary-card">
+                <small>{{ copy.admin.waiting }}</small
+                ><b>{{ waitingCount }}</b>
+              </div>
+              <div class="summary-card">
+                <small>{{ copy.admin.completed }}</small
+                ><b>{{ doneCount }}</b>
+              </div>
+              <div class="summary-card">
+                <small>{{ copy.admin.cancelled }}</small
+                ><b>{{ cancelledCount }}</b>
+              </div>
+            </div>
             <div class="appointment-tabs" role="tablist">
-              <button class="appointment-filter" [class.active]="filter === 'waiting'" (click)="filter = 'waiting'">{{ copy.admin.waiting }}</button>
-              <button class="appointment-filter" [class.active]="filter === 'done'" (click)="filter = 'done'">{{ copy.admin.completed }}</button>
-              <button class="appointment-filter" [class.active]="filter === 'cancelled'" (click)="filter = 'cancelled'">{{ copy.admin.cancelled }}</button>
-              <button class="appointment-filter" [class.active]="filter === 'all'" (click)="filter = 'all'">{{ copy.admin.allRequests }}</button>
+              <button
+                class="appointment-filter"
+                [class.active]="filter === 'waiting'"
+                (click)="filter = 'waiting'"
+              >
+                {{ copy.admin.waiting }}
+              </button>
+              <button
+                class="appointment-filter"
+                [class.active]="filter === 'done'"
+                (click)="filter = 'done'"
+              >
+                {{ copy.admin.completed }}
+              </button>
+              <button
+                class="appointment-filter"
+                [class.active]="filter === 'cancelled'"
+                (click)="filter = 'cancelled'"
+              >
+                {{ copy.admin.cancelled }}
+              </button>
+              <button
+                class="appointment-filter"
+                [class.active]="filter === 'all'"
+                (click)="filter = 'all'"
+              >
+                {{ copy.admin.allRequests }}
+              </button>
             </div>
             <div class="appointment-list">
               @for (appointment of visibleAppointments; track appointment.id) {
                 <article class="appointment-row">
-                  <div class="patient-main"><strong>{{ appointment.name }} <span class="patient-status" [class.done]="appointment.status === 'done'" [class.cancelled]="appointment.status === 'cancelled'">{{ copy.status[appointment.status] }}</span></strong><small>{{ appointment.age }} {{ copy.admin.ageYears }} · {{ appointment.gender }} · {{ copy.admin.requested }} {{ formatDate(appointment.requestedAt) }}</small></div>
-                  <div class="patient-meta">
-                    <a [href]="'tel:+91' + appointment.phone">+91 {{ appointment.phone }}</a>
-                    @if (appointment.email) { <span>{{ appointment.email }}</span> }
-                    @if (appointment.statusUpdatedAt) { <span>{{ appointment.status === 'done' ? copy.admin.completed : copy.admin.updated }} {{ formatDate(appointment.statusUpdatedAt) }}</span> }
+                  <div class="patient-main">
+                    <strong
+                      >{{ appointment.name }}
+                      <span
+                        class="patient-status"
+                        [class.done]="appointment.status === 'done'"
+                        [class.cancelled]="appointment.status === 'cancelled'"
+                        >{{ copy.status[appointment.status] }}</span
+                      ></strong
+                    ><small
+                      >{{ appointment.age }} {{ copy.admin.ageYears }} ·
+                      {{ appointment.gender }} · {{ copy.admin.requested }}
+                      {{ formatDate(appointment.requestedAt) }}</small
+                    >
                   </div>
-                  @if (appointment.problem) { <p class="patient-problem"><strong>{{ copy.admin.problemFacing }}:</strong> {{ appointment.problem }}</p> }
+                  <div class="patient-meta">
+                    <a [href]="'tel:+91' + appointment.phone"
+                      >+91 {{ appointment.phone }}</a
+                    >
+                    @if (appointment.email) {
+                      <span>{{ appointment.email }}</span>
+                    }
+                    @if (appointment.statusUpdatedAt) {
+                      <span
+                        >{{
+                          appointment.status === "done"
+                            ? copy.admin.completed
+                            : copy.admin.updated
+                        }}
+                        {{ formatDate(appointment.statusUpdatedAt) }}</span
+                      >
+                    }
+                  </div>
+                  @if (appointment.problem) {
+                    <p class="patient-problem">
+                      <strong>{{ copy.admin.problemFacing }}:</strong>
+                      {{ appointment.problem }}
+                    </p>
+                  }
                   <div class="row-actions">
-                    @if (appointment.status !== 'done') { <button class="mini-button" [disabled]="busy" (click)="updateStatus(appointment, 'done')">{{ copy.admin.done }}</button> }
-                    @if (appointment.status !== 'cancelled') { <button class="mini-button" [disabled]="busy" (click)="updateStatus(appointment, 'cancelled')">{{ copy.admin.cancel }}</button> }
-                    @if (appointment.status !== 'waiting') { <button class="mini-button" [disabled]="busy" (click)="updateStatus(appointment, 'waiting')">{{ copy.admin.restore }}</button> }
+                    @if (appointment.status !== "done") {
+                      <button
+                        class="mini-button"
+                        [disabled]="busy"
+                        (click)="updateStatus(appointment, 'done')"
+                      >
+                        {{ copy.admin.done }}
+                      </button>
+                    }
+                    @if (appointment.status !== "cancelled") {
+                      <button
+                        class="mini-button"
+                        [disabled]="busy"
+                        (click)="updateStatus(appointment, 'cancelled')"
+                      >
+                        {{ copy.admin.cancel }}
+                      </button>
+                    }
+                    @if (appointment.status !== "waiting") {
+                      <button
+                        class="mini-button"
+                        [disabled]="busy"
+                        (click)="updateStatus(appointment, 'waiting')"
+                      >
+                        {{ copy.admin.restore }}
+                      </button>
+                    }
                   </div>
                 </article>
-              } @empty { <div class="empty-state"><b>{{ filter === 'all' ? copy.admin.noAppointments : copy.admin.noAppointmentsByStatus[filter] }}</b>{{ copy.admin.newRequests }}</div> }
+              } @empty {
+                <div class="empty-state">
+                  <b>{{
+                    filter === "all"
+                      ? copy.admin.noAppointments
+                      : copy.admin.noAppointmentsByStatus[filter]
+                  }}</b
+                  >{{ copy.admin.newRequests }}
+                </div>
+              }
             </div>
             <section class="archive-section">
-              <div class="admin-subheading">{{ copy.admin.appointmentArchive }}</div>
-              <p class="archive-description">{{ copy.admin.archiveDescription }}</p>
+              <div class="admin-subheading">
+                {{ copy.admin.appointmentArchive }}
+              </div>
+              <p class="archive-description">
+                {{ copy.admin.archiveDescription }}
+              </p>
               <div class="archive-search">
-                <label class="admin-field">{{ copy.admin.archiveYear }}<select name="archiveYear" [(ngModel)]="archiveYear">@for (year of archiveYears; track year) { <option [ngValue]="year">{{ year }}</option> }</select></label>
-                <label class="admin-field">{{ copy.admin.archiveMonth }}<select name="archiveMonth" [(ngModel)]="archiveMonth">@for (month of archiveMonths; track month) { <option [ngValue]="month">{{ copy.admin.monthNames[month - 1] }}</option> }</select></label>
-                <button class="button button-outline" type="button" (click)="searchArchive()" [disabled]="archiveLoading">{{ archiveLoading ? copy.admin.archiveSearching : copy.admin.searchArchive }}</button>
+                <label class="admin-field"
+                  >{{ copy.admin.archiveYear
+                  }}<select name="archiveYear" [(ngModel)]="archiveYear">
+                    @for (year of archiveYears; track year) {
+                      <option [ngValue]="year">{{ year }}</option>
+                    }
+                  </select></label
+                >
+                <label class="admin-field"
+                  >{{ copy.admin.archiveMonth
+                  }}<select name="archiveMonth" [(ngModel)]="archiveMonth">
+                    @for (month of archiveMonths; track month) {
+                      <option [ngValue]="month">
+                        {{ copy.admin.monthNames[month - 1] }}
+                      </option>
+                    }
+                  </select></label
+                >
+                <button
+                  class="button button-outline"
+                  type="button"
+                  (click)="searchArchive()"
+                  [disabled]="archiveLoading"
+                >
+                  {{
+                    archiveLoading
+                      ? copy.admin.archiveSearching
+                      : copy.admin.searchArchive
+                  }}
+                </button>
               </div>
               @if (archiveSearched) {
-                <h3 class="archive-result-title">{{ copy.admin.archiveResults }} · {{ copy.admin.monthNames[archiveMonth - 1] }} {{ archiveYear }}</h3>
+                <h3 class="archive-result-title">
+                  {{ copy.admin.archiveResults }} ·
+                  {{ copy.admin.monthNames[archiveMonth - 1] }}
+                  {{ archiveYear }}
+                </h3>
                 <div class="appointment-list archive-list">
-                  @for (appointment of archiveAppointments; track appointment.id) {
+                  @for (
+                    appointment of archiveAppointments;
+                    track appointment.id
+                  ) {
                     <article class="appointment-row">
-                      <div class="patient-main"><strong>{{ appointment.name }} <span class="patient-status" [class.done]="appointment.status === 'done'" [class.cancelled]="appointment.status === 'cancelled'">{{ copy.status[appointment.status] }}</span></strong><small>{{ appointment.age }} {{ copy.admin.ageYears }} · {{ appointment.gender }} · {{ copy.admin.requested }} {{ formatDate(appointment.requestedAt) }}</small></div>
-                      <div class="patient-meta"><a [href]="'tel:+91' + appointment.phone">+91 {{ appointment.phone }}</a>@if (appointment.email) { <span>{{ appointment.email }}</span> }@if (appointment.statusUpdatedAt) { <span>{{ appointment.status === 'done' ? copy.admin.completed : copy.admin.updated }} {{ formatDate(appointment.statusUpdatedAt) }}</span> }</div>
-                      @if (appointment.problem) { <p class="patient-problem"><strong>{{ copy.admin.problemFacing }}:</strong> {{ appointment.problem }}</p> }
-                      <div class="row-actions">@if (appointment.status !== 'done') { <button class="mini-button" [disabled]="busy" (click)="updateStatus(appointment, 'done')">{{ copy.admin.done }}</button> }@if (appointment.status !== 'cancelled') { <button class="mini-button" [disabled]="busy" (click)="updateStatus(appointment, 'cancelled')">{{ copy.admin.cancel }}</button> }@if (appointment.status !== 'waiting') { <button class="mini-button" [disabled]="busy" (click)="updateStatus(appointment, 'waiting')">{{ copy.admin.restore }}</button> }</div>
+                      <div class="patient-main">
+                        <strong
+                          >{{ appointment.name }}
+                          <span
+                            class="patient-status"
+                            [class.done]="appointment.status === 'done'"
+                            [class.cancelled]="
+                              appointment.status === 'cancelled'
+                            "
+                            >{{ copy.status[appointment.status] }}</span
+                          ></strong
+                        ><small
+                          >{{ appointment.age }} {{ copy.admin.ageYears }} ·
+                          {{ appointment.gender }} · {{ copy.admin.requested }}
+                          {{ formatDate(appointment.requestedAt) }}</small
+                        >
+                      </div>
+                      <div class="patient-meta">
+                        <a [href]="'tel:+91' + appointment.phone"
+                          >+91 {{ appointment.phone }}</a
+                        >
+                        @if (appointment.email) {
+                          <span>{{ appointment.email }}</span>
+                        }
+                        @if (appointment.statusUpdatedAt) {
+                          <span
+                            >{{
+                              appointment.status === "done"
+                                ? copy.admin.completed
+                                : copy.admin.updated
+                            }}
+                            {{ formatDate(appointment.statusUpdatedAt) }}</span
+                          >
+                        }
+                      </div>
+                      @if (appointment.problem) {
+                        <p class="patient-problem">
+                          <strong>{{ copy.admin.problemFacing }}:</strong>
+                          {{ appointment.problem }}
+                        </p>
+                      }
+                      <div class="row-actions">
+                        @if (appointment.status !== "done") {
+                          <button
+                            class="mini-button"
+                            [disabled]="busy"
+                            (click)="updateStatus(appointment, 'done')"
+                          >
+                            {{ copy.admin.done }}
+                          </button>
+                        }
+                        @if (appointment.status !== "cancelled") {
+                          <button
+                            class="mini-button"
+                            [disabled]="busy"
+                            (click)="updateStatus(appointment, 'cancelled')"
+                          >
+                            {{ copy.admin.cancel }}
+                          </button>
+                        }
+                        @if (appointment.status !== "waiting") {
+                          <button
+                            class="mini-button"
+                            [disabled]="busy"
+                            (click)="updateStatus(appointment, 'waiting')"
+                          >
+                            {{ copy.admin.restore }}
+                          </button>
+                        }
+                      </div>
                     </article>
-                  } @empty { <div class="empty-state">{{ copy.admin.archiveEmpty }}</div> }
+                  } @empty {
+                    <div class="empty-state">{{ copy.admin.archiveEmpty }}</div>
+                  }
                 </div>
               }
             </section>
-          } @else if (tab === 'doctors') {
-            <div class="admin-page-heading"><div><div class="eyebrow"><span></span> {{ copy.admin.doctorsEyebrow }}</div><h2>{{ copy.admin.doctors }}</h2><p>{{ copy.admin.doctorsDescription }}</p></div></div>
+          } @else if (tab === "doctors") {
+            <div class="admin-page-heading">
+              <div>
+                <div class="eyebrow">
+                  <span></span> {{ copy.admin.doctorsEyebrow }}
+                </div>
+                <h2>{{ copy.admin.doctors }}</h2>
+                <p>{{ copy.admin.doctorsDescription }}</p>
+              </div>
+            </div>
             <div class="doctor-admin-list">
               @for (doctor of doctors; track doctor.id; let index = $index) {
                 <article class="doctor-admin-card">
-                  @if (doctor.image) { <img [src]="imageUrl(doctor.image)" [alt]="doctor.name"> }
-                  @else { <div class="doctor-admin-placeholder">{{ copy.admin.doctorPhotoMissing }}</div> }
+                  @if (doctor.image) {
+                    <img [src]="imageUrl(doctor.image)" [alt]="doctor.name" />
+                  } @else {
+                    <div class="doctor-admin-placeholder">
+                      {{ copy.admin.doctorPhotoMissing }}
+                    </div>
+                  }
                   <div class="doctor-admin-fields">
-                    <label class="admin-field">{{ copy.admin.doctorName }}<input [(ngModel)]="doctor.name" [name]="'doctor-name-' + index" maxlength="100"></label>
-                    <label class="admin-field">{{ copy.admin.doctorQualification }}<input [(ngModel)]="doctor.qualification" [name]="'doctor-qualification-' + index" maxlength="160"></label>
-                    <label class="admin-field">{{ copy.admin.doctorDescription }}<textarea [(ngModel)]="doctor.description" [name]="'doctor-description-' + index" maxlength="1000"></textarea></label>
-                    <label class="admin-field">{{ copy.admin.doctorExpertise }}<input [(ngModel)]="doctor.expertise" [name]="'doctor-expertise-' + index" maxlength="300"></label>
-                    <label class="upload-label">{{ copy.admin.doctorPhoto }}<input type="file" accept="image/jpeg,image/png,image/webp,image/gif" (change)="uploadDoctorImage($any($event.target).files?.[0] || null, index)"></label>
-                    <button type="button" class="mini-button" (click)="removeDoctor(index)">{{ copy.admin.removeDoctor }}</button>
+                    <label class="admin-field"
+                      >{{ copy.admin.doctorName
+                      }}<input
+                        [(ngModel)]="doctor.name"
+                        [name]="'doctor-name-' + index"
+                        maxlength="100"
+                        required
+                    /></label>
+                    <label class="admin-field"
+                      >{{ copy.admin.doctorQualification
+                      }}<input
+                        [(ngModel)]="doctor.qualification"
+                        [name]="'doctor-qualification-' + index"
+                        maxlength="160"
+                    /></label>
+                    <label class="admin-field"
+                      >{{ copy.admin.doctorDescription
+                      }}<textarea
+                        [(ngModel)]="doctor.description"
+                        [name]="'doctor-description-' + index"
+                        maxlength="1000"
+                        required
+                      ></textarea>
+                    </label>
+                    <label class="admin-field"
+                      >{{ copy.admin.doctorExpertise
+                      }}<input
+                        [(ngModel)]="doctor.expertise"
+                        [name]="'doctor-expertise-' + index"
+                        maxlength="300"
+                        required
+                    /></label>
+                    <label class="upload-label"
+                      >{{ copy.admin.doctorPhoto
+                      }}<input
+                        type="file"
+                        accept="image/jpeg,image/png,image/webp,image/gif"
+                        (change)="
+                          uploadDoctorImage(
+                            $any($event.target).files?.[0] || null,
+                            index
+                          )
+                        "
+                    /></label>
+                    <button
+                      type="button"
+                      class="mini-button"
+                      [disabled]="busy"
+                      (click)="removeDoctor(index)"
+                    >
+                      {{ copy.admin.removeDoctor }}
+                    </button>
                   </div>
                 </article>
-              } @empty { <div class="empty-state">{{ copy.admin.noDoctors }}</div> }
+              } @empty {
+                <div class="empty-state">{{ copy.admin.noDoctors }}</div>
+              }
             </div>
             <section class="doctor-add-form">
               <div class="admin-subheading">{{ copy.admin.addDoctor }}</div>
               <div class="admin-form-grid">
-                <label class="admin-field">{{ copy.admin.doctorName }}<input name="newDoctorName" [(ngModel)]="newDoctor.name" maxlength="100"></label>
-                <label class="admin-field">{{ copy.admin.doctorQualification }}<input name="newDoctorQualification" [(ngModel)]="newDoctor.qualification" maxlength="160"></label>
-                <label class="admin-field full">{{ copy.admin.doctorDescription }}<textarea name="newDoctorDescription" [(ngModel)]="newDoctor.description" maxlength="1000"></textarea></label>
-                <label class="admin-field full">{{ copy.admin.doctorExpertise }}<input name="newDoctorExpertise" [(ngModel)]="newDoctor.expertise" maxlength="300"></label>
+                <label class="admin-field"
+                  >{{ copy.admin.doctorName
+                  }}<input
+                    name="newDoctorName"
+                    [(ngModel)]="newDoctor.name"
+                    maxlength="100"
+                    required
+                /></label>
+                <label class="admin-field"
+                  >{{ copy.admin.doctorQualification
+                  }}<input
+                    name="newDoctorQualification"
+                    [(ngModel)]="newDoctor.qualification"
+                    maxlength="160"
+                /></label>
+                <label class="admin-field full"
+                  >{{ copy.admin.doctorDescription
+                  }}<textarea
+                    name="newDoctorDescription"
+                    [(ngModel)]="newDoctor.description"
+                    maxlength="1000"
+                    required
+                  ></textarea>
+                </label>
+                <label class="admin-field full"
+                  >{{ copy.admin.doctorExpertise
+                  }}<input
+                    name="newDoctorExpertise"
+                    [(ngModel)]="newDoctor.expertise"
+                    maxlength="300"
+                    required
+                /></label>
+                <label class="admin-field full"
+                  >{{ copy.admin.doctorPhoto
+                  }}<input
+                    name="newDoctorPhoto"
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp,image/gif"
+                    (change)="
+                      selectNewDoctorImage(
+                        $any($event.target).files?.[0] || null
+                      )
+                    "
+                /></label>
               </div>
-              <button type="button" class="button button-outline" (click)="addDoctor()">{{ copy.admin.addDoctor }}</button>
             </section>
-            <div class="admin-save-row"><small>{{ copy.admin.doctorsSaveNote }}</small><button class="button button-dark" type="button" (click)="saveDoctors()" [disabled]="busy">{{ copy.admin.saveDoctors }} <span>{{ copy.common.externalArrow }}</span></button></div>
-          } @else if (tab === 'promotion') {
-            <div class="admin-page-heading"><div><div class="eyebrow"><span></span> {{ copy.admin.promotionEyebrow }}</div><h2>{{ copy.admin.offers }}</h2><p>{{ copy.admin.promotionDescription }}</p></div></div>
+            <div class="admin-save-row">
+              <small>{{ copy.admin.doctorsSaveNote }}</small
+              ><button
+                class="button button-dark"
+                type="button"
+                (click)="saveDoctors()"
+                [disabled]="busy"
+              >
+                {{ copy.admin.saveDoctors }}
+                <span>{{ copy.common.externalArrow }}</span>
+              </button>
+            </div>
+          } @else if (tab === "promotion") {
+            <div class="admin-page-heading">
+              <div>
+                <div class="eyebrow">
+                  <span></span> {{ copy.admin.promotionEyebrow }}
+                </div>
+                <h2>{{ copy.admin.offers }}</h2>
+                <p>{{ copy.admin.promotionDescription }}</p>
+              </div>
+            </div>
             <form (ngSubmit)="createOffer()">
               <div class="admin-form-grid">
-                <label class="admin-field full">{{ copy.admin.popupTitle }}<input name="offerTitle" [(ngModel)]="newOffer.title" [placeholder]="copy.admin.popupTitlePlaceholder" maxlength="120" required></label>
-                <label class="admin-field full">{{ copy.admin.message }}<textarea name="offerMessage" [(ngModel)]="newOffer.message" [placeholder]="copy.admin.messagePlaceholder" maxlength="2000" required></textarea></label>
-                <label class="admin-field">{{ copy.admin.offerDate }}<input name="offerDate" type="date" [min]="offerMinDate" [(ngModel)]="newOffer.displayDate" required></label>
-                <label class="admin-field full">{{ copy.admin.uploadImage }}<input type="file" accept="image/jpeg,image/png,image/webp,image/gif" (change)="uploadOfferImage($any($event.target).files?.[0] || null)"></label>
+                <label class="admin-field full"
+                  >{{ copy.admin.popupTitle
+                  }}<input
+                    name="offerTitle"
+                    [(ngModel)]="newOffer.title"
+                    [placeholder]="copy.admin.popupTitlePlaceholder"
+                    maxlength="120"
+                    required
+                /></label>
+                <label class="admin-field full"
+                  >{{ copy.admin.message
+                  }}<textarea
+                    name="offerMessage"
+                    [(ngModel)]="newOffer.message"
+                    [placeholder]="copy.admin.messagePlaceholder"
+                    maxlength="2000"
+                    required
+                  ></textarea>
+                </label>
+                <label class="admin-field"
+                  >{{ copy.admin.offerDate
+                  }}<input
+                    name="offerDate"
+                    type="date"
+                    [min]="offerMinDate"
+                    [(ngModel)]="newOffer.displayDate"
+                    required
+                /></label>
+                <label class="admin-field full"
+                  >{{ copy.admin.uploadImage
+                  }}<input
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp,image/gif"
+                    (change)="
+                      uploadOfferImage($any($event.target).files?.[0] || null)
+                    "
+                /></label>
               </div>
-              <div class="promo-preview">@if (newOffer.image) { <img [src]="imageUrl(newOffer.image)" alt=""> } @else { <div class="empty-state">{{ copy.admin.noImage }}</div> }<div><b>{{ newOffer.title || copy.admin.popupPreview }}</b><p>{{ newOffer.message || copy.admin.messagePreview }}</p><small>{{ newOffer.displayDate ? formatOfferDate(newOffer.displayDate) : copy.admin.offerDateRequired }}</small></div></div>
-              <div class="admin-save-row"><small>{{ copy.admin.offerAllDayNote }}</small><button class="button button-dark" type="submit" [disabled]="busy">{{ copy.admin.saveOffer }} <span>{{ copy.common.externalArrow }}</span></button></div>
+              <div class="promo-preview">
+                @if (newOffer.image) {
+                  <img [src]="imageUrl(newOffer.image)" alt="" />
+                } @else {
+                  <div class="empty-state">{{ copy.admin.noImage }}</div>
+                }
+                <div>
+                  <b>{{ newOffer.title || copy.admin.popupPreview }}</b>
+                  <p>{{ newOffer.message || copy.admin.messagePreview }}</p>
+                  <small>{{
+                    newOffer.displayDate
+                      ? formatOfferDate(newOffer.displayDate)
+                      : copy.admin.offerDateRequired
+                  }}</small>
+                </div>
+              </div>
+              <div class="admin-save-row">
+                <small>{{ copy.admin.offerAllDayNote }}</small
+                ><button
+                  class="button button-dark"
+                  type="submit"
+                  [disabled]="busy"
+                >
+                  {{ copy.admin.saveOffer }}
+                  <span>{{ copy.common.externalArrow }}</span>
+                </button>
+              </div>
             </form>
             <section class="offer-list-section">
-              <div class="admin-subheading">{{ copy.admin.activeAndScheduledOffers }}</div>
+              <div class="admin-subheading">
+                {{ copy.admin.activeAndScheduledOffers }}
+              </div>
               <div class="offer-list">
                 @for (offer of activeOrScheduledOffers; track offer.id) {
                   <article class="offer-admin-card">
-                    @if (offer.image) { <img [src]="imageUrl(offer.image)" [alt]="offer.title"> }
-                    <div class="offer-admin-copy"><h3>{{ offer.title }}</h3><p>{{ offer.message }}</p><small>{{ copy.admin.offerDate }}: {{ formatOfferDate(offer.displayDate) }} · {{ isOfferLive(offer) ? copy.admin.offerLive : copy.admin.offerScheduled }}</small></div>
-                    <button type="button" class="mini-button offer-toggle" [disabled]="busy" [attr.aria-pressed]="offer.enabled" (click)="toggleOffer(offer)">{{ offer.enabled ? copy.admin.turnOfferOff : copy.admin.turnOfferOn }}</button>
+                    @if (offer.image) {
+                      <img [src]="imageUrl(offer.image)" [alt]="offer.title" />
+                    }
+                    <div class="offer-admin-copy">
+                      <h3>{{ offer.title }}</h3>
+                      <p>{{ offer.message }}</p>
+                      <small
+                        >{{ copy.admin.offerDate }}:
+                        {{ formatOfferDate(offer.displayDate) }} ·
+                        {{
+                          isOfferLive(offer)
+                            ? copy.admin.offerLive
+                            : copy.admin.offerScheduled
+                        }}</small
+                      >
+                    </div>
+                    <button
+                      type="button"
+                      class="mini-button offer-toggle"
+                      [disabled]="busy"
+                      [attr.aria-pressed]="offer.enabled"
+                      (click)="toggleOffer(offer)"
+                    >
+                      {{
+                        offer.enabled
+                          ? copy.admin.turnOfferOff
+                          : copy.admin.turnOfferOn
+                      }}
+                    </button>
                   </article>
-                } @empty { <div class="empty-state">{{ copy.admin.noActiveOffers }}</div> }
+                } @empty {
+                  <div class="empty-state">{{ copy.admin.noActiveOffers }}</div>
+                }
               </div>
             </section>
             <section class="offer-list-section">
-              <div class="admin-subheading">{{ copy.admin.expiredOffers }} <small>{{ copy.admin.offerHistoryLimit }}</small></div>
+              <div class="admin-subheading">
+                {{ copy.admin.expiredOffers }}
+                <small>{{ copy.admin.offerHistoryLimit }}</small>
+              </div>
               <div class="offer-list">
                 @for (offer of pastOrInactiveOffers; track offer.id) {
                   <article class="offer-admin-card offer-expired">
-                    @if (offer.image) { <img [src]="imageUrl(offer.image)" [alt]="offer.title"> }
-                    <div class="offer-admin-copy"><h3>{{ offer.title }}</h3><p>{{ offer.message }}</p><small>{{ copy.admin.offerDate }}: {{ formatOfferDate(offer.displayDate) }} · {{ isOfferExpired(offer) ? copy.admin.offerExpired : copy.admin.disabled }}</small></div>
-                    <button type="button" class="mini-button offer-toggle" [disabled]="busy || isOfferExpired(offer)" [attr.aria-pressed]="offer.enabled" (click)="toggleOffer(offer)">{{ offer.enabled ? copy.admin.turnOfferOff : copy.admin.turnOfferOn }}</button>
+                    @if (offer.image) {
+                      <img [src]="imageUrl(offer.image)" [alt]="offer.title" />
+                    }
+                    <div class="offer-admin-copy">
+                      <h3>{{ offer.title }}</h3>
+                      <p>{{ offer.message }}</p>
+                      <small
+                        >{{ copy.admin.offerDate }}:
+                        {{ formatOfferDate(offer.displayDate) }} ·
+                        {{
+                          isOfferExpired(offer)
+                            ? copy.admin.offerExpired
+                            : copy.admin.disabled
+                        }}</small
+                      >
+                    </div>
+                    <button
+                      type="button"
+                      class="mini-button offer-toggle"
+                      [disabled]="busy || isOfferExpired(offer)"
+                      [attr.aria-pressed]="offer.enabled"
+                      (click)="toggleOffer(offer)"
+                    >
+                      {{
+                        offer.enabled
+                          ? copy.admin.turnOfferOff
+                          : copy.admin.turnOfferOn
+                      }}
+                    </button>
                   </article>
-                } @empty { <div class="empty-state">{{ copy.admin.noExpiredOffers }}</div> }
+                } @empty {
+                  <div class="empty-state">
+                    {{ copy.admin.noExpiredOffers }}
+                  </div>
+                }
               </div>
             </section>
           }

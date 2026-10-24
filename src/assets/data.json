@@ -409,9 +409,9 @@
     "addDoctor": "Add doctor",
     "removeDoctor": "Remove doctor",
     "saveDoctors": "Save doctors",
-    "doctorsSaveNote": "Only saved doctor profiles appear on the public website.",
+    "doctorsSaveNote": "Use Save doctors to add a new profile or save edits to existing profiles. Removals save immediately.",
     "doctorsSaveError": "Could not save the doctors list.",
-    "doctorImageUploaded": "Doctor photo uploaded. Save doctors to publish the change.",
+    "doctorImageUploaded": "Doctor photo uploaded and profile saved.",
     "noDoctors": "No doctor profiles have been added yet.",
     "csvHeadings": ["Patient", "Age", "Gender", "Phone", "Email", "Problem", "Status", "Requested at", "Status updated at"]
   },

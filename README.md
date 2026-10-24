@@ -19,6 +19,7 @@ The root install creates the one `node_modules` folder. `npm start` starts the w
 Keep the terminal open while using the website. Press **Ctrl+C** to stop both processes. No global Angular command and no installs in subfolders are required.
 
 To create a production frontend build, run `npm run build` from this same folder.
+Run `npm run lint` to check Angular TypeScript and templates; spec files are excluded.
 
 ## For visitors
 

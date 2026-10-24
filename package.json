@@ -9,7 +9,8 @@
     "start": "concurrently --kill-others --names API,SITE \"npm run start:api\" \"npm run start:site\"",
     "start:api": "node --watch api/server.js",
     "start:site": "ng serve mdc",
-    "build": "ng build mdc"
+    "build": "ng build mdc",
+    "lint": "ng lint"
   },
   "dependencies": {
     "@angular/common": "^20.3.0",
@@ -34,7 +35,10 @@
     "@angular/build": "^20.3.40",
     "@angular/cli": "^20.3.40",
     "@angular/compiler-cli": "^20.3.0",
+    "angular-eslint": "20.7.0",
     "concurrently": "^10.0.6",
-    "typescript": "~5.9.2"
+    "eslint": "^9.39.1",
+    "typescript": "~5.9.2",
+    "typescript-eslint": "8.46.4"
   }
 }
